@@ -1,23 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sourcey.materiallogindemo" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sourcey.materiallogindemo">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
+        android:name=".app"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
         <activity
-            android:name="com.sourcey.materiallogindemo.MainActivity"
-            android:label="@string/app_name" >
+            android:name=".MainActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.Dark" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <service
+            android:name=".Notification.MyFirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".Notification.MyFirebaseMessing"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".MapsActivity" />
+        <activity
+            android:name=".homeBottom"
+            android:label="@string/title_activity_home_bottom" />
+        <activity android:name=".Account" />
+        <activity android:name=".goodOffersAct" />
+        <activity android:name=".BuildingAndConstrauct" />
+        <activity android:name=".Add_Offers" />
+        <activity android:name=".AddResultOffer" />
+        <activity android:name=".SplaceScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sourcey.materiallogindemo.LoginActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name="com.sourcey.materiallogindemo.SignupActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".OfferResult" />
+        <activity android:name=".ChatAct" />
+        <activity android:name=".ChatList" />
+        <activity android:name=".MyOfferNeeded" />
+        <activity android:name=".OfferShare" />
+        <activity android:name=".BuildDetial"></activity>
     </application>
 
 </manifest>

@@ -3,35 +3,65 @@ package com.sourcey.materiallogindemo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.sourcey.materiallogindemo.Model.User;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.sourcey.materiallogindemo.Shared.Array;
+import static com.sourcey.materiallogindemo.Shared.CityArray;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     @BindView(R.id.input_name) EditText _nameText;
-    @BindView(R.id.input_address) EditText _addressText;
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_mobile) EditText _mobileText;
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.input_reEnterPassword) EditText _reEnterPasswordText;
     @BindView(R.id.btn_signup) Button _signupButton;
     @BindView(R.id.link_login) TextView _loginLink;
-    
+    @BindView(R.id.spinnerAccount)Spinner spinner;
+
+    FirebaseDatabase database=FirebaseDatabase.getInstance();
+    DatabaseReference mReference=database.getReference("user");
+    FirebaseAuth auth;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-
+        ArrayAdapter<String> Adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,Array);
+        spinner.setAdapter(Adapter);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,CityArray);
+        auth =FirebaseAuth.getInstance();
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +80,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
-
+    User user;
     public void signup() {
         Log.d(TAG, "Signup");
 
@@ -64,24 +94,29 @@ public class SignupActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage("إنشاء حساب ....");
         progressDialog.show();
 
         String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
+        String type = spinner.getSelectedItem().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
-
-        // TODO: Implement your own signup logic here.
-
+        String city="";
+        user=new User();
+        user.setName(name);
+        user.setType(type);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setPhoneNumber(mobile);
+        user.setCity(city);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        onSignupSuccess();
+                        Register();
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -89,9 +124,48 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
+    public void addUser(final User user){
+        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(_mobileText.getText().toString())){
+                    Toast.makeText(SignupActivity.this, "هذا الرقم يمتلك حساب من قبل..", Toast.LENGTH_SHORT).show();
+                }else{
+                    Shared.user=user;
+                    mReference.child(_mobileText.getText().toString()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            onSignupSuccess();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            onSignupFailed();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
+        Intent intent;
+        if(spinner.getSelectedItem().equals(Shared.Array[0])){
+             intent=new Intent(this,goodOffersAct.class);
+
+        }else{
+            intent=new Intent(this,MyOfferNeeded.class);
+
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 
@@ -105,7 +179,7 @@ public class SignupActivity extends AppCompatActivity {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
+        String type = spinner.getSelectedItem().toString();
         String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
@@ -118,14 +192,6 @@ public class SignupActivity extends AppCompatActivity {
             _nameText.setError(null);
         }
 
-        if (address.isEmpty()) {
-            _addressText.setError("Enter Valid Address");
-            valid = false;
-        } else {
-            _addressText.setError(null);
-        }
-
-
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("enter a valid email address");
             valid = false;
@@ -133,7 +199,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (mobile.isEmpty() || mobile.length()!=10) {
+        if (mobile.isEmpty()) {
             _mobileText.setError("Enter Valid Mobile Number");
             valid = false;
         } else {
@@ -155,5 +221,34 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+    public void Register(){
+        auth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Shared.user=user;
+                            FirebaseUser firebaseUser=auth.getCurrentUser();
+                            String userID=firebaseUser.getUid();
+                            user.setUserID(userID);
+                            HashMap<String,String>hashMap=new HashMap<>();
+                            hashMap.put("id",userID);
+                            hashMap.put("username",user.getName());
+                            hashMap.put("imageURL","default");
+                            user.setHashMap(hashMap);
+                            mReference.child(userID).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        onSignupSuccess();
+                                    }
+                                }
+                            });
+                        }else{
+                            Toast.makeText(SignupActivity.this, "لا تسطيعى التسجيل بهذا الايميل", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
