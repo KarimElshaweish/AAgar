@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "294903125821",
+    "firebase_url": "https://aagar-957be.firebaseio.com",
+    "project_id": "aagar-957be",
+    "storage_bucket": "aagar-957be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294903125821:android:a4b0a6895ea3d369",
+        "android_client_info": {
+          "package_name": "com.sourcey.materialloginexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294903125821-o0lk3ucl017pnmvrl9t6cfeiof5m8j14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sourcey.materialloginexample",
+            "certificate_hash": "eedb6107aa1f3b5a8b4a69b93173d2d2ba9347b3"
+          }
+        },
+        {
+          "client_id": "294903125821-hqk7j8eui3bf1ov5dofeggasqgo9sm13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvGwyjASqyQEVd1lO_xcLUzHyTkPhl7Xg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294903125821-hqk7j8eui3bf1ov5dofeggasqgo9sm13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

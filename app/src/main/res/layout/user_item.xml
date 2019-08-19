@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_margin="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:id="@+id/rl">
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@drawable/avatar"
+    android:id="@+id/profile"/>
+    <TextView
+        android:fontFamily="@font/vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user name"
+        android:id="@+id/usernameText"
+        android:textSize="18sp"
+        android:layout_toRightOf="@id/profile"
+        android:layout_toEndOf="@id/profile"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
+</android.support.v7.widget.CardView>
