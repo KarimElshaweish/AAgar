@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
+import com.sourcey.materiallogindemo.Adapter.OfferListChatAdapter;
 import com.sourcey.materiallogindemo.Model.Offer;
 
 import java.io.File;
@@ -61,6 +62,7 @@ public class MyOfferNeeded extends AppCompatActivity {
                 Shared.keyList=new ArrayList<>();
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     Offer offer=dt.getValue(Offer.class);
+                    offer.setOfferID(dt.getKey());
                     if(offer.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                         list.add(offer);
                         Shared.keyList.add(dt.getKey());
@@ -79,7 +81,7 @@ public class MyOfferNeeded extends AppCompatActivity {
     }
 
     public void openChat(View view) {
-        startActivity(new Intent(this, ChatList.class));
+        startActivity(new Intent(this, offerChatList.class));
     }
     public void logout(View view) {
         Shared.reset();

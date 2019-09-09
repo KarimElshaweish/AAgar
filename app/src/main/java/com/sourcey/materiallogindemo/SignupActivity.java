@@ -96,7 +96,7 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("إنشاء حساب ....");
         progressDialog.show();
-
+        progressDialog.setCanceledOnTouchOutside(false);
         String name = _nameText.getText().toString();
         String type = spinner.getSelectedItem().toString();
         String email = _emailText.getText().toString();
@@ -171,7 +171,7 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
+        _signupButton.setEnabled(true);
         _signupButton.setEnabled(true);
     }
 

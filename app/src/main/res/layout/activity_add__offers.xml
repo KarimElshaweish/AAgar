@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#fbfbf8"
     tools:context="com.sourcey.materiallogindemo.Add_Offers"
     android:orientation="vertical">
     <RelativeLayout
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
@@ -29,10 +30,14 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 <LinearLayout
+    android:background="#fbfbf8"
+    android:layout_above="@+id/bottom"
+    android:layout_below="@+id/titleBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="wrap_content"
@@ -40,7 +45,6 @@
         android:orientation="vertical"
         android:background="@drawable/linear_layout"
         android:padding="10dp"
-        android:layout_gravity="center"
         android:gravity="center">
         <TextView
             android:textColor="#000"
@@ -64,9 +68,193 @@
             android:layout_height="wrap_content"
             android:text="مدينتك"/>
     </LinearLayout>
+    <LinearLayout
+        android:padding="10dp"
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:weightSum="4">
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/tab_layout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="visible"
+            android:id="@+id/notificationTyp"
+            android:textColor="#000"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="استلام العروض"/>
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/tab_layout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="visible"
+            android:id="@+id/nenxtPrice"
+            android:textColor="#000"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="سعر الطلب"/>
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/tab_layout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="visible"
+            android:id="@+id/buildType"
+            android:textColor="#000"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="نوع العقار"/>
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/primary"
+            android:id="@+id/orderType"
+            android:textColor="#fff"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="نوع الطلب"/>
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearDetials"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:fontFamily="@font/vip"
+            android:textColor="#000"
+            android:layout_gravity="right"
+            android:layout_margin="15dp"
+            android:text="تفاصيل الطلب"/>
+        <EditText
+            android:id="@+id/detailsNewText"
+            android:textColor="#000"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/details_cornor"
+            android:layout_margin="15dp"/>
+    </LinearLayout>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv1"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp">
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list"></ListView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv2"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp">
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ListView
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/list2"></ListView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv4"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp">
+    <LinearLayout
+        android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list3"></ListView>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
 
+<android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv3"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp">
 <LinearLayout
+    android:padding="5dp"
+        android:id="@+id/linPrice"
+    android:layout_margin="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:layout_weight="2">
+    <EditText
+        android:hint="السعر"
+        android:inputType="number"
+        android:gravity="center"
+        android:id="@+id/piceTextNew"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="@drawable/details_cornor"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="50dp"
+        android:text="السعر"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:fontFamily="@font/vip"/>
+</LinearLayout>
+    </android.support.v7.widget.CardView>
+<LinearLayout
+    android:visibility="gone"
     android:layout_margin="10dp"
     android:padding="20dp"
     android:layout_width="match_parent"
@@ -179,4 +367,34 @@
             android:fontFamily="@font/vip"/>
 </LinearLayout>
 </LinearLayout>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:visibility="gone"
+            android:padding="5dp"
+            android:id="@+id/addressTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vip"
+            android:textColor="#000"
+            android:text="العنوان "/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_margin="15dp"
+            app:backgroundTint="@color/primary"
+            android:onClick="next"
+            android:src="@drawable/ic_left_next"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:textColor="#fff"
+            android:fontFamily="@font/vip"
+            android:id="@+id/btnNtextStep"
+            android:text="الخطوة التاليه"/>
+    </LinearLayout>
+
+</RelativeLayout>

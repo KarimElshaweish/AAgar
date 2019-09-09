@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Shared {
+    public static  Offer MyOffer;
     public static double longtuide=-1;public static double lituide=-1;
     public static User user;
    public static String[]Array=new String[]{"وسيط","عميل"};
@@ -51,4 +52,5 @@ public static boolean fristTime=false;
     public static  void reset(){
         customer=false;
     }
+    public static boolean  AddRandomButton=false;
 }

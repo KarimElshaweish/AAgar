@@ -49,25 +49,35 @@
                 android:layout_alignParentTop="true"
                 ></android.support.design.widget.TabLayout>
 
-            <RelativeLayout
-                android:background="#AAffffff"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:id="@+id/rl">
-
-                <TextView
-                    android:id="@+id/cityName"
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                android:layout_gravity="center"
+                app:contentPadding="7dp"
+                android:layout_margin="7dp"
+                app:cardCornerRadius="17dp"
+                android:elevation="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:background="#AAffffff"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/vip"
-                    android:text="لم يتم تحديد الموقع افتح GPS "
-                    android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:padding="2dp"
+                    android:id="@+id/rl">
+
+                    <TextView
+                        android:id="@+id/cityName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/vip"
+                        android:text="لم يتم تحديد الموقع افتح GPS "
+                        android:textColor="#000"
+                        android:textSize="20dp" />
 
 
-            </RelativeLayout>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
 
             <LinearLayout
 
@@ -155,12 +165,14 @@
             app:backgroundTint="@color/primary"
             android:src="@drawable/ic_add_white"
             android:id="@+id/fabAdd"
-            android:layout_alignParentRight="true"
+            android:elevation="7dp"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="25dp"/>
 <android.support.v7.widget.CardView
     android:id="@+id/cvDelet"
     android:visibility="gone"
+    android:elevation="7dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="30dp"

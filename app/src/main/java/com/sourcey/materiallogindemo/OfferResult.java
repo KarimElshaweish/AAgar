@@ -60,6 +60,7 @@ public class OfferResult extends AppCompatActivity {
         });
         return idList;
     }
+    TextView offetText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class OfferResult extends AppCompatActivity {
         rv=findViewById(R.id.rv1);
         pb=findViewById(R.id.pb);
         noOffer=findViewById(R.id.noOffer);
+        offetText=findViewById(R.id.offerText);
         rv.setLayoutManager(new LinearLayoutManager(this));
         getData();
 
@@ -74,32 +76,44 @@ public class OfferResult extends AppCompatActivity {
     String currentUser=FirebaseAuth.getInstance().getCurrentUser().getUid();
     List<com.sourcey.materiallogindemo.Model.OfferResult>list;
     private void getData(){
+        String s="عروض لطلب";
+        offetText.setText(s+" "+Shared.MyOffer.getType());
         list=new ArrayList<>();
-        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
                 if(dataSnapshot.hasChild(currentUser)) {
-                for (DataSnapshot dt:dataSnapshot.getChildren()) {
-                    if(dt.hasChild(Shared.offerID)) {
-                        for (DataSnapshot dt1 : dt.getChildren()) {
-                                    if(dt1.getKey().equals(Shared.offerID)){
-                                        for(DataSnapshot dt2:dt1.getChildren()) {
-                                            com.sourcey.materiallogindemo.Model.OfferResult offer = dt2.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class);
-                                            list.add(offer);
-                                        }
+                    mReference.child(currentUser).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot2) {
+                            for (DataSnapshot dt:dataSnapshot2.getChildren()) {
+                                if(dt.getKey().equals(Shared.offerID)) {
+                                    for (DataSnapshot dt1 : dt.getChildren()) {
+                                                com.sourcey.materiallogindemo.Model.OfferResult offer = dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class);
+                                                list.add(offer);
+                                    }
                                 }
                             }
+                            if(list.size()==0)
+                            {
+                                pb.setVisibility(View.GONE);
+                                noOffer.setVisibility(View.VISIBLE);
+                            }else{
+                                offerAdapter Adapter=new offerAdapter(OfferResult.this,list);
+                                rv.setAdapter(Adapter);
+                                pb.setVisibility(View.GONE);
+                            }
                         }
-                    }
-                    if(list.size()==0)
-                    {
-                        pb.setVisibility(View.GONE);
-                        noOffer.setVisibility(View.VISIBLE);
-                    }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
-                offerAdapter Adapter=new offerAdapter(OfferResult.this,list);
-                rv.setAdapter(Adapter);
-                pb.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -109,4 +123,11 @@ public class OfferResult extends AppCompatActivity {
         });
     }
 
+    public void chat(View view) {
+        startActivity(new Intent(this,ChatList.class));
+    }
+
+    public void finish(View view) {
+        finish();
+    }
 }

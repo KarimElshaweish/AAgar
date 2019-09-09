@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -15,12 +16,20 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,6 +46,8 @@ import com.sourcey.materiallogindemo.Model.Offer;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +61,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mReference = database.getReference("OfferNeeded");
     Offer offer;
+    ListView listView;
 
     public void Finish(View view) {
         finish();
@@ -65,6 +77,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
         offer.setLituide(Shared.lituide);
         offer.setStreet(streetText.getText().toString());
         offer.setUserName(Shared.user.getName());
+        offer.setNotificationTyp(notificaionLocatian);
         Shared.AddToMap = new Offer();
         Shared.AddToMap.setCity(spinnerCity.getSelectedItem().toString());
         Shared.AddToMap.setPrice(priceText.getText().toString());
@@ -73,7 +86,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
         Shared.AddToMap.setLituide(Shared.lituide);
         Shared.AddToMap.setStreet(streetText.getText().toString());
         Shared.AddToMap.setUserName(Shared.user.getName());
-
+        Shared.AddToMap.setNotificationTyp(notificaionLocatian);
         Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         offer.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -138,13 +151,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__offers);
-        spinnerCity = findViewById(R.id.citySpinner);
-        spinnerType = findViewById(R.id.spinnerType);
-
-        priceText = findViewById(R.id.priceText);
-        streetText = findViewById(R.id.StreetText);
-        setTypeSpinner();
-        Shared.addOffer = true;
+        __init__();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -165,12 +172,78 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                     }
                 });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getTyp=true;
+                type= tabsArray.get(position);
+            }
+        });
+        list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getBuildType=true;
+                build=tabsArray2.get(position);
+            }
+        });
+        notifcationTypListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                notificaionLocatian=tabsArray3.get(position);
+                getNotification=true;
+            }
+        });
 
     }
+ListView notifcationTypListView;
+    private void __init__() {
+
+        cv4=findViewById(R.id.cv4);
+        cv3=findViewById(R.id.cv3);
+        cv2=findViewById(R.id.cv2);
+        cv1=findViewById(R.id.cv1);
+        notifcationTypListView=findViewById(R.id.list3);
+        notificationTyp=findViewById(R.id.notificationTyp);
+        priceNext1=findViewById(R.id.nenxtPrice);
+        Shared.latLngList=new ArrayList<>();
+        list2=findViewById(R.id.list2);
+        buildType=findViewById(R.id.buildType);
+        addressTxt=findViewById(R.id.addressTxt);
+        linPrice=findViewById(R.id.linPrice);
+        piceTextNew=findViewById(R.id.piceTextNew);
+        linearDetials=findViewById(R.id.linearDetials);
+        detailsNewText=findViewById(R.id.detailsNewText);
+        orderTypeNext=findViewById(R.id.orderType);
+        descrtiptionNext=findViewById(R.id.orderDescription);
+        //   priceNext1=findViewById(R.id.orderNext);
+        listView=findViewById(R.id.list);
+        spinnerCity = findViewById(R.id.citySpinner);
+        spinnerType = findViewById(R.id.spinnerType);
+
+        priceText = findViewById(R.id.priceText);
+        streetText = findViewById(R.id.StreetText);
+        setTypeSpinner();
+        Shared.addOffer = true;
+    }
+
+    ArrayList<String>tabsArray2,tabsArray,tabsArray3;
     private void setTypeSpinner() {
-        String[] tabsArray = new String[]{"الكل", "شقةللإيجار", "فيلا للبيع", "إرض للبيع", "فيلا للإيجار", "دور للإيجار", "شقة للبيع", "عمارة للبيع", "بيت للبيع", "استراحه للإيجار", "بيت للإيجار", "محل للإيجار", "مزرعه للبيع", "عماره للإيجار"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tabsArray);
+        tabsArray3=new ArrayList<>();
+        tabsArray3.addAll(Arrays.asList(new String[]{"داخل النطاق فقط","داخل المدينه"}));
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray3);
+        notifcationTypListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        notifcationTypListView.setAdapter(adapter3);
+        tabsArray2 =new ArrayList<>();
+        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "إرض ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
+        tabsArray=new ArrayList<>();
+        tabsArray.addAll(Arrays.asList(new String[]{"شراء", "إيجار"}));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray);
         spinnerType.setAdapter(adapter);
+        listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
+        listView.setAdapter(adapter);
+        ArrayAdapter<String>adapter2=new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice,tabsArray2);
+        list2.setChoiceMode(listView.CHOICE_MODE_SINGLE);
+        list2.setAdapter(adapter2);
     }
     public void Add(View view) {
         fillData = true;
@@ -240,6 +313,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
             spinnerCity.setAdapter(adapter);
             streetText.setText(address.get(0).getLocality()+" " +address.get(0).getAdminArea());
             streetText.setEnabled(false);
+            addressTxt.setText(streetText.getText());
 
         } catch (IOException e) {
             // Handle IOException
@@ -262,5 +336,132 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     public void onProviderDisabled(String s) {
 
     }
+    ListView list2;
+    CardView cv1,cv2,cv3,cv4;
+    int time =0;
+    TextView priceNext1,notificationTyp,descrtiptionNext,orderTypeNext,addressTxt,buildType;
+    EditText detailsNewText,piceTextNew;
+    LinearLayout linearDetials,linPrice;
+    String type,build,notificaionLocatian;
+    boolean getTyp=false,getBuildType=false,getNotification=false;
+    private void hideView(final View view, final View appear){
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        //use this to make it longer:  animation.setDuration(1000);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
 
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+                appear.setVisibility(View.VISIBLE);
+            }
+        });
+
+        view.startAnimation(animation);
+    }
+    private void changeColor(TextView last,TextView next){
+        last.setTextColor(Color.parseColor("#000000"));
+        last.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+        next.setTextColor(Color.parseColor("#ffffff"));
+        next.setBackgroundColor(getResources().getColor(R.color.primary));
+    }
+    public void next(View view) {
+     //   Button btn=(Button)view;
+        if(time==0){
+            if(getTyp){
+            time++;
+            buildType.setVisibility(View.VISIBLE);
+            changeColor(orderTypeNext,buildType);
+            hideView(cv1,cv2);
+          //  listView.setVisibility(View.GONE);
+           }
+            else{
+                Toast.makeText(this, "من فضلك اختار نوع العقار", Toast.LENGTH_SHORT).show();
+            }
+        }else if(time==1) {
+            if(!getBuildType)
+                Toast.makeText(this, "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
+            else {
+                time++;
+                priceNext1.setVisibility(View.VISIBLE);
+                changeColor(buildType, priceNext1);
+                hideView(cv2, cv3);
+                //  linPrice.setVisibility(View.VISIBLE);
+                // list2.setVisibility(View.GONE);
+            }
+        }else if(time==2){
+            String price=piceTextNew.getText().toString();
+            if(price.equals("")) {
+                piceTextNew.setError("من فضلك ادخل سعر الطلب");
+            }else {
+                hideView(cv3, cv4);
+                changeColor(priceNext1, notificationTyp);
+//            String details=detailsNewText.getText().toString();
+//            if(details.equals("")){
+//                detailsNewText.setError("من فضلك ادخل تفاصيل الطلب");
+//            }else {
+                linearDetials.setVisibility(View.GONE);
+                time++;
+                //   descrtiptionNext.setTextSize(12);
+                notificationTyp.setVisibility(View.VISIBLE);
+                notifcationTypListView.setVisibility(View.VISIBLE);
+                linPrice.setVisibility(View.GONE);
+            }
+            //    btn.setText("تحديد الموقع على الخريطه");
+//            }
+        }else if(time ==3){
+
+            if(!getNotification){
+                piceTextNew.setError("من فضلك اختار نوع الاشعارات");
+            }else{
+                offer = new Offer();
+                offer.setUserName(Shared.user.getName());
+                offer.setCity(spinnerCity.getSelectedItem().toString());
+                offer.setPrice(piceTextNew.getText().toString());
+                offer.setType(type);
+                offer.setLongtuide(Shared.longtuide);
+                offer.setLituide(Shared.lituide);
+                offer.setStreet(streetText.getText().toString());
+                offer.setUserName(Shared.user.getName());
+                offer.setBuildingTyp(build);
+                Shared.AddToMap = new Offer();
+                Shared.AddToMap.setCity(spinnerCity.getSelectedItem().toString());
+                Shared.AddToMap.setPrice(piceTextNew.getText().toString());
+                Shared.AddToMap.setType(type);
+                Shared.AddToMap.setLongtuide(Shared.longtuide);
+                Shared.AddToMap.setLituide(Shared.lituide);
+                Shared.AddToMap.setStreet(streetText.getText().toString());
+                Shared.AddToMap.setUserName(Shared.user.getName());
+                Shared.AddToMap.setBuildingTyp(build);
+                Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                offer.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                Shared.upload = offer;
+                addLocation = true;
+                Shared.addLocation = true;
+                startActivity(new Intent(Add_Offers.this, MapsActivity.class));
+                finish();
+            }
+        }
+    }
+
+//    public void seeOnlyPrice(View view) {
+//        time=2;
+//        cv1.setVisibility(View.GONE);
+//        cv2.setVisibility(View.GONE);
+//        cv4.setVisibility(View.GONE);
+//        cv3.setVisibility(View.VISIBLE);
+//        changeColor(buildType,priceNext1);
+//        orderTypeNext.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+//        orderTypeNext.setTextColor(Color.parseColor("#000000"));
+//
+//        notificationTyp.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+//        notificationTyp.setTextColor(Color.parseColor("#000000"));
+//
+//    }
 }

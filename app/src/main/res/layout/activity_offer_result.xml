@@ -10,24 +10,32 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:layout_margin="10dp"
+        android:background="@color/primary"
         >
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_back"
+    android:onClick="finish"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"/>
         <TextView
-            android:fontFamily="@font/vip"
-            android:layout_width="match_parent"
+            android:id="@+id/offerText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="العروض"
-            android:textSize="20dp"
-            android:padding="10dp"
-            android:textColor="#000"
-            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:fontFamily="@font/vip"
             android:gravity="center"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+            android:padding="10dp"
+            android:text="العروض"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            />
+    </RelativeLayout>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -47,6 +55,13 @@
         android:textSize="15dp"
         android:visibility="gone"
         />
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:fontFamily="@font/vip"
+           android:layout_gravity="center"
+           android:onClick="chat"
+           android:text="المحادثه الخاصه بهذ الطلب"/>
     <android.support.v7.widget.RecyclerView
         android:layout_margin="10dp"
         android:layout_width="match_parent"

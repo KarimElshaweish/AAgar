@@ -45,12 +45,15 @@
             />
     </RelativeLayout>
     <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
         android:padding="10dp">
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:background="@drawable/linearbk"
@@ -68,17 +71,29 @@
         </RelativeLayout>
 
         <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/vip"
+            android:textColor="#fff"
+            android:background="@color/primary"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="الطلبات الحاليه"/>
+        <TextView
+            android:visibility="gone"
             android:fontFamily="@font/vip"
             android:backgroundTint="@color/primary"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="أعلى سعر"
             android:textColor="#000"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:layout_height="wrap_content" />
         <TextView
+            android:background="@drawable/tab_layout"
             android:textSize="20dp"
-
             android:onClick="Share"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -90,11 +105,9 @@
             android:textColor="@color/primary"
             />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000"/>
+
     <Button
+        android:visibility="gone"
         android:fontFamily="@font/vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,7 +125,7 @@
         android:fontFamily="@font/vip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="لاتوجود طلبات"
+        android:text="  لاتوجود طلبات تاكد من  ان GPS يعمل"
         android:padding="10dp"
         android:id="@+id/noOrder"
         android:textColor="#000"

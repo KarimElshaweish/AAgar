@@ -1,16 +1,20 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +51,7 @@ public class ChatAct extends AppCompatActivity {
     RecyclerView recyclerView;
     FirebaseDatabase database=FirebaseDatabase.getInstance();
 
-    ImageView sentImage;
+    ImageView sentImage,img;
     EditText sentText;
     APIService apiService;
     boolean notify=false;
@@ -58,10 +62,15 @@ public class ChatAct extends AppCompatActivity {
         Token token1=new Token(token);
         reference.child(FirebaseAuth.getInstance().getUid()).setValue(token1);
     }
+    TextView order,result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        order=findViewById(R.id.order);
+        result=findViewById(R.id.result);
+        result.setText(Shared.MyOffer.getType()+" "+Shared.MyOffer.getBuildingTyp()+" "+Shared.MyOffer.getPrice()+" "+"ريال");
+        order.setText(Shared.offerKnow.getSpinnerType()+"  "+Shared.offerKnow.getBuildingType()+" "+Shared.offerKnow.getPrice()+" ريال ");
         if(Shared.offerKnow!=null) {
             String id = FirebaseAuth.getInstance().getUid();
             bottom = findViewById(R.id.bottom);
@@ -74,6 +83,8 @@ public class ChatAct extends AppCompatActivity {
             street.setText(Shared.offerKnow.getStreet());
             desc = findViewById(R.id.desc);
             desc.setText(Shared.offerKnow.getDescription());
+            img=findViewById(R.id.img);
+            Glide.with(this).load(Shared.offerKnow.getImageList().get(0)).into(img);
 
         }else{
                 View view =findViewById(R.id.view);
@@ -87,14 +98,32 @@ public class ChatAct extends AppCompatActivity {
         sentText=findViewById(R.id.text_sent);
 if(Shared.fristTime) {
     Shared.fristTime=false;
-            String msg = "مرحبا اخى...." +
-                    "كنت اود ان استعلم بخصوص عرضك   " +
-                    Shared.offerKnow.getSpinnerType() +
-                    "..المتواجد بمدينة.. " +
-                    Shared.offerKnow.getCity() +
-                    " ..وسعره.. " +
+//            String msg = "مرحبا اخى...." +
+//                    "كنت اود ان استعلم بخصوص عرضك   " +
+//                    Shared.offerKnow.getSpinnerType() +
+//                    "..المتواجد بمدينة.. " +
+//                    Shared.offerKnow.getCity() +
+//                    " ..وسعره.. " +
+    String msg="";
                     Shared.offerKnow.getPrice();
-    phoneumber.setText(Shared.offerKnow.getSpinnerType());
+            FirebaseDatabase.getInstance().getReference().child("user").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot dt:dataSnapshot.getChildren()){
+                        User user=dt.getValue(User.class);
+                        if(user.getUserID().equals(Shared.offerKnow.getuID())){
+                            phoneumber.setText(user.getName());
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+   // phoneumber.setText(Shared.offerKnow.getSpinnerType());
 
     notify = true;
             if (!msg.equals(""))
@@ -115,21 +144,47 @@ if(Shared.fristTime) {
     }
     private void readMessage(final String myID, final String userID, final String imageURL){
         mChat=new ArrayList<>();
-        DatabaseReference mReference=database.getReference("Chats");
-        mReference.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mChat.clear();
-                for(DataSnapshot dt:dataSnapshot.getChildren()){
-                    Chat chat=dt.getValue(Chat.class);
-                    if(chat!=null)
-                    if(chat.getSender().equals(myID)&&chat.getReciver().equals(userID)||
-                            chat.getSender().equals(userID)&&chat.getReciver().equals(myID)){
-                        mChat.add(chat);
-                    }
-                    messageAdapter =new MessageAdapter(ChatAct.this,mChat,imageURL);
-                    recyclerView.setAdapter(messageAdapter);
-                }
+                Boolean check=dataSnapshot.child("Chats").exists();
+                if(check)
+                    database.getReference("Chats").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue()!=null && dataSnapshot.hasChild(Shared.offerKnow.getOfferID()))
+                            {
+                                DatabaseReference mReference=database.getReference("Chats").child(Shared.offerKnow.getOfferID());
+                                mReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        mChat.clear();
+                                        for(DataSnapshot dt:dataSnapshot.getChildren()){
+                                            Chat chat=dt.getValue(Chat.class);
+                                            if(chat!=null)
+                                                if(chat.getSender().equals(myID)&&chat.getReciver().equals(userID)||
+                                                        chat.getSender().equals(userID)&&chat.getReciver().equals(myID)){
+                                                    mChat.add(chat);
+                                                }
+                                            messageAdapter =new MessageAdapter(ChatAct.this,mChat,imageURL);
+                                            recyclerView.setAdapter(messageAdapter);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
             }
 
             @Override
@@ -137,6 +192,8 @@ if(Shared.fristTime) {
 
             }
         });
+
+
         updateToken(FirebaseInstanceId.getInstance().getToken());
     }
     private void sentMeeage(String sender, final String receiver, String message){
@@ -147,7 +204,7 @@ if(Shared.fristTime) {
         hashMap.put("message",message);
 
 
-        mReference.child("Chats").push().setValue(hashMap);
+        mReference.child("Chats").child(Shared.offerKnow.getOfferID()).push().setValue(hashMap);
 
 
 
@@ -213,5 +270,55 @@ if(Shared.fristTime) {
         if (!msg.equals(""))
             sentMeeage(FirebaseAuth.getInstance().getCurrentUser().getUid(), Shared.sent_id, msg);
         sentText.setText("");
+    }
+
+    public void openOffer(View view) {
+        Dialog dialog=new Dialog(this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(getLayoutInflater().inflate(R.layout.list_item,null));
+
+        bottom = dialog.findViewById(R.id.bottom);
+        bottom.setVisibility(View.GONE);
+        price = dialog.findViewById(R.id.price);
+        price.setText(Shared.offerKnow.getPrice());
+        city = dialog.findViewById(R.id.city);
+        city.setText(Shared.offerKnow.getCity());
+        street = dialog.findViewById(R.id.street);
+        street.setText(Shared.offerKnow.getStreet());
+        desc = dialog.findViewById(R.id.desc);
+        desc.setText(Shared.offerKnow.getDescription());
+        img=dialog.findViewById(R.id.img);
+        Glide.with(this).load(Shared.offerKnow.getImageList().get(0)).into(img);
+
+        dialog.show();
+    }
+
+    public void openOrder(View view) {
+        Dialog dialog=new Dialog(this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(getLayoutInflater().inflate(R.layout.list_item,null));
+
+        bottom = dialog.findViewById(R.id.bottom);
+        bottom.setVisibility(View.GONE);
+        price = dialog.findViewById(R.id.price);
+        price.setText(Shared.MyOffer.getPrice());
+        city = dialog.findViewById(R.id.city);
+        city.setText(Shared.MyOffer.getCity());
+        street = dialog.findViewById(R.id.street);
+        street.setText(Shared.MyOffer.getStreet());
+        desc = dialog.findViewById(R.id.desc);
+        desc.setVisibility(View.GONE);
+        img=dialog.findViewById(R.id.img);
+        
+
+        dialog.show();
+    }
+
+    public void openDetails(View view) {
+        startActivity(new Intent(this,MyOrderChatDetia.class));
+    }
+
+    public void openOfferDetalis(View view) {
+        startActivity(new Intent(this,DetailsChatAct.class));
     }
 }

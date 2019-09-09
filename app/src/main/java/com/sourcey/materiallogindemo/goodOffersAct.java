@@ -147,6 +147,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
     }
 
     public void openMap(View view) {
+        Shared.AddRandomButton=true;
         Shared.addOfferNewRandom=true;
         Shared.random=true;
         startActivity(new Intent(this,MapsActivity.class));

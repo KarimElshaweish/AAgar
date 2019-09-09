@@ -52,6 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
     public void onBindViewHolder(@NonNull viewholder holder, final int position) {
             //  holder.dateTextView.setText(list.get(position).getDate());
 
+        holder.desc.setText(list.get(position).getBuildingTyp());
         holder.cityText.setText(list.get(position).getCity());
         holder.TypeText.setText(list.get(position).getType());
         holder.priceText.setText(list.get(position).getPrice() + " ريال  ");
@@ -79,8 +80,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
             holder.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(Shared.keyList!=null)
                     Shared.offerID=Shared.keyList.get(position);
                     _ctx.startActivity(new Intent(_ctx,OfferResult.class));
+                    Shared.MyOffer=list.get(position);
 
                 }
             });
@@ -131,7 +134,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
 
     class viewholder extends RecyclerView.ViewHolder {
 
-        TextView priceText,TypeText,cityText,street;
+        TextView priceText,TypeText,cityText,street,desc;
         ImageView img,area,offerImage;
         View bottom;
         CardView cv;
@@ -148,6 +151,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
             bottom=itemView.findViewById(R.id.bottom);
             street=itemView.findViewById(R.id.street);
             bottom.setVisibility(View.GONE);
+            desc=itemView.findViewById(R.id.desc);
 
         }
     }

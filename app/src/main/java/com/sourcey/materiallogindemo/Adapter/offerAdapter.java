@@ -44,7 +44,7 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewhHolder holder, final int position) {
-        holder.desc.setText(offerResultList.get(position).getDescription());
+        holder.desc.setText(offerResultList.get(position).getBuildingType());
         holder.cityText.setText(offerResultList.get(position).getCity());
         holder.priceText.setText(offerResultList.get(position).getPrice()+" "+"ريال");
         holder.TypeText.setText(offerResultList.get(position).getSpinnerType());
@@ -112,6 +112,7 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
             img=itemView.findViewById(R.id.img);
             if(Shared.owner)
                 img_share.setVisibility(View.VISIBLE);
+
         }
     }
 }

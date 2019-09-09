@@ -79,12 +79,14 @@ import br.com.joinersa.oooalertdialog.Animation;
 import br.com.joinersa.oooalertdialog.OnClickListener;
 import br.com.joinersa.oooalertdialog.OoOAlertDialog;
 
+import static com.sourcey.materiallogindemo.Shared.AddRandomButton;
 import static com.sourcey.materiallogindemo.Shared.Array;
 import static com.sourcey.materiallogindemo.Shared.offer;
 import static com.sourcey.materiallogindemo.Shared.user;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
+    Boolean mark=false;
     private GoogleMap mMap;
     private ActionBarDrawerToggle toggle;
     private DrawerLayout dl;
@@ -116,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     FloatingActionButton fabAdd;
     TextView type,name;
     CardView cvDelet;
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,17 +139,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             fabAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Shared.longtuide == -1 || Shared.lituide == -1)
-                        Toast.makeText(MapsActivity.this, "من فضلك حدد مكان على الخريطه", Toast.LENGTH_SHORT).show();
-                    else {
-                        if (Shared.user.getType().equals(Array[0])) {
-                            finish();
-                            startActivity(new Intent(MapsActivity.this, AddResultOffer.class));
-                        } else {
-                            startActivity(new Intent(MapsActivity.this, Add_Offers.class));
+                    if (Shared.longtuide == -1 || Shared.lituide == -1) {
+                        if (!mark)
+                            Toast.makeText(MapsActivity.this, "من فضلك حدد مكان على الخريطه", Toast.LENGTH_SHORT).show();
+
+                    }  else {
+                            if (Shared.user.getType().equals(Array[0])) {
+                                finish();
+                                startActivity(new Intent(MapsActivity.this, AddResultOffer.class));
+                            } else {
+                                startActivity(new Intent(MapsActivity.this, Add_Offers.class));
+                            }
                         }
                     }
-                }
+
             });
             Shared.addOfferNewRandom=false;
         }else{
@@ -159,26 +165,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         confirmOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Shared.AddToMap.setFlit(Shared.latLngList.get(0).latitude);
-                Shared.AddToMap.setFlon(Shared.latLngList.get(0).longitude);
+                if (Shared.latLngList.size() == 0)
+                    Toast.makeText(MapsActivity.this, "من فضلك حدد النطاف", Toast.LENGTH_SHORT).show();
+                else {
+                    Shared.AddToMap.setFlit(Shared.latLngList.get(0).latitude);
+                    Shared.AddToMap.setFlon(Shared.latLngList.get(0).longitude);
 
-                Shared.AddToMap.setSlit(Shared.latLngList.get(1).latitude);
-                Shared.AddToMap.setSlon(Shared.latLngList.get(1).longitude);
+                    Shared.AddToMap.setSlit(Shared.latLngList.get(1).latitude);
+                    Shared.AddToMap.setSlon(Shared.latLngList.get(1).longitude);
 
-                Shared.AddToMap.setTlit(Shared.latLngList.get(2).latitude);
-                Shared.AddToMap.setTlon(Shared.latLngList.get(2).longitude);
+                    Shared.AddToMap.setTlit(Shared.latLngList.get(2).latitude);
+                    Shared.AddToMap.setTlon(Shared.latLngList.get(2).longitude);
 
-                Shared.AddToMap.setFtlit(Shared.latLngList.get(3).latitude);
-                Shared.AddToMap.setFtlon(Shared.latLngList.get(3).longitude);
-                FirebaseDatabase.getInstance().getReference("OfferNeeded").child(Calendar.getInstance().getTime().toString()).setValue(Shared.AddToMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MapsActivity.this, "تم إضافة الطلب", Toast.LENGTH_SHORT).show();
-                        confirmOffer.setVisibility(View.GONE);
-                        finish();
-                        startActivity(new Intent(MapsActivity.this, MyOfferNeeded.class));
-                    }
-                });
+                    Shared.AddToMap.setFtlit(Shared.latLngList.get(3).latitude);
+                    Shared.AddToMap.setFtlon(Shared.latLngList.get(3).longitude);
+                    Shared.AddToMap.setOfferID(Calendar.getInstance().getTime().toString());
+                    FirebaseDatabase.getInstance().getReference("OfferNeeded").child(Shared.AddToMap.getOfferID()).setValue(Shared.AddToMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(MapsActivity.this, "تم إضافة الطلب", Toast.LENGTH_SHORT).show();
+                            confirmOffer.setVisibility(View.GONE);
+                            finish();
+                            startActivity(new Intent(MapsActivity.this, MyOfferNeeded.class));
+                        }
+                    });
+                }
             }
         });
 
@@ -362,7 +373,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     });
 
-            if (Shared.user.getType().equals(Array[0]) && Shared.offer != null&&!Shared.random) {
+            if (Shared.user.getType().equals(Array[0]) && Shared.offer != null&&!Shared.AddRandomButton) {
 
                 createPolygon();
                 Shared.getPolygon = !Shared.getPolygon;
@@ -383,11 +394,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
+                    if(AddRandomButton){
+                        mMap.clear();
+                        latLngList.clear();
+                    }
+                    mark=true;
                     Shared.lituide = latLng.latitude;
                     Shared.longtuide = latLng.longitude;
                     mMap.addMarker(new MarkerOptions().position(latLng));
                     latLngList.add(latLng);
-                    if (latLngList.size() >= 4) {
+                    if (latLngList.size() >= 4&&!Shared.AddRandomButton) {
                         polygon1 = mMap.addPolygon(new PolygonOptions()
                                 .add(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),
                                         new LatLng(latLngList.get(1).latitude, latLngList.get(1).longitude),
@@ -494,13 +510,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         list = new ArrayList<>();
         hashMap = new HashMap<>();
         Shared.listReult = new ArrayList<>();
-        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dt : dataSnapshot.getChildren()) {
-                    for (DataSnapshot dt1 : dt.getChildren()) {
-                        OfferResult offer = dt1.getValue(OfferResult.class);
-                        if(offer.getuID().equals(user.getUserID())) {
+                    if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        for (DataSnapshot dt1 : dt.getChildren()) {
+                            OfferResult offer = dt1.getValue(OfferResult.class);
                             Shared.listReult.add(offer);
                             LatLng latLng = new LatLng(offer.getLituide(), offer.getLongtuide());
                             hashMap.put(latLng, offer);
@@ -529,21 +545,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     .setPositiveButton("إرسال الطلب", new OnClickListener() {
                                         @Override
                                         public void onClick() {
-                                            FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
-                                                            new OoOAlertDialog.Builder(MapsActivity.this)
-                                                                    .setTitle("تمت الإضافه")
-                                                                    .setImage(R.drawable.villa)
-                                                                    .setAnimation(Animation.POP)
-                                                                    .build();
-                                                            IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
-                                                            icnGenerator.setTextAppearance(R.style.iconGenText);
-                                                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
-                                                        }
-                                                    });
+                                            FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    if(dataSnapshot.hasChild(noffer.getDescription())){
+                                                        Toast.makeText(MapsActivity.this, "تم اضافه هذا العرض من قبل ", Toast.LENGTH_SHORT).show();
+                                                    }else{
+                                                        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
+                                                                        new OoOAlertDialog.Builder(MapsActivity.this)
+                                                                                .setTitle("تمت الإضافه")
+                                                                                .setImage(R.drawable.villa)
+                                                                                .setAnimation(Animation.POP)
+                                                                                .build();
+                                                                        IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
+                                                                        icnGenerator.setTextAppearance(R.style.iconGenText);
+                                                                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
                                         }
                                     })
                                     .setNegativeButton("إلغاء", new OnClickListener() {
@@ -578,6 +609,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+
     private void getData(final String category) {
         list = new ArrayList<>();
         hashMap = new HashMap<>();
@@ -586,6 +619,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dt : dataSnapshot.getChildren()) {
+                    if(dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                     for (DataSnapshot dt1 : dt.getChildren()) {
                         OfferResult offer = dt1.getValue(OfferResult.class);
                         if (offer.getSpinnerType().equals(category)) {
@@ -619,21 +653,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .setPositiveButton("إرسال الطلب", new OnClickListener() {
                                     @Override
                                     public void onClick() {
-                                        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
-                                                        new OoOAlertDialog.Builder(MapsActivity.this)
-                                                                .setTitle("تمت الإضافه")
-                                                                .setImage(R.drawable.villa)
-                                                                .setAnimation(Animation.POP)
-                                                                .build();
-                                                        IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
-                                                        icnGenerator.setTextAppearance(R.style.iconGenText);
-                                                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
-                                                    }
-                                                });
+                                        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if(!dataSnapshot.hasChild(noffer.getDescription()))
+                                                FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
+                                                                new OoOAlertDialog.Builder(MapsActivity.this)
+                                                                        .setTitle("تمت الإضافه")
+                                                                        .setImage(R.drawable.villa)
+                                                                        .setAnimation(Animation.POP)
+                                                                        .build();
+                                                                IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
+                                                                icnGenerator.setTextAppearance(R.style.iconGenText);
+                                                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
+                                                            }
+                                                        });
+                                                else{
+                                                    Toast.makeText(MapsActivity.this, "تم اضافه هذ العرض من قبل ", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
                                 })
                                 .setNegativeButton("إلغاء", new OnClickListener() {

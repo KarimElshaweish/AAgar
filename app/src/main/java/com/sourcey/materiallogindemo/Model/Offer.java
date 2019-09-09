@@ -5,14 +5,42 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 public class Offer {
+    String notificationTyp;
+
+    public String getNotificationTyp() {
+        return notificationTyp;
+    }
+
+    public void setNotificationTyp(String notificationTyp) {
+        this.notificationTyp = notificationTyp;
+    }
+
     String type;
     String price;
     String city;
+    String buildingTyp;
+
+    public String getBuildingTyp() {
+        return buildingTyp;
+    }
+
+    public void setBuildingTyp(String buildingTyp) {
+        this.buildingTyp = buildingTyp;
+    }
 
     String street;
     Double longtuide,lituide;
     Double flon,flit,slon,slit,tlon,tlit,ftlon,ftlit;
     String userName;
+    String offerID;
+
+    public String getOfferID() {
+        return offerID;
+    }
+
+    public void setOfferID(String offerID) {
+        this.offerID = offerID;
+    }
 
     public String getUserName() {
         return userName;

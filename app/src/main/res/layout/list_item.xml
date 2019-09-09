@@ -5,20 +5,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="5dp"
+    android:layout_margin="12dp"
     app:contentPaddingTop="10dp"
     app:cardCornerRadius="10dp"
     app:contentPaddingBottom="10dp"
     android:background="#f4f4f4"
-    app:cardBackgroundColor="#f4f4f4"
+    app:cardElevation="10dp"
     android:id="@+id/cv">
     <RelativeLayout
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
+            android:visibility="gone"
             app:cardBackgroundColor="#d6cdcc"
             android:layout_margin="5dp"
             android:layout_alignParentLeft="true"
@@ -55,23 +54,67 @@
 
         <LinearLayout
             android:layout_toRightOf="@+id/cv2"
-            android:background="#f4f4f4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentRight="true"
             >
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="منشأة للايجار"
-                android:textColor="#000"
-                android:id="@+id/type"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/vip"/>
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#000"
+                    android:id="@+id/type"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/vip"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="منشأة "
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/vip"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textDirection="rtl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="السعر : ؟؟"
+                    android:id="@+id/desc"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/vip"/>
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_details"/>
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_height="match_parent">
             <TextView
                 android:textDirection="rtl"
                 android:layout_width="match_parent"
@@ -81,36 +124,59 @@
                 android:id="@+id/price"
                 android:textColor="#000"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:fontFamily="@font/vip"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
                 android:layout_gravity="center"
-                android:text="الوصف : ؟؟" android:id="@+id/city"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold" android:fontFamily="@font/vip"/>
+                android:layout_marginLeft="5dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_money"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_height="match_parent">
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="شارع  : ؟؟"
-                android:id="@+id/street"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:lines="3"
-                android:textStyle="bold"
-                android:fontFamily="@font/vip"/>
-            <TextView
+                android:layout_marginLeft="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/desc"
+                android:text="الوصف : ؟؟"
+                android:id="@+id/city"
                 android:textColor="#000"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="monospace"/>
+                android:fontFamily="@font/vip"/>
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_pin"/>
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="right">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="شارع  : ؟؟"
+        android:id="@+id/street"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:fontFamily="@font/vip"/>
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_street"/>
+</LinearLayout>
             <LinearLayout
                 android:visibility="gone"
                 android:layout_width="match_parent"

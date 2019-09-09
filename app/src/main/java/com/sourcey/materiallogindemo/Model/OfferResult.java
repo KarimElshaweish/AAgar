@@ -3,7 +3,36 @@ package com.sourcey.materiallogindemo.Model;
 import java.util.List;
 
 public class OfferResult {
+    String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     String spinnerType;
+    String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getBuildingType() {
+        return buildingType;
+    }
+
+    public void setBuildingType(String buildingType) {
+        this.buildingType = buildingType;
+    }
+
+    String buildingType;
     String price;
     String description;
     double longtuide,lituide;

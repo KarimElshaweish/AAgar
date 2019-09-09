@@ -23,6 +23,7 @@ public class OfferShare extends AppCompatActivity {
     RecyclerView rv;
     ProgressBar pb;
     TextView noOffer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

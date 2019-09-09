@@ -1,5 +1,6 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -8,10 +9,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -27,7 +34,7 @@ public class BuildDetial extends AppCompatActivity {
     OfferResult offerResult=Shared.offerKnow;
     TextView type,price,city,street,desc;
     CarouselView carouselView;
-    FloatingActionButton fb;
+    LinearLayout fb;
     private void __init__(){
         type=findViewById(R.id.type);
         price=findViewById(R.id.price);
@@ -38,8 +45,8 @@ public class BuildDetial extends AppCompatActivity {
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         street.setText(offerResult.getStreet());
-        desc.setText(offerResult.getDescription());
-        fb=findViewById(R.id.fb);
+        desc.setText(offerResult.getBuildingType());
+        fb=findViewById(R.id.bottomlin);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +61,12 @@ public class BuildDetial extends AppCompatActivity {
         carouselView.setImageListener(imageListener);
 
     }
-    ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            Glide.with(BuildDetial.this).load(offerResult.getImageList().get(position)).into(imageView);
-        }
-    };
+        ImageListener imageListener = new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Glide.with(BuildDetial.this).load(offerResult.getImageList().get(position)).into(imageView);
+            }
+        };
 
     public void Finish(View view) {
         finish();
@@ -71,5 +78,29 @@ public class BuildDetial extends AppCompatActivity {
         Shared.offerKnow=offerResult;
         Shared.fristTime=true;
         startActivity(intent);
+    }
+
+    public void Map(View view) {
+        startActivity(new Intent(this,ShowBuildMap.class));
+    }
+
+    String user=FirebaseAuth.getInstance().getCurrentUser().getUid();
+    public void choseOffer(View view) {
+        final ProgressDialog progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("جارى الاختيار");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        progressDialog.dismiss();
+                        Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
@@ -7,6 +7,7 @@ android:layout_height="match_parent"
 tools:context="com.sourcey.materiallogindemo.AddResultOffer"
 android:orientation="vertical">
     <RelativeLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
@@ -30,6 +31,9 @@ android:orientation="vertical">
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/descLin"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,7 +64,201 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:text="مدينتك"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/descLin"
+        android:padding="10dp"
+        android:id="@+id/lin"
+        android:weightSum="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        android:gravity="right">
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/tab_layout"
+            android:id="@+id/orderPrice"
+            android:textColor="#000"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="سعر الطلب"/>
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/tab_layout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/orderDescription"
+            android:textColor="#000"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="وصف الطلب"/>
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/tab_layout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/orderType"
+            android:textColor="#000"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="نوع الطلب"/>
+        <TextView
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@color/primary"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/orderPicture"
+            android:textColor="#fff"
+            android:fontFamily="@font/vip"
+            android:textSize="12dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="صور الطلب"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/lin"
+        android:layout_above="@id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:cardCornerRadius="7dp"
+            android:elevation="7dp"
+            app:contentPadding="7dp"
+            android:layout_margin="7dp"
+            android:id="@+id/cv2">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/list"></ListView>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_below="@id/lin"
+        android:layout_above="@id/bottom">
+        <android.support.design.widget.FloatingActionButton
+            android:onClick="AddPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_upload_image"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/imgViewUpload"
+            app:elevation="7dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:backgroundTint="#fff"/>
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            app:cardCornerRadius="50dp"
+            app:cardPreventCornerOverlap="false"
+            android:layout_gravity="center"
+            app:contentPadding="15dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:onClick="AddPicture"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_upload_image"
+                android:layout_margin="5dp"
+                />
+        </android.support.v7.widget.CardView>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="7dp"
+    android:elevation="7dp"
+    app:contentPadding="7dp"
+    android:layout_margin="7dp"
+    android:id="@+id/cv1">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
+
+</android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="7dp"
+    android:elevation="7dp"
+    app:contentPadding="7dp"
+    android:layout_margin="7dp"
+    android:id="@+id/cv3">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list2"></ListView>
+
+</android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="7dp"
+    android:elevation="7dp"
+    app:contentPadding="7dp"
+    android:layout_margin="7dp"
+    android:id="@+id/cv4">
+            <LinearLayout
+                android:padding="5dp"
+                android:id="@+id/linPrice"
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <EditText
+                    android:id="@+id/priceText"
+                    android:hint="السعر"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/tab_layout"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:text="السعر"
+                    android:textSize="20dp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip"/>
+            </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
+
+    </RelativeLayout>
     <Button
+        android:visibility="gone"
         android:layout_margin="10dp"
         android:onClick="uploadToFirebase"
         android:layout_marginTop="10dp"
@@ -72,6 +270,7 @@ android:orientation="vertical">
         android:textColor="#fff"
         android:text="إضافة عرض"/>
     <ScrollView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -126,7 +325,6 @@ android:orientation="vertical">
                     <EditText
                         android:background="#b1abab"
                         android:inputType="number"
-                        android:id="@+id/priceText"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         />
@@ -224,10 +422,38 @@ android:orientation="vertical">
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
+                android:id="@+id/rv1"></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
     </ScrollView>
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:visibility="gone"
+            android:padding="5dp"
+            android:id="@+id/addressTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vip"
+            android:textColor="#000"
+            android:text="العنوان "/>
+        <android.support.design.widget.FloatingActionButton
+            app:backgroundTint="@color/primary"
+            android:src="@drawable/ic_left_next"
+            android:padding="5dp"
+            android:elevation="7dp"
+            android:layout_margin="7dp"
+            android:onClick="next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vip"
+            android:id="@+id/btnNtextStep"
+            android:text="الخطوة التاليه"/>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
