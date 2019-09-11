@@ -356,6 +356,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 // Logic to handle location object
                                 if (location != null) {
                                     try {
+                                        if(Shared.notCurrent){
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
                                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                                 .target(new LatLng(location.getLatitude(), location.getLongitude()))
@@ -363,7 +364,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                                 .bearing(90)
                                                 .tilt(40)
                                                 .build();
-                                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));}
                                     }catch (Exception ex){
                                         Toast.makeText(MapsActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                                         throw ex;
@@ -377,15 +378,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 createPolygon();
                 Shared.getPolygon = !Shared.getPolygon;
-                try{
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Shared.offer.getTlit(), Shared.offer.getTlon()), 13));
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(new LatLng(Shared.offer.getTlit(), Shared.offer.getTlon()))
-                        .zoom(17)
-                        .bearing(90)
-                        .tilt(40)
-                        .build();
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));}
+                try {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Shared.offer.getTlit(), Shared.offer.getTlon()), 13));
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(Shared.offer.getTlit(), Shared.offer.getTlon()))
+                                .zoom(17)
+                                .bearing(90)
+                                .tilt(40)
+                                .build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
                 catch (Exception ex){
                     Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                     throw ex;
@@ -404,6 +406,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.addMarker(new MarkerOptions().position(latLng));
                     latLngList.add(latLng);
                     if (latLngList.size() >= 4&&!Shared.AddRandomButton) {
+
                         polygon1 = mMap.addPolygon(new PolygonOptions()
                                 .add(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),
                                         new LatLng(latLngList.get(1).latitude, latLngList.get(1).longitude),
@@ -411,6 +414,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         new LatLng(latLngList.get(3).latitude, latLngList.get(3).longitude))
                                 .strokeColor(Color.parseColor("#000000")).fillColor(Color.parseColor("#26E12929"))
                                 .strokeWidth(2));
+                        if(!Shared.notCurrent){
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),13));
+                            Shared.notCurrent=true;
+                        }
                         for (LatLng latLng1 : latLngList) {
 
                             Shared.latLngList.add(latLng1);

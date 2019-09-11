@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +50,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewholder holder, final int position) {
-            //  holder.dateTextView.setText(list.get(position).getDate());
+    public void onBindViewHolder(@NonNull final viewholder holder, final int position) {
+
+        holder.seeMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.linst.setVisibility(View.VISIBLE);
+                holder.lindesc.setVisibility(View.VISIBLE);
+                holder.seeMore.setVisibility(View.GONE);
+            }
+        });
 
         holder.desc.setText(list.get(position).getBuildingTyp());
         holder.cityText.setText(list.get(position).getCity());
@@ -97,31 +106,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
                     Shared.offer=list.get(position);
                     Shared.offerID=Shared.keyList.get(position);
                     _ctx.startActivity(new Intent(_ctx,MapsActivity.class));
-//                    new OoOAlertDialog.Builder((Activity)_ctx)
-//                            .setTitle("قم بالاختيار")
-//                            .setAnimation(Animation.SIDE)
-//                            .setPositiveButton("النطاق الجغرافى", new OnClickListener() {
-//                                @Override
-//                                public void onClick() {
-//                                    Shared.toID=list.get(position).getUID();
-//                                    Shared.offer=list.get(position);
-//                                    Shared.offerID=Shared.keyList.get(position);
-//                                    _ctx.startActivity(new Intent(_ctx,MapsActivity.class));
-//
-//                                }
-//                            })
-//                            .setNegativeButton("مشاركة عرض", new OnClickListener() {
-//                                @Override
-//                                public void onClick() {
-//                                    Shared.offer=list.get(position);
-//                                    Shared.offerID=Shared.keyList.get(position);
-//                                    Shared.toID=list.get(position).getUID();
-//                                    _ctx.startActivity(new Intent(_ctx,OfferResult.class));
-//                                }
-//                            })
-//                            .setPositiveButtonColor(R.color.primary)
-//                            .setNegativeButtonColor(R.color.jet)
-//                            .build();
+                    Shared.notCurrent=false;
                 }
             });
         }
@@ -133,11 +118,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-
-        TextView priceText,TypeText,cityText,street,desc;
+        TextView priceText,TypeText,cityText,street,desc,seeMore;
         ImageView img,area,offerImage;
         View bottom;
         CardView cv;
+        LinearLayout lindesc,linst;
         public viewholder(@NonNull View itemView) {
             super(itemView);
             area=itemView.findViewById(R.id.area_image);
@@ -152,7 +137,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
             street=itemView.findViewById(R.id.street);
             bottom.setVisibility(View.GONE);
             desc=itemView.findViewById(R.id.desc);
-
+            seeMore=itemView.findViewById(R.id.seeMore);
+            lindesc=itemView.findViewById(R.id.lindesc);
+            linst=itemView.findViewById(R.id.linst);
         }
     }
 }

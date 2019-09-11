@@ -321,4 +321,5 @@ if(Shared.fristTime) {
     public void openOfferDetalis(View view) {
         startActivity(new Intent(this,DetailsChatAct.class));
     }
+
 }

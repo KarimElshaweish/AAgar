@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:id="@+id/titleBar"
-        android:background="@color/primary_darker">
+        android:background="@color/primary">
         <ImageView
             android:onClick="Finish"
             android:layout_width="wrap_content"
@@ -23,7 +23,8 @@
             android:fontFamily="@font/vip"
             android:layout_centerHorizontal="true"
             android:textColor="#fff"
-            android:textSize="15dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/phoneumber"
@@ -52,11 +53,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="15dp">
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/vip"-->
-                <!--android:text="نوع المنشأه"/>-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,12 +75,6 @@
                         android:layout_height="20dp"
                         android:src="@drawable/ic_street"/>
                 </LinearLayout>
-
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/vip"-->
-                <!--android:text="السعر "/>-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,27 +110,12 @@
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/vip"-->
-                <!--android:text=" مدينة المنشأه"/>-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="right"
                     android:gravity="right">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="شارع  : ؟؟"
-                        android:id="@+id/street"
-                        android:textColor="#000"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginRight="5dp"
-                        android:fontFamily="@font/vip"/>
                     <TextView
                         android:layout_gravity="center"
                         android:gravity="center"
@@ -160,41 +135,30 @@
                         android:src="@drawable/ic_pin"/>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
+                    android:gravity="right">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="شارع  : ؟؟"
+                        android:id="@+id/street"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/vip"/>
+                    <ImageView
+                        android:layout_marginLeft="3dp"
+                        android:layout_gravity="center"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_pin"/>
 
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/vip"-->
-                <!--android:text="الشارع"/>-->
-                <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:gravity="right">-->
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="شارع  : ؟؟"-->
-                <!--android:id="@+id/street"-->
-                <!--android:textColor="#000"-->
-                <!--android:textSize="20sp"-->
-                <!--android:textStyle="bold"-->
-                <!--android:fontFamily="@font/vip"/>-->
-                <!--<ImageView-->
-                <!--android:layout_marginLeft="3dp"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_street"-->
-                <!--android:layout_gravity="center"-->
-                <!--/>-->
-                <!--</LinearLayout>-->
-
-                <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:fontFamily="@font/vip"-->
-                <!--android:text="وصف  المنشأه"/>-->
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

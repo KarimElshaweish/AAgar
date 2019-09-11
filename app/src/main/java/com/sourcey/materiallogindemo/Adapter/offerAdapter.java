@@ -93,7 +93,7 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
 
     public class ViewhHolder extends RecyclerView.ViewHolder {
         TextView desc,vs;
-        TextView priceText,TypeText,cityText,streetText;
+        TextView priceText,TypeText,cityText,streetText,seeMore;
         ImageView chat,offerImage,img_share,img;
         CardView cv;
         public ViewhHolder(View itemView) {
@@ -110,6 +110,8 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
             cv=itemView.findViewById(R.id.cv);
             vs=itemView.findViewById(R.id.vs);
             img=itemView.findViewById(R.id.img);
+            seeMore=itemView.findViewById(R.id.seeMore);
+            seeMore.setVisibility(View.GONE);
             if(Shared.owner)
                 img_share.setVisibility(View.VISIBLE);
 

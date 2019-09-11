@@ -132,7 +132,17 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_money"/>
         </LinearLayout>
+            <TextView
+                android:id="@+id/seeMore"
+                android:fontFamily="@font/vip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="مشاهدة المزيد ....."
+                android:gravity="right"
+                android:layout_gravity="right"/>
         <LinearLayout
+            android:id="@+id/lindesc"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_gravity="right"
@@ -157,6 +167,9 @@
                 android:src="@drawable/ic_pin"/>
         </LinearLayout>
 <LinearLayout
+
+    android:id="@+id/linst"
+    android:visibility="gone"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"

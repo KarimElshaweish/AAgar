@@ -1,5 +1,6 @@
 package com.sourcey.materiallogindemo;
 
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class OfferShare extends AppCompatActivity {
         setContentView(R.layout.activity_offer_share);
         rv=findViewById(R.id.rv1);
         pb=findViewById(R.id.pb);
+        pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary),PorterDuff.Mode.MULTIPLY);
         noOffer=findViewById(R.id.noOffer);
         rv.setLayoutManager(new LinearLayoutManager(this));
         getData();
@@ -69,6 +71,10 @@ public class OfferShare extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Shared.owner=false;
+        finish();
+    }
+
+    public void finish(View view) {
         finish();
     }
 }

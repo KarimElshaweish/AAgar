@@ -48,6 +48,7 @@ public static boolean fristTime=false;
     public static OfferResult offerKnow;
     public static boolean addLocation;
     public static boolean addOfferNewRandom=false;
+    public static boolean notCurrent=true;
 
     public static  void reset(){
         customer=false;

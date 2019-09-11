@@ -12,7 +12,7 @@ import com.synnapps.carouselview.ImageListener;
 
 public class MyOrderChatDetia extends AppCompatActivity {
 
-    TextView type,price,city,street;
+    TextView type,price,city,street,desc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,8 @@ public class MyOrderChatDetia extends AppCompatActivity {
         city.setText(Shared.MyOffer.getCity());
         street=findViewById(R.id.street);
         street.setText(Shared.MyOffer.getStreet());
+        desc=findViewById(R.id.desc);
+        desc.setText(Shared.MyOffer.getBuildingTyp());
     }
 
     public void Finish(View view) {

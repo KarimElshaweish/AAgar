@@ -6,12 +6,17 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.sourcey.materiallogindemo.OfferShare">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:layout_margin="10dp"
+        android:background="@color/primary"
         >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_centerVertical="true"
+            android:onClick="finish"/>
         <TextView
             android:fontFamily="@font/vip"
             android:layout_width="match_parent"
@@ -19,11 +24,11 @@
             android:text="عروضى"
             android:textSize="20dp"
             android:padding="10dp"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_gravity="center"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -31,6 +36,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="3dp"
         android:id="@+id/pb"
+        android:backgroundTint="@color/primary"
         />
     <TextView
         android:layout_width="wrap_content"

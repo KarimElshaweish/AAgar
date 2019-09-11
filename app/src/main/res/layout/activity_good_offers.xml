@@ -16,7 +16,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:id="@+id/titleBar"
-        android:background="@color/primary_darker">
+        android:background="@color/primary">
         <ImageView
             android:layout_alignParentRight="true"
             android:onClick="logout"
@@ -25,17 +25,17 @@
             android:src="@drawable/ic_logout"
             />
         <TextView
-            android:fontFamily="@font/vip"
-            android:layout_centerHorizontal="true"
-            android:textColor="#fff"
-            android:textSize="15dp"
+            android:id="@+id/offerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/phoneumber"
-            android:text="الطلبات"
-            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:fontFamily="@font/vip"
             android:gravity="center"
-            android:layout_gravity="center"/>
+            android:text="الطلبات"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
