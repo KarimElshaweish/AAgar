@@ -59,11 +59,7 @@
         <activity android:name=".Add_Offers" />
         <activity android:name=".AddResultOffer" />
         <activity android:name=".SplaceScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".OfferResult" />
         <activity android:name=".ChatAct" />
@@ -76,7 +72,14 @@
             android:label="@string/title_activity_show_build_map" />
         <activity android:name=".offerChatList" />
         <activity android:name=".DetailsChatAct" />
-        <activity android:name=".MyOrderChatDetia"></activity>
+        <activity android:name=".MyOrderChatDetia" />
+        <activity android:name=".Profile">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

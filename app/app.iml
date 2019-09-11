@@ -225,13 +225,12 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-awareness-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:coordinatorlayout-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-cast-12.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: de.hdodenhof:circleimageview-3.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide-4.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex-1.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:swiperefreshlayout-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-maps-license-12.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.android.support:support-v4-26.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-games-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-1.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-vision-12.0.1" level="project" />
@@ -240,6 +239,7 @@
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.6.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:loader-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-config-12.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-v4-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-drive-license-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:viewpager-28.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.maps.android:android-maps-utils-0.5" level="project" />
@@ -261,7 +261,6 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-gcm-license-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-common-license-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-safetynet-license-12.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: de.hdodenhof:circleimageview-2.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-gcm-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-vision-common-license-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:collections:28.0.0@jar" level="project" />
@@ -281,6 +280,7 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-ads-license-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-drive-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tagmanager-license-12.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-28.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-panorama-license-12.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-plus-12.0.1" level="project" />
