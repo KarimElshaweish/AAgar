@@ -194,4 +194,8 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
     public void onProviderDisabled(String provider) {
 
     }
+
+    public void profile(View view) {
+        startActivity(new Intent(this,Profile.class));
+    }
 }

@@ -89,4 +89,8 @@ public class MyOfferNeeded extends AppCompatActivity {
                         finishAffinity();
                        startActivity(new Intent(this,LoginActivity.class));
     }
+
+    public void profile(View view) {
+        startActivity(new Intent(this,Profile.class));
+    }
 }

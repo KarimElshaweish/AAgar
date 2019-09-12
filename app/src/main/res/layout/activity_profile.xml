@@ -26,23 +26,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/primary">
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:id="@+id/lin"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:layout_height="170dp">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_avatar"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     app:civ_border_color="#fff"
                     app:civ_border_width="3dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerInParent="true"
                     android:src="@drawable/avatar_logo"
                     />
+                <android.support.design.widget.FloatingActionButton
+                    android:onClick="change"
+                    android:layout_width="70dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="70dp"
+                    app:borderWidth="3dp"
+                    android:padding="15dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/ic_camera"
+                    app:backgroundTint="@color/primary"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="#fff"/>
+            </RelativeLayout>
+
+
                 <TextView
+                    android:id="@+id/namTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="عميل"
                     android:fontFamily="@font/vip"
                     android:textColor="#fff"
-                    android:layout_below="@+id/profile_avatar"
+                    android:layout_below="@+id/lin"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:textSize="17dp"
@@ -72,13 +93,12 @@
                         android:layout_centerHorizontal="true"
                         android:text="الصفحة الشخصيه"/>
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_margin="15dp"
-                        android:visibility="gone"
                         android:id="@+id/profile_avatar_small"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         app:civ_border_color="#fff"
                         app:civ_border_width="1dp"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/avatar_logo"
                         />

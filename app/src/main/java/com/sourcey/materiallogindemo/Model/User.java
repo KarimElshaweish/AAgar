@@ -3,9 +3,17 @@ package com.sourcey.materiallogindemo.Model;
 import java.util.HashMap;
 
 public class User {
-    String name,email,password,type,phoneNumber,city,userID;
+    String name,email,password,type,phoneNumber,city,userID,profilePic;
 
     HashMap<String,String>hashMap;
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
 
     public HashMap<String, String> getHashMap() {
         return hashMap;

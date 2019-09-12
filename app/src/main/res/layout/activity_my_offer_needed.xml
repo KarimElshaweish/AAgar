@@ -17,7 +17,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:id="@+id/titleBar"
-        android:background="@color/primary_darker">
+        android:background="@color/primary">
         <ImageView
             android:layout_alignParentRight="true"
             android:onClick="logout"
@@ -36,13 +36,25 @@
             android:text="قائمة الطلبات"
             android:gravity="center"
             android:layout_gravity="center"/>
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_chat_ic"
-            android:layout_alignParentLeft="true"
-            android:onClick="openChat"
-            />
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chat_ic"
+                android:layout_alignParentLeft="true"
+                android:onClick="openChat"
+                />
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_profile"
+               android:layout_marginLeft="7dp"
+               android:onClick="profile"/>
+        </LinearLayout>
+
     </RelativeLayout>
      <TextView
          android:id="@+id/noOffer"
