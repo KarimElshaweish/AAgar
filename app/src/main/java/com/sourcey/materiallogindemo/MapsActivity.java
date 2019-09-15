@@ -88,25 +88,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Boolean mark=false;
     private GoogleMap mMap;
-    private ActionBarDrawerToggle toggle;
-    private DrawerLayout dl;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-
-                case R.id.navigation_account:
-                    if (dl.isDrawerOpen(Gravity.END))
-                        dl.closeDrawer(Gravity.END);
-                    else
-                        dl.openDrawer(Gravity.END);
-                    return true;
-            }
-            return false;
-        }
-    };
     TabLayout tb;
     boolean polygon = false;
     Polygon polygon1;
@@ -123,6 +104,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+//        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if(user.getType().equals(Array[0])) {
             cvDelet=findViewById(R.id.cvDelet);
             cvDelet.setVisibility(View.VISIBLE);
@@ -180,25 +163,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Shared.AddToMap.setFtlit(Shared.latLngList.get(3).latitude);
                     Shared.AddToMap.setFtlon(Shared.latLngList.get(3).longitude);
                     Shared.AddToMap.setOfferID(Calendar.getInstance().getTime().toString());
-                    FirebaseDatabase.getInstance().getReference("OfferNeeded").child(Shared.AddToMap.getOfferID()).setValue(Shared.AddToMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(MapsActivity.this, "تم إضافة الطلب", Toast.LENGTH_SHORT).show();
-                            confirmOffer.setVisibility(View.GONE);
-                            finish();
-                            startActivity(new Intent(MapsActivity.this, MyOfferNeeded.class));
-                        }
-                    });
+                        FirebaseDatabase.getInstance().getReference("OfferNeeded").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Shared.AddToMap.getOfferID()).setValue(Shared.AddToMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(MapsActivity.this, "تم إضافة الطلب", Toast.LENGTH_SHORT).show();
+                                confirmOffer.setVisibility(View.GONE);
+                                finish();
+                                startActivity(new Intent(MapsActivity.this, MyOfferNeeded.class));
+                            }
+                        });
                 }
             }
         });
 
-        dl = findViewById(R.id.drawer);
-        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
-        dl.addDrawerListener(toggle);
-        toggle.syncState();
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

@@ -106,19 +106,21 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             public void onDataChange(DataSnapshot dataSnapshot) {
                 pb.setVisibility(View.VISIBLE);
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        pb.setVisibility(View.GONE);
-                        Offer offer=dataSnapshot1.getValue(Offer.class);
-                        if(city.equals(offer.getCity())) {
-                            list.add(offer);
-                            Shared.keyList.add(dataSnapshot1.getKey());
-                            adapter.notifyDataSetChanged();
-                            if (list.size() > 0) {
-                                pb.setVisibility(View.GONE);
-                                noOrder.setVisibility(View.GONE);
+                        for (DataSnapshot dt2 : dataSnapshot1.getChildren()) {
+                            pb.setVisibility(View.GONE);
+                            Offer offer = dt2.getValue(Offer.class);
+                            if (city.equals(offer.getCity())) {
+                                list.add(offer);
+                                Shared.keyList.add(dt2.getKey());
+                                adapter.notifyDataSetChanged();
+                                if (list.size() > 0) {
+                                    pb.setVisibility(View.GONE);
+                                    noOrder.setVisibility(View.GONE);
+                                }
                             }
-                        }
 
-                }
+                        }
+                    }
                 pb.setVisibility(View.GONE);
             }
 

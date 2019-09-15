@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,9 +49,16 @@ public class Profile extends AppCompatActivity {
 
     TextView namTxt;
     User user;
+
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout dl;
+
+
     public void setUser(User user){
         this.user=user;
+        dlName.setText(user.getName());
     }
+
     public TextView getNamTxt() {
         return this.namTxt;
     }
@@ -60,12 +69,21 @@ public class Profile extends AppCompatActivity {
 
     public void setProfile_avatar(String image) {
         Glide.with(this).load(image).placeholder(R.drawable.avatar).into(this.profile_avatar);
-    }
+        Glide.with(this).load(image).placeholder(R.drawable.avatar).into(this.navAvatar);
 
+    }
+    CircleImageView navAvatar;
+    TextView dlName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        navAvatar=findViewById(R.id.navAvatar);
+        dlName=findViewById(R.id.dlName);
+        dl = findViewById(R.id.drawer);
+        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
+        dl.addDrawerListener(toggle);
+        toggle.syncState();
         namTxt=findViewById(R.id.namTxt);
         profile_avatar=findViewById(R.id.profile_avatar);
         vp=findViewById(R.id.vp);

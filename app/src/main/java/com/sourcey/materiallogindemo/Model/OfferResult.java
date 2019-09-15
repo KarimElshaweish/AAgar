@@ -42,7 +42,15 @@ public class OfferResult {
     String toID;
     String offerID;
     List<String>imageList;
+    boolean fav;
 
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
+    }
 
     public String getSpinnerType() {
         return spinnerType;

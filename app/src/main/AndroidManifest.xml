@@ -77,9 +77,10 @@
         <activity android:name=".offerChatList" />
         <activity android:name=".DetailsChatAct" />
         <activity android:name=".MyOrderChatDetia" />
-        <activity android:name=".Profile">
-
-        </activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".favActicity" />
+        <activity android:name=".ArchiveOrder" />
+        <activity android:name=".ArchiveLink"></activity>
     </application>
 
 </manifest>

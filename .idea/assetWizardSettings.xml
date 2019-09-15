@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/home/karim/Downloads/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_person_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/home/karim/Downloads/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/toggle/ic_star_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -52,14 +52,25 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icons8-building-50.png" />
-                                      <entry key="outputName" value="ic_profile" />
-                                      <entry key="theme" value="HOLO_DARK" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icons8-star-50.png" />
+                                      <entry key="outputName" value="ic_fav_yallewo" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="ffd700" />
                                     </map>
                                   </option>
                                 </PersistentState>

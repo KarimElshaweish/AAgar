@@ -35,7 +35,9 @@ public class BuildDetial extends AppCompatActivity {
     TextView type,price,city,street,desc;
     CarouselView carouselView;
     LinearLayout fb;
+    ImageView favImage;
     private void __init__(){
+        favImage=findViewById(R.id.faviamge);
         type=findViewById(R.id.type);
         price=findViewById(R.id.price);
         city=findViewById(R.id.city);
@@ -53,6 +55,11 @@ public class BuildDetial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_detial);
         __init__();
+        if(offerResult.isFav()){
+            favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_yallewo));
+        }else{
+            favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_white));
+        }
         if(Shared.user.getType().equals(Shared.Array[0]))
             fb.setVisibility(View.GONE);
         carouselView = (CarouselView) findViewById(R.id.carouselView);
@@ -86,7 +93,7 @@ public class BuildDetial extends AppCompatActivity {
 
     String user=FirebaseAuth.getInstance().getCurrentUser().getUid();
     public void choseOffer(View view) {
-        final ProgressDialog progressDialog=new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("جارى الاختيار");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -96,11 +103,82 @@ public class BuildDetial extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
-                        Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
+                        FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.AddToMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                progressDialog.dismiss();
+                                Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
+                                FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
+                                        .child(Shared.MyOffer.getOfferID()).setValue(null);
+                            }
+                        });
+
+
                     }
                 });
+
             }
         });
+    }
+    ImageView fav;
+    ProgressDialog progressDialog;
+    public void AddToFavoutit(View view) {
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setCanceledOnTouchOutside(false);
+        fav=(ImageView)view;
+        if(offerResult.isFav()){
+            offerResult.setFav(false);
+            progressDialog.setTitle("جارى الحذف من المفضله");
+            progressDialog.show();
+            FirebaseDatabase.getInstance().getReference("Fav")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(offerResult.getId())
+                    .setValue(null)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    FirebaseDatabase.getInstance().getReference("linkOffer")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child(Shared.offerID)
+                            .child(offerResult.getDescription())
+                            .setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            progressDialog.dismiss();
+                            fav.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_white));
+                        }
+                    });
+
+                }
+            });
+        }else{
+            progressDialog.setTitle("اضافة الى المفضله....");
+            progressDialog.show();
+            offerResult.setFav(true);
+            FirebaseDatabase.getInstance().getReference("Fav").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child(offerResult.getId()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    FirebaseDatabase.getInstance().getReference("Fav").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child(offerResult.getId()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            FirebaseDatabase.getInstance().getReference("linkOffer")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(Shared.offerID)
+                                    .child(offerResult.getDescription())
+                                    .setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressDialog.dismiss();
+                                    fav.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_yallewo));
+
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
 }
