@@ -20,6 +20,40 @@ public class Offer {
     String city;
     String buildingTyp;
 
+    String minPrice,minArea,maxPrice,maxArea;
+
+    public String getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(String minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public String getMinArea() {
+        return minArea;
+    }
+
+    public void setMinArea(String minArea) {
+        this.minArea = minArea;
+    }
+
+    public String getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(String maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public String getMaxArea() {
+        return maxArea;
+    }
+
+    public void setMaxArea(String maxArea) {
+        this.maxArea = maxArea;
+    }
+
     public String getBuildingTyp() {
         return buildingTyp;
     }

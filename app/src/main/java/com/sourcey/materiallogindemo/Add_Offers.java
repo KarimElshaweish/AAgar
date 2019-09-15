@@ -196,8 +196,10 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
 
     }
 ListView notifcationTypListView;
+    LinearLayout roomlin;
     private void __init__() {
 
+        roomlin=findViewById(R.id.roomlin);
         cv4=findViewById(R.id.cv4);
         cv3=findViewById(R.id.cv3);
         cv2=findViewById(R.id.cv2);
@@ -210,7 +212,7 @@ ListView notifcationTypListView;
         buildType=findViewById(R.id.buildType);
         addressTxt=findViewById(R.id.addressTxt);
         linPrice=findViewById(R.id.linPrice);
-        piceTextNew=findViewById(R.id.piceTextNew);
+        piceTextNew=findViewById(R.id.minpiceTextNew);
         linearDetials=findViewById(R.id.linearDetials);
         detailsNewText=findViewById(R.id.detailsNewText);
         orderTypeNext=findViewById(R.id.orderType);
@@ -391,6 +393,9 @@ ListView notifcationTypListView;
                 priceNext1.setVisibility(View.VISIBLE);
                 changeColor(buildType, priceNext1);
                 hideView(cv2, cv3);
+                if(!build.equals(tabsArray2.get(3))){
+                    roomlin.setVisibility(View.GONE);
+                }
                 //  linPrice.setVisibility(View.VISIBLE);
                 // list2.setVisibility(View.GONE);
             }

@@ -106,7 +106,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="سعر الطلب"/>
+            android:text=" تفاصيل  الطلب"/>
         <TextView
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
@@ -166,6 +166,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cv1"
+        android:visibility="visible"
         android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
@@ -226,32 +227,204 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
-<LinearLayout
-    android:padding="5dp"
-        android:id="@+id/linPrice"
-    android:layout_margin="15dp"
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:orientation="horizontal"
-    android:layout_weight="2">
-    <EditText
-        android:hint="السعر"
-        android:inputType="number"
-        android:gravity="center"
-        android:id="@+id/piceTextNew"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:background="@drawable/details_cornor"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="50dp"
-        android:text="السعر"
-        android:textSize="20dp"
-        android:textColor="#000"
-        android:fontFamily="@font/vip"/>
-</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:padding="10dp"
+            android:id="@+id/linPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"/>
+                <TextView
+                    android:background="#fff"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/vip"
+                    android:textColor="#000"
+                    android:text="الاسعار"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <EditText
+                    android:hint="اقل سعر"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:id="@+id/minpiceTextNew"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/details_cornor"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:text="اقل سعر"
+                    android:textSize="20dp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <EditText
+                    android:hint="اعلى سعر"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:id="@+id/maxpiceTextNew"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/details_cornor"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:text="اعلى سعر"
+                    android:textSize="20dp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip"/>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#000"/>
+                <TextView
+                    android:background="#fff"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/vip"
+                    android:textColor="#000"
+                    android:text="المساحة"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <EditText
+                    android:hint="اقل مساحه"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:id="@+id/minAreaTextNew"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/details_cornor"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:text="اقل مساحه"
+                    android:textSize="20dp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <EditText
+                    android:hint="اعلى مساحه"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:id="@+id/maxAreaTextNew"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/details_cornor"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:text="اعلى مساحه"
+                    android:textSize="20dp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/roomlin">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000"/>
+                    <TextView
+                        android:background="#fff"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vip"
+                        android:textColor="#000"
+                        android:text="الغرف"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+                    <EditText
+                        android:hint="عدد الغرف"
+                        android:inputType="number"
+                        android:gravity="center"
+                        android:id="@+id/noRooms"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/details_cornor"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="50dp"
+                        android:text="عدد الغرف"
+                        android:textSize="20dp"
+                        android:textColor="#000"
+                        android:fontFamily="@font/vip"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
     </android.support.v7.widget.CardView>
 <LinearLayout
     android:visibility="gone"
