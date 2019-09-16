@@ -51,6 +51,19 @@
     android:drawableRight="@drawable/ic_profile_ic"
     android:text="الملف الشخصى"/>
         <TextView
+            android:id="@+id/chat_nav"
+            android:gravity="center_vertical"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="17dp"
+    android:drawablePadding="7dp"
+    android:textColor="#000"
+    android:fontFamily="@font/vip"
+    android:drawableRight="@drawable/ic_chat_new"
+    android:text="المحادثات"/>
+        <TextView
             android:gravity="center_vertical"
 
             android:layout_width="match_parent"
@@ -100,7 +113,7 @@
     android:text="نبذا عنا"/>
         <TextView
             android:gravity="center_vertical"
-
+            android:id="@+id/txtLogout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

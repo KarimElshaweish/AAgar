@@ -66,6 +66,7 @@ public class MyOfferNeeded extends AppCompatActivity {
     RecyclerView rv;
     TextView noOffer;
     List<Offer>list;
+    TextView txtLogout;
     public void OpenAddOffer(View view){
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -76,10 +77,11 @@ public class MyOfferNeeded extends AppCompatActivity {
         }else
         startActivity(new Intent(this,Add_Offers.class));
     }
-    TextView profile_nav,fav,order;
+    TextView profile_nav,fav,order,chat_nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_offer_needed);
         order=findViewById(R.id.order);
         profile_nav=findViewById(R.id.profile_nav);
@@ -100,6 +102,20 @@ public class MyOfferNeeded extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MyOfferNeeded.this,Profile.class));
+            }
+        });
+        chat_nav=findViewById(R.id.chat_nav);
+        chat_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChat();
+            }
+        });
+        txtLogout=findViewById(R.id.txtLogout);
+        txtLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
             }
         });
         navigationView=findViewById(R.id.navigationView);
@@ -153,10 +169,10 @@ public class MyOfferNeeded extends AppCompatActivity {
         });
     }
 
-    public void openChat(View view) {
+    public void openChat() {
         startActivity(new Intent(this, offerChatList.class));
     }
-    public void logout(View view) {
+    public void logout() {
         Shared.reset();
         FirebaseAuth.getInstance().signOut();
                         finishAffinity();
