@@ -1,6 +1,7 @@
 package com.sourcey.materiallogindemo;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,16 +9,22 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,12 +40,15 @@ import com.sourcey.materiallogindemo.Adapter.ListAdapter;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.sourcey.materiallogindemo.Model.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class goodOffersAct extends AppCompatActivity implements LocationListener {
 
@@ -47,7 +57,9 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mReference = database.getReference("OfferNeeded");
     TextView noOrder;
-
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
     public void logout(View view) {
         Shared.reset();
         FirebaseAuth.getInstance().signOut();
@@ -55,7 +67,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-    public void openChat(View view) {
+    public void openChat() {
         startActivity(new Intent(this, ChatList.class));
     }
 
@@ -65,10 +77,57 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
 
     private FusedLocationProviderClient fusedLocationClient;
 
+    ProgressDialog progressDialog;
+    User user;
+    CircleImageView navAvatar;
+    TextView dlName;
+    private void  getUserData(){
+        navAvatar=findViewById(R.id.navAvatar);
+        dlName=findViewById(R.id.dlName);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        progressDialog.dismiss();
+                        user=dataSnapshot.getValue(User.class);
+                        Glide.with(goodOffersAct.this).load(user.getProfilePic()).placeholder(R.drawable.avatar)
+                                .into(navAvatar);
+                        dlName.setText(user.getName());
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+    TextView profile_nav,fav,order,chat_nav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_good_offers);
+        navigationView=findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.profile_nav:
+                        startActivity(new Intent(goodOffersAct.this,Profile.class));
+                        return true;
+                }
+                return false;
+            }
+        });
+        dl = findViewById(R.id.drawer);
+        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
+        dl.addDrawerListener(toggle);
+        toggle.syncState();
+
+        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
+        dl.addDrawerListener(toggle);
+        toggle.syncState();
         pb = findViewById(R.id.pb);
         rv = findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -92,8 +151,21 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
                         }
                     }
                 });
-
-
+        chat_nav=findViewById(R.id.chat_nav);
+        chat_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChat();
+            }
+        });
+        profile_nav=findViewById(R.id.profile_nav);
+        profile_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(goodOffersAct.this,Profile.class));
+            }
+        });
+        getUserData();
     }
     List<Offer> list;
     private void getData(final String city){

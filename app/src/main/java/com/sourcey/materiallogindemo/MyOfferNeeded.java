@@ -170,7 +170,7 @@ public class MyOfferNeeded extends AppCompatActivity {
     }
 
     public void openChat() {
-        startActivity(new Intent(this, offerChatList.class));
+        startActivity(new Intent(this, ChatList.class));
     }
     public void logout() {
         Shared.reset();

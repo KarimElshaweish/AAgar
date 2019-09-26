@@ -57,6 +57,42 @@ public class ChatAct extends AppCompatActivity {
     boolean notify=false;
     LinearLayout bottom;
     TextView price,city,street,desc;
+    ValueEventListener sentListener;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        FirebaseDatabase.getInstance().getReference("Chats").removeEventListener(sentListener);
+        super.onPause();
+    }
+
+    private void seenMessage(final String userid){
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Chats");
+        sentListener=reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dt:dataSnapshot.getChildren()){
+                    for(DataSnapshot dt1:dt.getChildren()){
+                        Chat chat=dt1.getValue(Chat.class);
+                        if(chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())&&chat.getSender().equals(userid)){
+                            HashMap<String,Object>hashMap=new HashMap<>();
+                            hashMap.put("isseen",true);
+                            dt1.getRef().updateChildren(hashMap);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void updateToken(String token){
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1=new Token(token);
@@ -137,6 +173,7 @@ if(Shared.fristTime) {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         readMessage(FirebaseAuth.getInstance().getUid(),Shared.sent_id,"defualt");
+        seenMessage(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     }
     public void Finish(View view){
@@ -202,9 +239,9 @@ if(Shared.fristTime) {
         hashMap.put("sender",sender);
         hashMap.put("reciver",receiver);
         hashMap.put("message",message);
+        hashMap.put("isseen",false);
 
-
-        mReference.child("Chats").child(Shared.offerKnow.getOfferID()).push().setValue(hashMap);
+        mReference.child("Chats").push().setValue(hashMap);
 
 
 

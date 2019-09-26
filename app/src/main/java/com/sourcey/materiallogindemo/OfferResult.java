@@ -1,15 +1,22 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,9 +28,12 @@ import com.google.maps.android.PolyUtil;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
 import com.sourcey.materiallogindemo.Model.Offer;
+import com.sourcey.materiallogindemo.Model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.sourcey.materiallogindemo.Shared.offerID;
 import static com.sourcey.materiallogindemo.Shared.user;
@@ -35,7 +45,9 @@ public class OfferResult extends AppCompatActivity {
     RecyclerView rv;
     ProgressBar pb;
     TextView noOffer;
-
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
 
 
 
@@ -60,16 +72,64 @@ public class OfferResult extends AppCompatActivity {
         });
         return idList;
     }
+    ProgressDialog progressDialog;
+    User user;
+    CircleImageView navAvatar;
+    TextView dlName;
+    private void  getUserData(){
+        navAvatar=findViewById(R.id.navAvatar);
+        dlName=findViewById(R.id.dlName);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        progressDialog.dismiss();
+                        user=dataSnapshot.getValue(User.class);
+                        Glide.with(OfferResult.this).load(user.getProfilePic()).placeholder(R.drawable.avatar)
+                                .into(navAvatar);
+                        dlName.setText(user.getName());
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
     TextView offetText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_result);
+        navigationView=findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.profile_nav:
+                        startActivity(new Intent(OfferResult.this,Profile.class));
+                        return true;
+                }
+                return false;
+            }
+        });
+        dl = findViewById(R.id.drawer);
+        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
+        dl.addDrawerListener(toggle);
+        toggle.syncState();
+
+        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
+        dl.addDrawerListener(toggle);
+        toggle.syncState();
         rv=findViewById(R.id.rv1);
         pb=findViewById(R.id.pb);
         noOffer=findViewById(R.id.noOffer);
         offetText=findViewById(R.id.offerText);
         rv.setLayoutManager(new LinearLayoutManager(this));
+        getUserData();
         getData();
 
     }

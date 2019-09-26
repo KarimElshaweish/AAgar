@@ -2,6 +2,15 @@ package com.sourcey.materiallogindemo.Model;
 
 public class Chat {
     private String sender,reciver,message;
+    private boolean isseen;
+
+    public boolean isIsseen() {
+        return isseen;
+    }
+
+    public void setIsseen(boolean isseen) {
+        this.isseen = isseen;
+    }
 
     public Chat(String sender, String reciver, String message) {
         this.sender = sender;

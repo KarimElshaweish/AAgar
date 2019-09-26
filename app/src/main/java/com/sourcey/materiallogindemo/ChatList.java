@@ -77,12 +77,12 @@ public class ChatList extends AppCompatActivity {
         useList=new ArrayList<>();
         Intent intent=getIntent();
         String offerId=intent.getStringExtra("id");
-        getData();
+        getUsers();
 
     }
 
     private void getUsers() {
-        final List<String>Formatuser=getUsersFroamted();
+      //  final List<String>Formatuser=getUsersFroamted();
         reference=FirebaseDatabase.getInstance().getReference("Chats");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -91,12 +91,12 @@ public class ChatList extends AppCompatActivity {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     for(DataSnapshot dt1:dt.getChildren()) {
                         Chat chat=dt1.getValue(Chat.class);
-                        if (list.contains(dt.getKey())) {
+//                        if (list.contains(dt.getKey())) {
                             if (chat.getSender().equals(firebaseUser.getUid()))
                                 useList.add(chat.getReciver());
                             if (chat.getReciver().equals(firebaseUser.getUid()))
                                 useList.add(chat.getSender());
-                        }
+                     //   }
                     }
 
                 }

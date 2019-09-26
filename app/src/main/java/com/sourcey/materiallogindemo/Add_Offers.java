@@ -1,6 +1,7 @@
 package com.sourcey.materiallogindemo;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -98,6 +99,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
 
     }
 
+    ProgressDialog progressDialog;
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
@@ -281,18 +283,12 @@ ListView notifcationTypListView;
 
     }
 
-    private void setCity() {
-        String []CityArray=new String[]{
-"الرياض","مكة","المدينة المنورة","بريدة"
-                ,"تبوك","الدمام","الاحساء","القطيف","خميس","مشيط","الطائف","نجران","حفر","الباطن","الجبيل","ضباء",
-                "الخرج","الثقبة","ينبع","البحر","الخبر","عرعر","الحوية","عنيزة","سكاكا","جيزان",
-                "القريات","الظهران","الباحة","الزلفي","تاروت","شروره","صبياء","الحوطة","الأفلاج","بحره"
-        };
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,CityArray);
-        spinnerCity.setAdapter(adapter);
-    }
     @Override
     public void onLocationChanged(Location location) {
+        progressDialog =new ProgressDialog(this);
+        progressDialog.setTitle("جارى تحميل المدينة");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         //You had this as int. It is advised to have Lat/Loing as double.
         double lat = location.getLatitude();
         double lng = location.getLongitude();
@@ -316,6 +312,7 @@ ListView notifcationTypListView;
             streetText.setText(address.get(0).getLocality()+" " +address.get(0).getAdminArea());
             streetText.setEnabled(false);
             addressTxt.setText(streetText.getText());
+            progressDialog.dismiss();
 
         } catch (IOException e) {
             // Handle IOException
@@ -455,18 +452,4 @@ ListView notifcationTypListView;
         }
     }
 
-//    public void seeOnlyPrice(View view) {
-//        time=2;
-//        cv1.setVisibility(View.GONE);
-//        cv2.setVisibility(View.GONE);
-//        cv4.setVisibility(View.GONE);
-//        cv3.setVisibility(View.VISIBLE);
-//        changeColor(buildType,priceNext1);
-//        orderTypeNext.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-//        orderTypeNext.setTextColor(Color.parseColor("#000000"));
-//
-//        notificationTyp.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-//        notificationTyp.setTextColor(Color.parseColor("#000000"));
-//
-//    }
 }

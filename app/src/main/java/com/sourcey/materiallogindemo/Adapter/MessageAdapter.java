@@ -51,6 +51,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
         Chat chat=mChat.get(position);
         holder.showMessage.setText(chat.getMessage());
         holder.profileImage.setImageResource(R.mipmap.ic_launcher);
+       if(position==mChat.size()-1) {
+           if (chat.isIsseen()) {
+                holder.txt_seen.setText("Seen");
+           } else {
+                holder.txt_seen.setText("Delivered");
+           }
+       }else{
+           holder.txt_seen.setVisibility(View.GONE);
+       }
     }
 
     @Override
@@ -60,12 +69,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
 
     public class viewholder extends RecyclerView.ViewHolder {
 
-        TextView showMessage;
+        TextView showMessage,txt_seen;
         ImageView profileImage;
+
         public viewholder(View itemView) {
             super(itemView);
             profileImage=itemView.findViewById(R.id.profile);
             showMessage=itemView.findViewById(R.id.show_message);
+            txt_seen=itemView.findViewById(R.id.txt_seen);
         }
     }
 
