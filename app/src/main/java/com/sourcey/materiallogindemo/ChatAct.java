@@ -253,6 +253,9 @@ if(Shared.fristTime) {
                                             if(chat!=null)
                                                 if(chat.getSender().equals(myID)&&chat.getReciver().equals(userID)||
                                                         chat.getSender().equals(userID)&&chat.getReciver().equals(myID)){
+                                                    if(chat.isIsblock()){
+                                                        btt.setVisibility(View.GONE);
+                                                    }
                                                     mChat.add(chat);
                                                 }
                                             messageAdapter =new MessageAdapter(ChatAct.this,mChat,imageURL);
