@@ -16,21 +16,21 @@
     android:layout_height="50dp"
     android:src="@drawable/avatar"
     android:id="@+id/profile"/>
-    <TextView
-        android:textColor="#000"
-        android:fontFamily="@font/vip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="user name"
-        android:id="@+id/usernameText"
-        android:textSize="18sp"
-        android:layout_toLeftOf="@id/profile"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"/>
+
         <TextView
-            android:layout_marginTop="7dp"
+            android:id="@+id/usernameText"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/profile"
+            android:fontFamily="@font/vip"
+            android:text="user name"
+            android:textColor="#000"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_marginTop="3dp"
             android:maxLines="1"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="4dp"
             android:id="@+id/last_msg"
             android:textColor="@color/primary_darker"
             android:padding="5dp"

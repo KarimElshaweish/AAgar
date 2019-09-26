@@ -60,7 +60,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
     private DrawerLayout dl;
     private ActionBarDrawerToggle toggle;
     NavigationView navigationView;
-    public void logout(View view) {
+    public void logout() {
         Shared.reset();
         FirebaseAuth.getInstance().signOut();
         finish();
@@ -103,7 +103,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
                     }
                 });
     }
-    TextView profile_nav,fav,order,chat_nav;
+    TextView profile_nav,fav,order,chat_nav,txtLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,6 +163,13 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(goodOffersAct.this,Profile.class));
+            }
+        });
+        txtLogout=findViewById(R.id.txtLogout);
+        txtLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
             }
         });
         getUserData();

@@ -13,16 +13,18 @@
         android:id="@+id/titleBar"
         android:background="@color/primary_darker">
         <ImageView
+            android:layout_centerVertical="true"
             android:onClick="Finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
             android:layout_alignParentLeft="true"/>
         <TextView
+            android:textStyle="bold"
             android:fontFamily="@font/vip"
             android:layout_centerHorizontal="true"
             android:textColor="#fff"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/phoneumber"

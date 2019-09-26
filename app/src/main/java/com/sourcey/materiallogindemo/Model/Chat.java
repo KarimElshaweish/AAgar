@@ -2,7 +2,16 @@ package com.sourcey.materiallogindemo.Model;
 
 public class Chat {
     private String sender,reciver,message;
-    private boolean isseen;
+    private boolean isseen,isblock;
+
+
+    public void setIsblock(boolean isblock) {
+        this.isblock = isblock;
+    }
+
+    public boolean isIsblock() {
+        return isblock;
+    }
 
     public boolean isIsseen() {
         return isseen;

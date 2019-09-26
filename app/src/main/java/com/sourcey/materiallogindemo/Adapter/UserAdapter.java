@@ -93,14 +93,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
            @Override
            public void onDataChange(DataSnapshot dataSnapshot) {
                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                   for(DataSnapshot dt1:snapshot.getChildren()) {
-                       Chat chat = dt1.getValue(Chat.class);
+                       Chat chat = snapshot.getValue(Chat.class);
                        if (chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && chat.getSender().equals(userId) ||
                                chat.getReciver().equals(userId) && chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                            theLastMessage = chat.getMessage();
 
                        }
-                   }
+
                }
                switch (theLastMessage){
                    case "default":

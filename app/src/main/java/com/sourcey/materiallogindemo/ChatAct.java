@@ -1,9 +1,11 @@
 package com.sourcey.materiallogindemo;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +61,7 @@ public class ChatAct extends AppCompatActivity {
     LinearLayout bottom;
     TextView price,city,street,desc;
     ValueEventListener sentListener;
+    ImageView avatar;
 
     @Override
     protected void onResume() {
@@ -76,14 +80,12 @@ public class ChatAct extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
-                    for(DataSnapshot dt1:dt.getChildren()){
-                        Chat chat=dt1.getValue(Chat.class);
+                        Chat chat=dt.getValue(Chat.class);
                         if(chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())&&chat.getSender().equals(userid)){
                             HashMap<String,Object>hashMap=new HashMap<>();
                             hashMap.put("isseen",true);
-                            dt1.getRef().updateChildren(hashMap);
+                            dt.getRef().updateChildren(hashMap);
                         }
-                    }
                 }
             }
 
@@ -99,14 +101,62 @@ public class ChatAct extends AppCompatActivity {
         reference.child(FirebaseAuth.getInstance().getUid()).setValue(token1);
     }
     TextView order,result;
+    ProgressDialog progressDialog;
+    User user;
+    CardView cv1,cv2;
+    private void  getUserData(String usreID){
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        FirebaseDatabase.getInstance().getReference("user").child(usreID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        progressDialog.dismiss();
+                        user=dataSnapshot.getValue(User.class);
+                        Glide.with(ChatAct.this).load(user.getProfilePic()).placeholder(R.drawable.avatar)
+                                .into(avatar);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    LinearLayout linTop;
+    TextView blockingTxt;
+    RelativeLayout btt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        bottom = findViewById(R.id.bottom);
+        btt=findViewById(R.id.btt);
+        blockingTxt=findViewById(R.id.blocking);
+        blockingTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btt.setVisibility(View.GONE);
+                block(FirebaseAuth.getInstance().getCurrentUser().getUid(), Shared.sent_id, "block");
+            }
+        });
+        linTop=findViewById(R.id.liTop);
+        cv1=findViewById(R.id.cv1);
+        cv2=findViewById(R.id.cv2);
+        avatar=findViewById(R.id.avatar);
         order=findViewById(R.id.order);
         result=findViewById(R.id.result);
+        if(Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
         result.setText(Shared.MyOffer.getType()+" "+Shared.MyOffer.getBuildingTyp()+" "+Shared.MyOffer.getPrice()+" "+"ريال");
+        else{
+           linTop.setVisibility(View.GONE);
+        }
+        if(Shared.offerKnow!=null&&Shared.MyOffer.getType()!=null)
         order.setText(Shared.offerKnow.getSpinnerType()+"  "+Shared.offerKnow.getBuildingType()+" "+Shared.offerKnow.getPrice()+" ريال ");
+       else{
+           linTop.setVisibility(View.GONE);
+        }
         if(Shared.offerKnow!=null) {
             String id = FirebaseAuth.getInstance().getUid();
             bottom = findViewById(R.id.bottom);
@@ -174,24 +224,26 @@ if(Shared.fristTime) {
         recyclerView.setLayoutManager(linearLayoutManager);
         readMessage(FirebaseAuth.getInstance().getUid(),Shared.sent_id,"defualt");
         seenMessage(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+        getUserData(Shared.sent_id);
     }
     public void Finish(View view){
         finish();
     }
     private void readMessage(final String myID, final String userID, final String imageURL){
         mChat=new ArrayList<>();
-        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean check=dataSnapshot.child("Chats").exists();
                 if(check)
-                    database.getReference("Chats").addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference("Chats").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getValue()!=null && dataSnapshot.hasChild(Shared.offerKnow.getOfferID()))
+                            if(dataSnapshot.getValue()!=null)
+//                                    && dataSnapshot.hasChild(Shared.offerKnow.getOfferID()))
                             {
-                                DatabaseReference mReference=database.getReference("Chats").child(Shared.offerKnow.getOfferID());
+                                DatabaseReference mReference=database.getReference("Chats");
+//                                        .child(Shared.offerKnow.getOfferID());
                                 mReference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -233,6 +285,38 @@ if(Shared.fristTime) {
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
     }
+    private void block(String sender, final String receiver, String message){
+
+        bottom.setVisibility(View.GONE);
+        DatabaseReference mReference=database.getReference();
+        HashMap<String,Object>hashMap=new HashMap<>();
+        hashMap.put("sender",sender);
+        hashMap.put("reciver",receiver);
+        hashMap.put("message",message);
+        hashMap.put("isseen",false);
+        hashMap.put("isblock",true);
+
+        mReference.child("Chats").push().setValue(hashMap);
+
+
+
+        final String  msg=message;
+        mReference=FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getUid());
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                if(notify)
+                    sendNotificaion(receiver,user.getName(),msg);
+                notify=false;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void sentMeeage(String sender, final String receiver, String message){
         DatabaseReference mReference=database.getReference();
         HashMap<String,Object>hashMap=new HashMap<>();
@@ -240,6 +324,7 @@ if(Shared.fristTime) {
         hashMap.put("reciver",receiver);
         hashMap.put("message",message);
         hashMap.put("isseen",false);
+        hashMap.put("isblock",false);
 
         mReference.child("Chats").push().setValue(hashMap);
 

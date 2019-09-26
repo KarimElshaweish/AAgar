@@ -89,8 +89,7 @@ public class ChatList extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 useList.clear();
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
-                    for(DataSnapshot dt1:dt.getChildren()) {
-                        Chat chat=dt1.getValue(Chat.class);
+                        Chat chat=dt.getValue(Chat.class);
 //                        if (list.contains(dt.getKey())) {
                             if (chat.getSender().equals(firebaseUser.getUid()))
                                 useList.add(chat.getReciver());
@@ -99,7 +98,6 @@ public class ChatList extends AppCompatActivity {
                      //   }
                     }
 
-                }
                 readCaht();
             }
 
