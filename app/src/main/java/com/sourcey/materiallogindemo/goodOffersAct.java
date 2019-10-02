@@ -103,7 +103,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
                     }
                 });
     }
-    TextView profile_nav,fav,order,chat_nav,txtLogout;
+    TextView profile_nav,fav,order,chat_nav,txtLogout,myWallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +170,13 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             @Override
             public void onClick(View view) {
                 logout();
+            }
+        });
+        myWallet=findViewById(R.id.myWallet);
+        myWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(goodOffersAct.this,MyWalletAct.class));
             }
         });
         getUserData();
@@ -252,6 +259,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             }
 
             String city = address.get(0).getAdminArea();
+            if(city!=null)
             getData(city);
 
         } catch (IOException e) {

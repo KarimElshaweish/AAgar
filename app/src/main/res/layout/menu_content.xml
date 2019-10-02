@@ -64,6 +64,7 @@
     android:drawableRight="@drawable/ic_chat_new"
     android:text="المحادثات"/>
         <TextView
+            android:id="@+id/myWallet"
             android:gravity="center_vertical"
 
             android:layout_width="match_parent"
@@ -74,7 +75,7 @@
     android:textColor="#000"
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_wallet"
-    android:text="إعادة النقود"/>
+    android:text=" محفظتى"/>
         <TextView
             android:gravity="center_vertical"
 

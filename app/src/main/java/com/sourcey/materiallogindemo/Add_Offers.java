@@ -168,6 +168,10 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
+                            progressDialog =new ProgressDialog(Add_Offers.this);
+                            progressDialog.setTitle("جارى تحميل المدينة");
+                            progressDialog.setCanceledOnTouchOutside(false);
+                            progressDialog.show();
                             // Logic to handle location object
                             onLocationChanged(location);
                         }
@@ -282,13 +286,10 @@ ListView notifcationTypListView;
             Snackbar.make(view, "من فضلك ادخل النطاق الجغرافى", Snackbar.LENGTH_LONG).show();
 
     }
-
+    String fnialAddress;
     @Override
     public void onLocationChanged(Location location) {
-        progressDialog =new ProgressDialog(this);
-        progressDialog.setTitle("جارى تحميل المدينة");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+
         //You had this as int. It is advised to have Lat/Loing as double.
         double lat = location.getLatitude();
         double lng = location.getLongitude();
@@ -304,7 +305,7 @@ ListView notifcationTypListView;
                 builder.append(" ");
             }
 
-            String fnialAddress = address.get(0).getAdminArea();
+            fnialAddress = address.get(0).getAdminArea();
             String[] tabsArray =
                     new String[]{fnialAddress};
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tabsArray);
@@ -423,7 +424,7 @@ ListView notifcationTypListView;
             }else{
                 offer = new Offer();
                 offer.setUserName(Shared.user.getName());
-                offer.setCity(spinnerCity.getSelectedItem().toString());
+                offer.setCity(fnialAddress);
                 offer.setPrice(piceTextNew.getText().toString());
                 offer.setType(type);
                 offer.setLongtuide(Shared.longtuide);
@@ -432,7 +433,7 @@ ListView notifcationTypListView;
                 offer.setUserName(Shared.user.getName());
                 offer.setBuildingTyp(build);
                 Shared.AddToMap = new Offer();
-                Shared.AddToMap.setCity(spinnerCity.getSelectedItem().toString());
+                Shared.AddToMap.setCity(fnialAddress);
                 Shared.AddToMap.setPrice(piceTextNew.getText().toString());
                 Shared.AddToMap.setType(type);
                 Shared.AddToMap.setLongtuide(Shared.longtuide);

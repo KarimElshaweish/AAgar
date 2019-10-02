@@ -1,13 +1,18 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,11 +24,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sourcey.materiallogindemo.Model.Deals;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -93,32 +100,63 @@ public class BuildDetial extends AppCompatActivity {
 
     String user=FirebaseAuth.getInstance().getCurrentUser().getUid();
     public void choseOffer(View view) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("جارى الاختيار");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-        FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.MyOffer).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                progressDialog.dismiss();
-                                Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
-                                FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
-                                        .child(Shared.MyOffer.getOfferID()).setValue(null);
-                            }
-                        });
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("ادخل السعر");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        alert.setView(input);
+        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String text=input.getText().toString();
+                if(!text.equals("")){
+                    final ProgressDialog progressDialog = new ProgressDialog(BuildDetial.this);
+                    progressDialog.setTitle("جارى الاختيار");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.MyOffer).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
+                                            FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
+                                                    .child(Shared.MyOffer.getOfferID()).setValue(null);
+                                            Deals deals=new Deals();
+                                            deals.setPrice(Double.parseDouble(Shared.MyOffer.getPrice()));
+                                            deals.setCity(Shared.MyOffer.getCity());
+                                            deals.setAgree(false);
+                                            deals.setOfferName(Shared.MyOffer.getBuildingTyp());
+                                            FirebaseDatabase.getInstance().getReference("Deals")
+                                                    .child(offerResult.getuID())
+                                                    .child(Calendar.getInstance().getTime().toString())
+                                                    .setValue(deals);
+                                        }
+                                    });
 
 
-                    }
-                });
+                                }
+                            });
 
+                        }
+                    });
+                }else{
+                    Toast.makeText(BuildDetial.this, "من فضلك ادخل السعر", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        alert.setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Put actions for CANCEL button here, or leave in blank
+            }
+        });
+        alert.show();
+
     }
     ImageView fav;
     ProgressDialog progressDialog;
