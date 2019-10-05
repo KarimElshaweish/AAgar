@@ -10,8 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Model.Chat;
 import com.sourcey.materiallogindemo.Model.User;
 import com.sourcey.materiallogindemo.R;
@@ -47,10 +52,29 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull final viewholder holder, int position) {
         Chat chat=mChat.get(position);
         holder.showMessage.setText(chat.getMessage());
-        holder.profileImage.setImageResource(R.mipmap.ic_launcher);
+        FirebaseDatabase.getInstance().getReference("user")
+                .child(chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())?chat.getReciver():
+                        chat.getSender())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user= dataSnapshot.getValue(User.class);
+                        if(user.getProfilePic()!=null)
+                        Glide.with(_ctx).load(user.getProfilePic())
+                                .placeholder(R.mipmap.ic_launcher)
+                                .into(holder.profileImage);
+                        else
+                            holder.profileImage.setImageDrawable(_ctx.getResources().getDrawable(R.mipmap.ic_launcher));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
        if(position==mChat.size()-1) {
            if (chat.isIsseen()) {
                 holder.txt_seen.setText("Seen");

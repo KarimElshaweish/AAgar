@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +62,7 @@ public class ChatAct extends AppCompatActivity {
     LinearLayout bottom;
     TextView price,city,street,desc;
     ValueEventListener sentListener;
-    ImageView avatar;
+    CircleImageView avatar;
 
     @Override
     protected void onResume() {
@@ -81,7 +82,11 @@ public class ChatAct extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                         Chat chat=dt.getValue(Chat.class);
-                        if(chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())&&chat.getSender().equals(userid)){
+                        if(chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                &&chat.getSender().equals(userid)||
+                                chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        &&chat.getReciver().equals(userid)
+                        ){
                             HashMap<String,Object>hashMap=new HashMap<>();
                             hashMap.put("isseen",true);
                             dt.getRef().updateChildren(hashMap);
@@ -223,7 +228,6 @@ if(Shared.fristTime) {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         readMessage(FirebaseAuth.getInstance().getUid(),Shared.sent_id,"defualt");
-        seenMessage(FirebaseAuth.getInstance().getCurrentUser().getUid());
         getUserData(Shared.sent_id);
     }
     public void Finish(View view){
@@ -258,6 +262,7 @@ if(Shared.fristTime) {
                                                     }
                                                     mChat.add(chat);
                                                 }
+                                            seenMessage(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                             messageAdapter =new MessageAdapter(ChatAct.this,mChat,imageURL);
                                             recyclerView.setAdapter(messageAdapter);
                                         }
@@ -389,7 +394,7 @@ if(Shared.fristTime) {
     }
     public void Tost(View  view){
         String msg =sentText.getText().toString();
-        phoneumber.setText(Shared.offerKnow.getSpinnerType());
+   //        phoneumber.setText(Shared.offerKnow.getSpinnerType());
 
         notify = true;
         if (!msg.equals(""))

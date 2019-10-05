@@ -255,6 +255,10 @@ ListView notifcationTypListView;
     }
     public void Add(View view) {
         fillData = true;
+        if(notifcationTypListView.getSelectedItemPosition()==0)
+            Shared.AddToMap.setInsidePolgon(true);
+        else
+            Shared.AddToMap.setInsidePolgon(false);
         Shared.AddToMap.setCity(spinnerCity.getSelectedItem().toString());
         Shared.AddToMap.setPrice(priceText.getText().toString());
         Shared.AddToMap.setType(spinnerType.getSelectedItem().toString());

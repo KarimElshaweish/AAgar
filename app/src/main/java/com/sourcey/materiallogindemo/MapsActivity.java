@@ -199,7 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (tab.getPosition() == 0)
                     getData();
                 else {
-                    getData(tab.getText().toString());
+                    //getData(tab.getText().toString());
                 }
             }
 
@@ -309,7 +309,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if(!Shared.random &&Shared.user.getType().equals(Shared.Array[0])) {
-            getData(Shared.offer.getType());
+            getData(Shared.offer.getType(), offer.getBuildingTyp());
             LinearLayout li =findViewById(R.id.li);
             li.setVisibility(View.VISIBLE);
         }
@@ -595,7 +595,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    private void getData(final String category) {
+    private void getData(final String category,final  String buildType) {
         list = new ArrayList<>();
         hashMap = new HashMap<>();
         Shared.listReult = new ArrayList<>();
@@ -606,7 +606,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if(dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                     for (DataSnapshot dt1 : dt.getChildren()) {
                         OfferResult offer = dt1.getValue(OfferResult.class);
-                        if (offer.getSpinnerType().equals(category)) {
+                        if (offer.getSpinnerType().equals(category)&&offer.getBuildingType().equals(buildType)) {
                             Shared.listReult.add(offer);
                             LatLng latLng = new LatLng(offer.getLituide(), offer.getLongtuide());
 //                                    MarkerOptions marker = new MarkerOptions().position(latLng);
@@ -629,54 +629,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public boolean onMarkerClick(final Marker marker) {
                         final OfferResult noffer = hashMap.get(marker.getPosition());
-                        new OoOAlertDialog.Builder(MapsActivity.this)
-                                .setTitle(noffer.getDescription())
-                                .setMessage(noffer.getPrice())
-                                .setImage(R.drawable.villa)
-                                .setAnimation(Animation.POP)
-                                .setPositiveButton("إرسال الطلب", new OnClickListener() {
-                                    @Override
-                                    public void onClick() {
-                                        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                if(!dataSnapshot.hasChild(noffer.getDescription()))
-                                                FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
-                                                                new OoOAlertDialog.Builder(MapsActivity.this)
-                                                                        .setTitle("تمت الإضافه")
-                                                                        .setImage(R.drawable.villa)
-                                                                        .setAnimation(Animation.POP)
-                                                                        .build();
-                                                                IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
-                                                                icnGenerator.setTextAppearance(R.style.iconGenText);
-                                                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
-                                                            }
-                                                        });
-                                                else{
-                                                    Toast.makeText(MapsActivity.this, "تم اضافه هذ العرض من قبل ", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
+                        OoOAlertDialog.Builder builder = new OoOAlertDialog.Builder(MapsActivity.this);
+                        builder.setTitle(noffer.getBuildingType() + " " + noffer.getType());
+                        builder.setMessage("السعر " + noffer.getPrice() + " ريال ");
+                        builder.setImage(R.drawable.villa);
+                        builder.setAnimation(Animation.POP);
+                        builder.setPositiveButton("إرسال الطلب", new OnClickListener() {
+                            @Override
+                            public void onClick() {
 
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-                                        });
-                                    }
-                                })
-                                .setNegativeButton("إلغاء", new OnClickListener() {
+                                FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
                                     @Override
-                                    public void onClick() {
-                                        Toast.makeText(MapsActivity.this, "الغاء", Toast.LENGTH_SHORT).show();
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (!dataSnapshot.hasChild(noffer.getDescription()))
+                                            FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
+                                                            new OoOAlertDialog.Builder(MapsActivity.this)
+                                                                    .setTitle("تمت الإضافه")
+                                                                    .setImage(R.drawable.villa)
+                                                                    .setAnimation(Animation.POP)
+                                                                    .build();
+                                                            IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
+                                                            icnGenerator.setTextAppearance(R.style.iconGenText);
+                                                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
+                                                        }
+                                                    });
+                                        else {
+                                            Toast.makeText(MapsActivity.this, "تم اضافه هذ العرض من قبل ", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                })
-                                .setPositiveButtonColor(R.color.primary)
-                                .setNegativeButtonColor(R.color.jet)
-                                .build();
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }); builder.setNegativeButton("إلغاء", new OnClickListener() {
+                            @Override
+                            public void onClick() {
+                                Toast.makeText(MapsActivity.this, "الغاء", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.setPositiveButtonColor(R.color.primary);
+                        builder.setNegativeButtonColor(R.color.jet);
+                        builder.build();
 
 
                         return false;

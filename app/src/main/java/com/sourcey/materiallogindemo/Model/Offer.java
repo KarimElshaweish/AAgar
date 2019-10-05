@@ -15,6 +15,16 @@ public class Offer {
         this.notificationTyp = notificationTyp;
     }
 
+    Boolean insidePolgon;
+
+    public Boolean getInsidePolgon() {
+        return insidePolgon;
+    }
+
+    public void setInsidePolgon(Boolean insidePolgon) {
+        this.insidePolgon = insidePolgon;
+    }
+
     String type;
     String price;
     String city;
