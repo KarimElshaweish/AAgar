@@ -99,11 +99,23 @@ public class OfferResult extends AppCompatActivity {
                 });
     }
 
-    TextView offetText;
+    TextView offetText,offerType,offerplace,offerPrice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_result);
+        offerType=findViewById(R.id.offerType);
+        Intent intent=getIntent();
+        String type=intent.getStringExtra("type");
+        String price=intent.getStringExtra("price");
+        String buildType=intent.getStringExtra("type");
+        String city=intent.getStringExtra("city");
+        offerType.setText(type+" "+buildType);
+        offerplace=findViewById(R.id.offerplace);
+        offerplace.setText(city);
+        offerPrice=findViewById(R.id.offerPrice);
+        offerPrice.setText(price);
         navigationView=findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

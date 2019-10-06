@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -101,10 +102,11 @@ public class BuildDetial extends AppCompatActivity {
     String user=FirebaseAuth.getInstance().getCurrentUser().getUid();
     public void choseOffer(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("ادخل السعر");
-        final EditText input = new EditText(this);
+        alert.setTitle("هل انت موافق على السعر ؟");
+        final TextView input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        input.setText(offerResult.getPrice());
         alert.setView(input);
         alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -136,6 +138,7 @@ public class BuildDetial extends AppCompatActivity {
                                                     .child(offerResult.getuID())
                                                     .child(Calendar.getInstance().getTime().toString())
                                                     .setValue(deals);
+                                            finish();
                                         }
                                     });
 

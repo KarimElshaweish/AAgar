@@ -225,13 +225,17 @@
     <LinearLayout
         android:id="@+id/bottomlin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/lin"
+        android:weightSum="3"
+        android:padding="7dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center">
         <Button
             android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@color/primary"
             android:onClick="Chat"
@@ -246,7 +250,8 @@
         <Button
             android:padding="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@color/primary"
             android:onClick="choseOffer"
@@ -259,9 +264,11 @@
             android:textSize="15dp"
             />
 <Button
+
     android:padding="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+    android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@color/primary"
             android:onClick="Map"

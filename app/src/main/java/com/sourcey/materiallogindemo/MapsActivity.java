@@ -73,6 +73,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 import br.com.joinersa.oooalertdialog.Animation;
@@ -370,66 +371,83 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     throw ex;
                 }
             }
+            final Map<LatLng,Marker> hashMap=new HashMap<>();
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
-                    if(AddRandomButton){
+                    if (AddRandomButton) {
                         mMap.clear();
                         latLngList.clear();
                     }
-                    mark=true;
-                    Shared.lituide = latLng.latitude;
-                    Shared.longtuide = latLng.longitude;
-                    mMap.addMarker(new MarkerOptions().position(latLng));
-                    latLngList.add(latLng);
-                    if (latLngList.size() >= 4&&!Shared.AddRandomButton) {
+                    if (hashMap.size() > 0) {
+                        Map.Entry<LatLng, Marker> entry = hashMap.entrySet().iterator().next();
+                        LatLng key = entry.getKey();
+                        Marker value = entry.getValue();
+                        value.remove();
+                        hashMap.clear();
+                    }
+                    try {
 
-                        polygon1 = mMap.addPolygon(new PolygonOptions()
-                                .add(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),
-                                        new LatLng(latLngList.get(1).latitude, latLngList.get(1).longitude),
-                                        new LatLng(latLngList.get(2).latitude, latLngList.get(2).longitude),
-                                        new LatLng(latLngList.get(3).latitude, latLngList.get(3).longitude))
-                                .strokeColor(Color.parseColor("#000000")).fillColor(Color.parseColor("#26E12929"))
-                                .strokeWidth(2));
-                        if(!Shared.notCurrent){
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),13));
-                            Shared.notCurrent=true;
-                        }
-                        for (LatLng latLng1 : latLngList) {
 
-                            Shared.latLngList.add(latLng1);
-                        }
-                        latLngList.clear();
-                        Shared.polygon = polygon1;
-                        if (Array[0].equals(user.getType())) {
-                            mOfferReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        mark = true;
+                        Shared.lituide = latLng.latitude;
+                        Shared.longtuide = latLng.longitude;
+                        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng));
+                        latLngList.add(latLng);
+                        hashMap.put(latLng, marker);
+                        if (latLngList.size() >= 4 && !Shared.AddRandomButton) {
 
-                                        Offer offer = dataSnapshot1.getValue(Offer.class);
-                                        LatLng latLng = new LatLng(offer.getLituide(), offer.getLongtuide());
-                                        MarkerOptions marker = new MarkerOptions().position(latLng);
-                                        marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker)).title(offer.getType());
-                                        mMap.addMarker(marker);
-                                        marker.snippet(offer.getPrice());
+                            polygon1 = mMap.addPolygon(new PolygonOptions()
+                                    .add(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),
+                                            new LatLng(latLngList.get(1).latitude, latLngList.get(1).longitude),
+                                            new LatLng(latLngList.get(2).latitude, latLngList.get(2).longitude),
+                                            new LatLng(latLngList.get(3).latitude, latLngList.get(3).longitude))
+                                    .strokeColor(Color.parseColor("#000000")).fillColor(Color.parseColor("#26E12929"))
+                                    .strokeWidth(2));
+                            if (!Shared.notCurrent) {
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude), 13));
+                                Shared.notCurrent = true;
+                            }
+                            for (LatLng latLng1 : latLngList) {
+
+                                Shared.latLngList.add(latLng1);
+                            }
+                            latLngList.clear();
+                            Shared.polygon = polygon1;
+                            if (Array[0].equals(user.getType())) {
+                                mOfferReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                                            Offer offer = dataSnapshot1.getValue(Offer.class);
+                                            if(offer!=null) {
+                                                LatLng latLng = new LatLng(offer.getLituide(), offer.getLongtuide());
+                                                MarkerOptions marker = new MarkerOptions().position(latLng);
+                                                marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker)).title(offer.getType());
+                                                mMap.addMarker(marker);
+                                                marker.snippet(offer.getPrice());
+                                            }
+                                        }
+
+
                                     }
 
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                                }
+                                    }
+                                });
+                            } else
+                                getData();
+                        }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-                        } else
-                            getData();
+                    }catch (Exception ex){
+                        finish();
                     }
-
                 }
-
             });
+
 //            mMap.setBuildingsEnabled(true);
 //            mMap.getUiSettings().setZoomControlsEnabled(true);
         } else {
@@ -438,6 +456,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Manifest.permission.ACCESS_COARSE_LOCATION},
                     1);
         }
+
 
     }
 
@@ -625,60 +644,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 }
+             //   if(list.size()>0)
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(final Marker marker) {
+
                         final OfferResult noffer = hashMap.get(marker.getPosition());
-                        OoOAlertDialog.Builder builder = new OoOAlertDialog.Builder(MapsActivity.this);
-                        builder.setTitle(noffer.getBuildingType() + " " + noffer.getType());
-                        builder.setMessage("السعر " + noffer.getPrice() + " ريال ");
-                        builder.setImage(R.drawable.villa);
-                        builder.setAnimation(Animation.POP);
-                        builder.setPositiveButton("إرسال الطلب", new OnClickListener() {
-                            @Override
-                            public void onClick() {
+                        if(noffer!=null) {
+                            OoOAlertDialog.Builder builder = new OoOAlertDialog.Builder(MapsActivity.this);
+                            builder.setTitle(noffer.getBuildingType() + " " + noffer.getType());
+                            builder.setMessage("السعر " + noffer.getPrice() + " ريال ");
+                            builder.setImage(R.drawable.villa);
+                            builder.setAnimation(Animation.POP);
+                            builder.setPositiveButton("إرسال الطلب", new OnClickListener() {
+                                @Override
+                                public void onClick() {
 
-                                FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (!dataSnapshot.hasChild(noffer.getDescription()))
-                                            FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
-                                                            new OoOAlertDialog.Builder(MapsActivity.this)
-                                                                    .setTitle("تمت الإضافه")
-                                                                    .setImage(R.drawable.villa)
-                                                                    .setAnimation(Animation.POP)
-                                                                    .build();
-                                                            IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
-                                                            icnGenerator.setTextAppearance(R.style.iconGenText);
-                                                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
-                                                        }
-                                                    });
-                                        else {
-                                            Toast.makeText(MapsActivity.this, "تم اضافه هذ العرض من قبل ", Toast.LENGTH_SHORT).show();
+                                    FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if (!dataSnapshot.hasChild(noffer.getDescription()))
+                                                FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(MapsActivity.this, "تمت الاضافه", Toast.LENGTH_SHORT).show();
+                                                                new OoOAlertDialog.Builder(MapsActivity.this)
+                                                                        .setTitle("تمت الإضافه")
+                                                                        .setImage(R.drawable.villa)
+                                                                        .setAnimation(Animation.POP)
+                                                                        .build();
+                                                                IconGenerator icnGenerator = new IconGenerator(MapsActivity.this);
+                                                                icnGenerator.setTextAppearance(R.style.iconGenText);
+                                                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.buildmarker));
+                                                            }
+                                                        });
+                                            else {
+                                                Toast.makeText(MapsActivity.this, "تم اضافه هذ العرض من قبل ", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
 
-                                    }
-                                });
-                            }
-                        }); builder.setNegativeButton("إلغاء", new OnClickListener() {
-                            @Override
-                            public void onClick() {
-                                Toast.makeText(MapsActivity.this, "الغاء", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        builder.setPositiveButtonColor(R.color.primary);
-                        builder.setNegativeButtonColor(R.color.jet);
-                        builder.build();
+                                        }
+                                    });
+                                }
+                            });
+                            builder.setNegativeButton("إلغاء", new OnClickListener() {
+                                @Override
+                                public void onClick() {
+                                    Toast.makeText(MapsActivity.this, "الغاء", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            builder.setPositiveButtonColor(R.color.primary);
+                            builder.setNegativeButtonColor(R.color.jet);
+                            builder.build();
 
-
+                        }
                         return false;
                     }
                 });

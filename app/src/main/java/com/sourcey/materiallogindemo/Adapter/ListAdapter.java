@@ -91,7 +91,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
                 public void onClick(View view) {
                     if(Shared.keyList!=null)
                     Shared.offerID=Shared.keyList.get(position);
-                    _ctx.startActivity(new Intent(_ctx,OfferResult.class));
+                    Intent intent=new Intent(_ctx,OfferResult.class);
+                    intent.putExtra("type",list.get(position).getType());
+                    intent.putExtra("build_type",list.get(position).getBuildingTyp());
+                    intent.putExtra("price",list.get(position).getPrice());
+                    intent.putExtra("city",list.get(position).getCity());
+                    _ctx.startActivity(intent);
                     Shared.MyOffer=list.get(position);
 
                 }
