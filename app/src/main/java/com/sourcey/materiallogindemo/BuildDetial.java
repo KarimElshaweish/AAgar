@@ -138,7 +138,7 @@ public class BuildDetial extends AppCompatActivity {
                                                     .child(offerResult.getuID())
                                                     .child(Calendar.getInstance().getTime().toString())
                                                     .setValue(deals);
-                                            finish();
+                                            startActivity(new Intent(BuildDetial.this,MyOfferNeeded.class));
                                         }
                                     });
 

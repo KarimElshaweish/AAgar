@@ -48,7 +48,7 @@ public class MyOfferNeeded extends AppCompatActivity {
     private DrawerLayout dl;
     private ActionBarDrawerToggle toggle;
 
-    NavigationView navigationView;
+        NavigationView navigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
