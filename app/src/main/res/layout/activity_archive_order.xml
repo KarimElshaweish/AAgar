@@ -25,17 +25,18 @@
                 android:src="@drawable/ic_back"
                 android:layout_centerVertical="true"
                 android:onClick="finish"/>
+
             <TextView
-                android:fontFamily="@font/vip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="سجل الطلبات"
-                android:textSize="20dp"
-                android:padding="10dp"
-                android:textColor="#fff"
-                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:fontFamily="@font/vip"
                 android:gravity="center"
-                android:layout_gravity="center"/>
+                android:padding="10dp"
+                android:text="الطالبات المقفله"
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <ProgressBar

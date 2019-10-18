@@ -53,6 +53,15 @@
         android:layout_marginTop="3dp"
         android:id="@+id/pb"
         />
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="الطلب"
+           android:fontFamily="@font/vip_font"
+           android:layout_gravity="center"
+           android:gravity="center"
+           android:padding="7dp"
+           android:textSize="15dp"/>
        <include layout="@layout/offer_chat_item_list"
            android:layout_margin="7dp"
            android:layout_height="match_parent"
@@ -69,6 +78,15 @@
         android:textSize="15dp"
         android:visibility="gone"
         />
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="العرض المختار"
+           android:fontFamily="@font/vip_font"
+           android:layout_gravity="center"
+           android:gravity="center"
+           android:padding="7dp"
+           android:textSize="15dp"/>
     <android.support.v7.widget.RecyclerView
         android:layout_margin="10dp"
         android:layout_width="match_parent"

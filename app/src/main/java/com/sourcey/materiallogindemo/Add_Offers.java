@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -183,6 +184,17 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getTyp=true;
                 type= tabsArray.get(position);
+                if(getTyp){
+                    time++;
+                    buildType.setVisibility(View.VISIBLE);
+                    changeColor(orderTypeNext,buildType);
+                    hideView(cv1,cv2);
+                    //  listView.setVisibility(View.GONE);
+                }
+                else{
+                    Toast.makeText(getBaseContext(), "من فضلك اختار نوع العقار", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -190,21 +202,70 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getBuildType=true;
                 build=tabsArray2.get(position);
+                if(!getBuildType)
+                    Toast.makeText(getBaseContext(), "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
+                else {
+                    time++;
+                    priceNext1.setVisibility(View.VISIBLE);
+                    btnNtextStep.setVisibility(View.VISIBLE);
+                    changeColor(buildType, priceNext1);
+                    hideView(cv2, cv3);
+                    if(!build.equals(tabsArray2.get(3))){
+                        roomlin.setVisibility(View.GONE);
+
+                    }
+                    //  linPrice.setVisibility(View.VISIBLE);
+                    // list2.setVisibility(View.GONE);
+                }
             }
         });
         notifcationTypListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                notificaionLocatian=tabsArray3.get(position);
-                getNotification=true;
+                notificaionLocatian = tabsArray3.get(position);
+                getNotification = true;
+
+
+                if (!getNotification) {
+                    piceTextNew.setError("من فضلك اختار نوع الاشعارات");
+                } else {
+                    offer = new Offer();
+                    offer.setUserName(Shared.user.getName());
+                    offer.setCity(fnialAddress);
+                    offer.setPrice(piceTextNew.getText().toString());
+                    offer.setType(type);
+                    offer.setLongtuide(Shared.longtuide);
+                    offer.setLituide(Shared.lituide);
+                    offer.setStreet(streetText.getText().toString());
+                    offer.setUserName(Shared.user.getName());
+                    offer.setBuildingTyp(build);
+                    Shared.AddToMap = new Offer();
+                    Shared.AddToMap.setCity(fnialAddress);
+                    Shared.AddToMap.setPrice(piceTextNew.getText().toString());
+                    Shared.AddToMap.setType(type);
+                    Shared.AddToMap.setLongtuide(Shared.longtuide);
+                    Shared.AddToMap.setLituide(Shared.lituide);
+                    Shared.AddToMap.setStreet(streetText.getText().toString());
+                    Shared.AddToMap.setUserName(Shared.user.getName());
+                    Shared.AddToMap.setBuildingTyp(build);
+                    Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                    offer.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    Shared.upload = offer;
+                    addLocation = true;
+                    Shared.addLocation = true;
+                    startActivity(new Intent(Add_Offers.this, MapsActivity.class));
+                    finish();
+                }
             }
         });
 
     }
 ListView notifcationTypListView;
     LinearLayout roomlin;
+    FloatingActionButton btnNtextStep;
     private void __init__() {
-
+        btnNtextStep=findViewById(R.id.btnNtextStep);
         roomlin=findViewById(R.id.roomlin);
         cv4=findViewById(R.id.cv4);
         cv3=findViewById(R.id.cv3);
@@ -377,16 +438,6 @@ ListView notifcationTypListView;
     public void next(View view) {
      //   Button btn=(Button)view;
         if(time==0){
-            if(getTyp){
-            time++;
-            buildType.setVisibility(View.VISIBLE);
-            changeColor(orderTypeNext,buildType);
-            hideView(cv1,cv2);
-          //  listView.setVisibility(View.GONE);
-           }
-            else{
-                Toast.makeText(this, "من فضلك اختار نوع العقار", Toast.LENGTH_SHORT).show();
-            }
         }else if(time==1) {
             if(!getBuildType)
                 Toast.makeText(this, "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
@@ -418,6 +469,8 @@ ListView notifcationTypListView;
                 notificationTyp.setVisibility(View.VISIBLE);
                 notifcationTypListView.setVisibility(View.VISIBLE);
                 linPrice.setVisibility(View.GONE);
+                btnNtextStep.setVisibility(View.GONE);
+
             }
             //    btn.setText("تحديد الموقع على الخريطه");
 //            }

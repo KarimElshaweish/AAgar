@@ -26,17 +26,25 @@
         android:padding="10dp"
         android:id="@+id/titleBar"
         android:background="@color/primary">
-        <TextView
-            android:fontFamily="@font/vip"
-            android:layout_centerHorizontal="true"
-            android:textColor="#fff"
-            android:textSize="15dp"
+
+        <ImageView
+            android:onClick="seedl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_dl"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
             android:id="@+id/phoneumber"
-            android:text="قائمة الطلبات"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:fontFamily="@font/vip"
             android:gravity="center"
-            android:layout_gravity="center"/>
+            android:text="الطالبات القائمة"
+            android:textColor="#fff"
+            android:textSize="15dp" />
     </RelativeLayout>
      <TextView
          android:id="@+id/noOffer"

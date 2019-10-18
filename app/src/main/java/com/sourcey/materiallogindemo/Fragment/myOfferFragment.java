@@ -60,7 +60,7 @@ public class myOfferFragment extends Fragment {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     Offer offer=dt.getValue(Offer.class);
                     offer.setOfferID(dt.getKey());
-                    if(offer.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                    if(offer!=null&&offer.getUID()!=null&&offer.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                         list.add(offer);
                         Shared.keyList.add(dt.getKey());
                     }

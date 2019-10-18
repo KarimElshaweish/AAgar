@@ -556,6 +556,7 @@
             android:textColor="#000"
             android:text="العنوان "/>
         <android.support.design.widget.FloatingActionButton
+            android:visibility="gone"
             android:layout_margin="15dp"
             app:backgroundTint="@color/primary"
             android:onClick="next"

@@ -12,25 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.maps.android.ui.IconGenerator;
-import com.sourcey.materiallogindemo.AddResultOffer;
 import com.sourcey.materiallogindemo.MapsActivity;
 import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.OfferResult;
-import com.sourcey.materiallogindemo.OfferShare;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
 import java.util.List;
-
-import br.com.joinersa.oooalertdialog.Animation;
-import br.com.joinersa.oooalertdialog.OnClickListener;
-import br.com.joinersa.oooalertdialog.OoOAlertDialog;
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {

@@ -208,4 +208,8 @@ public class MyOfferNeeded extends AppCompatActivity {
                     }
                 });
     }
+
+    public void seedl(View view) {
+        dl.openDrawer(Gravity.END);
+    }
 }
