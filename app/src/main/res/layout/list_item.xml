@@ -5,12 +5,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
     app:contentPaddingTop="10dp"
-    app:cardCornerRadius="10dp"
     app:contentPaddingBottom="10dp"
     android:background="#f4f4f4"
-    app:cardElevation="10dp"
+    android:layout_marginTop="9dp"
     android:id="@+id/cv">
     <RelativeLayout
         android:padding="10dp"

@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,12 +79,16 @@ public class MyOfferNeeded extends AppCompatActivity {
         }else
         startActivity(new Intent(this,Add_Offers.class));
     }
-    TextView profile_nav,fav,order,chat_nav;
+    TextView profile_nav,fav,order,chat_nav,notifcationTitle;
+    CardView notifcation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_my_offer_needed);
+        notifcation=findViewById(R.id.notifcation);
+        notifcationTitle=findViewById(R.id.notifcationTitle);
+        getNotification();
         order=findViewById(R.id.order);
         profile_nav=findViewById(R.id.profile_nav);
         fav=findViewById(R.id.fav);
@@ -169,6 +175,25 @@ public class MyOfferNeeded extends AppCompatActivity {
         });
     }
 
+    private void getNotification() {
+        FirebaseDatabase.getInstance().getReference("Notification_MSG").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getValue()!=null) {
+                            notifcation.setVisibility(View.VISIBLE);
+                            notifcationTitle.setText(dataSnapshot.getValue().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
     public void openChat() {
         startActivity(new Intent(this, ChatList.class));
     }
@@ -211,5 +236,16 @@ public class MyOfferNeeded extends AppCompatActivity {
 
     public void seedl(View view) {
         dl.openDrawer(Gravity.END);
+    }
+
+    public void removeNotification(View view) {
+        FirebaseDatabase.getInstance().getReference("Notification_MSG").child(FirebaseAuth.getInstance().getCurrentUser()
+                .getUid()).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                notifcation.setVisibility(View.GONE);
+            }
+        });
+
     }
 }

@@ -49,6 +49,8 @@ public static boolean fristTime=false;
     public static boolean addLocation;
     public static boolean addOfferNewRandom=false;
     public static boolean notCurrent=true;
+    public static Offer putOfferOnMap;
+    public static boolean addoffMethod;
 
     public static  void reset(){
         customer=false;

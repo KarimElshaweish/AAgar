@@ -71,6 +71,7 @@ public class ChatAct extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        if(sentListener!=null)
         FirebaseDatabase.getInstance().getReference("Chats").removeEventListener(sentListener);
         super.onPause();
     }

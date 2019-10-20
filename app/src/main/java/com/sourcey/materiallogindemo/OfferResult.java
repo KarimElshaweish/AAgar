@@ -109,7 +109,7 @@ public class OfferResult extends AppCompatActivity {
         Intent intent=getIntent();
         String type=intent.getStringExtra("type");
         String price=intent.getStringExtra("price");
-        String buildType=intent.getStringExtra("type");
+        String buildType=intent.getStringExtra("build_type");
         String city=intent.getStringExtra("city");
         offerType.setText(type+" "+buildType);
         offerplace=findViewById(R.id.offerplace);
@@ -148,6 +148,7 @@ public class OfferResult extends AppCompatActivity {
     String currentUser=FirebaseAuth.getInstance().getCurrentUser().getUid();
     List<com.sourcey.materiallogindemo.Model.OfferResult>list;
     private void getData(){
+        pb.setVisibility(View.VISIBLE);
         String s="عروض لطلب";
         offetText.setText(s+" "+Shared.MyOffer.getType());
         list=new ArrayList<>();
@@ -155,6 +156,7 @@ public class OfferResult extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
+                pb.setVisibility(View.GONE);
                 if(dataSnapshot.hasChild(currentUser)) {
                     mReference.child(currentUser).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -176,6 +178,7 @@ public class OfferResult extends AppCompatActivity {
                                 rv.setAdapter(Adapter);
                                 pb.setVisibility(View.GONE);
                             }
+                            pb.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -192,6 +195,7 @@ public class OfferResult extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
     }
 
@@ -201,5 +205,9 @@ public class OfferResult extends AppCompatActivity {
 
     public void finish(View view) {
         finish();
+    }
+
+    public void showOnMap(View view) {
+        startActivity(new Intent(this,OfferShowOnMapAct.class));
     }
 }

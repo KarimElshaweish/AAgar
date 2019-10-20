@@ -192,8 +192,13 @@ ListView listView;
 
     String buildType,type;
     boolean getBuildType=false,getType=false;
+     String[]tabsArray;
     private void setTypeSpinner() {
-        final String[]tabsArray=new String[]{"شراء","إيجار"};
+        if(!Shared.AddRandomButton)
+           tabsArray =new String[]{offer.getType()};
+        else{
+            tabsArray =new String[]{"إيجار","شراء"};
+        }
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray);
         spinnerType.setAdapter(adapter);
         listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
@@ -310,7 +315,8 @@ ListView listView;
         offerResult.setToID(Shared.toID);
         for (int i = 0; i < fileNameList.size(); i++) {
             if (!Shared.AddRandomButton) {
-                StorageReference fileUpload = mStorage.child("OfferResult").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Shared.offerID).child(fileNameList.get(i));
+                StorageReference fileUpload = mStorage.child("OfferResult").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(Shared.offerID).child(fileNameList.get(i));
                 final int finalI = i;
                 fileUpload.putFile(uriList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -331,6 +337,11 @@ ListView listView;
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(AddResultOffer.this, "تم الإضافه", Toast.LENGTH_SHORT).show();
+                                            FirebaseDatabase.getInstance().getReference("Notification_MSG")
+                                                    .child(Shared.toID)
+                                                    .setValue(offerResult.getType()+" "+
+                                                            offerResult.getBuildingType()+" "+
+                                                            offerResult.getPrice());
                                             progressDialog.dismiss();
                                             finish();
                                         }

@@ -52,7 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
 
         holder.desc.setText(list.get(position).getBuildingTyp());
         holder.cityText.setText(list.get(position).getCity());
-        holder.TypeText.setText(list.get(position).getType());
+        holder.TypeText.setText(list.get(position).getType()+" "+list.get(position).getBuildingTyp());
         holder.priceText.setText(list.get(position).getPrice() + " ريال  ");
         holder.street.setText(list.get(position).getStreet());
         holder.area.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +85,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
                     intent.putExtra("build_type",list.get(position).getBuildingTyp());
                     intent.putExtra("price",list.get(position).getPrice());
                     intent.putExtra("city",list.get(position).getCity());
+                    Shared.putOfferOnMap=list.get(position);
                     _ctx.startActivity(intent);
                     Shared.MyOffer=list.get(position);
 

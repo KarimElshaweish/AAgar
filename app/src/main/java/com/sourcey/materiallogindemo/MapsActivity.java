@@ -2,33 +2,23 @@ package com.sourcey.materiallogindemo;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
-import android.util.Pair;
-import android.view.Gravity;
-import android.view.MenuItem;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -38,7 +28,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,13 +46,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.RemoteMessage;
-import com.google.maps.android.PolyUtil;
 import com.google.maps.android.ui.IconGenerator;
-import com.luseen.spacenavigation.SpaceItem;
-import com.luseen.spacenavigation.SpaceNavigationView;
-import com.luseen.spacenavigation.SpaceOnClickListener;
-import com.sourcey.materiallogindemo.Adapter.ListAdapter;
 import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 
@@ -74,7 +57,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 
 import br.com.joinersa.oooalertdialog.Animation;
 import br.com.joinersa.oooalertdialog.OnClickListener;
@@ -98,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button confirmOffer;
     TextView cityName;
     FloatingActionButton fabAdd;
-    TextView type,name;
+    TextView type,name,priceInfo;
     CardView cvDelet;
     @SuppressLint("RestrictedApi")
     @Override
@@ -111,11 +93,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             cvDelet=findViewById(R.id.cvDelet);
             cvDelet.setVisibility(View.VISIBLE);
             type = findViewById(R.id.type);
+            priceInfo=findViewById(R.id.price);
             name = findViewById(R.id.userName);
 
             if(!Shared.addOfferNewRandom) {
-                type.setText("النوع :"+Shared.offer.getType());
+                type.setText("النوع :"+Shared.offer.getType() + offer.getBuildingTyp());
                 name.setText("إسم العميل : "+ Shared.offer.getUserName());
+                priceInfo.setText("السعر : "+ offer.getPrice());
             }
             fabAdd = findViewById(R.id.fabAdd);
             fabAdd.setVisibility(View.VISIBLE);
@@ -260,6 +244,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        Shared.addoffMethod=false;
+    }
+
+    @Override
     public void onLocationChanged(Location location) {
         //You had this as int. It is advised to have Lat/Loing as double.
         double lat = location.getLatitude();
@@ -376,10 +366,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onMapClick(LatLng latLng) {
                     if (AddRandomButton) {
-                        mMap.clear();
-                        latLngList.clear();
+                        if(!Shared.addoffMethod) {
+                            mMap.clear();
+                            latLngList.clear();
+                        }
                     }
-                    if (hashMap.size() > 0) {
+                    if (hashMap.size() > 0&&!Shared.addoffMethod) {
                         Map.Entry<LatLng, Marker> entry = hashMap.entrySet().iterator().next();
                         LatLng key = entry.getKey();
                         Marker value = entry.getValue();
@@ -387,8 +379,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         hashMap.clear();
                     }
                     try {
-
-
                         mark = true;
                         Shared.lituide = latLng.latitude;
                         Shared.longtuide = latLng.longitude;
@@ -396,7 +386,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         latLngList.add(latLng);
                         hashMap.put(latLng, marker);
                         if (latLngList.size() >= 4 && !Shared.AddRandomButton) {
-
                             polygon1 = mMap.addPolygon(new PolygonOptions()
                                     .add(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude),
                                             new LatLng(latLngList.get(1).latitude, latLngList.get(1).longitude),
@@ -408,11 +397,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude), 13));
                                 Shared.notCurrent = true;
                             }
-                            for (LatLng latLng1 : latLngList) {
+                                for (LatLng latLng1 : latLngList) {
 
-                                Shared.latLngList.add(latLng1);
-                            }
-                            latLngList.clear();
+                                    Shared.latLngList.add(latLng1);
+                                }
+                                latLngList.clear();
+
                             Shared.polygon = polygon1;
                             if (Array[0].equals(user.getType())) {
                                 mOfferReference.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -265,6 +265,7 @@ ListView notifcationTypListView;
     LinearLayout roomlin;
     FloatingActionButton btnNtextStep;
     private void __init__() {
+        Shared.addoffMethod=true;
         btnNtextStep=findViewById(R.id.btnNtextStep);
         roomlin=findViewById(R.id.roomlin);
         cv4=findViewById(R.id.cv4);
