@@ -47,10 +47,14 @@ public static Offer AddToMap;
 public static boolean fristTime=false;
     public static OfferResult offerKnow;
     public static boolean addLocation;
-    public static boolean addOfferNewRandom=false;
+    public static boolean addOfferNewRandom = false;
     public static boolean notCurrent=true;
     public static Offer putOfferOnMap;
     public static boolean addoffMethod;
+    public static boolean close=false;
+    public static boolean AllMesage;
+    public static String chatOfferId;
+    public static List<String> useList;
 
     public static  void reset(){
         customer=false;

@@ -1,13 +1,22 @@
 package com.sourcey.materiallogindemo;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Shader;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -63,14 +72,22 @@ public class ChatAct extends AppCompatActivity {
     TextView price,city,street,desc;
     ValueEventListener sentListener;
     CircleImageView avatar;
-
+    String phoneNumber;
     @Override
     protected void onResume() {
         super.onResume();
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        Shared.AllMesage=false;
+        Shared.chatOfferId=null;
+    }
+
+    @Override
     protected void onPause() {
+        Shared.AllMesage=false;
         if(sentListener!=null)
         FirebaseDatabase.getInstance().getReference("Chats").removeEventListener(sentListener);
         super.onPause();
@@ -131,19 +148,41 @@ public class ChatAct extends AppCompatActivity {
     }
 
     LinearLayout linTop;
-    TextView blockingTxt;
+    TextView blockingTxt;//ubblockingTxt;
     RelativeLayout btt;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+
+            case 123:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:"+phoneNumber));
+                    startActivity(callIntent);
+                } else {
+                }                    Log.d("TAG", "Call Permission Not Granted");
+
+                break;
+
+            default:
+                break;
+        }
+    }
+    String []IDS ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         bottom = findViewById(R.id.bottom);
+       // ubblockingTxt=findViewById(R.id.ubblocking);
         btt=findViewById(R.id.btt);
         blockingTxt=findViewById(R.id.blocking);
         blockingTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 btt.setVisibility(View.GONE);
+                blockingTxt.setVisibility(View.GONE);
+               // ubblockingTxt.setVisibility(View.VISIBLE);
                 block(FirebaseAuth.getInstance().getCurrentUser().getUid(), Shared.sent_id, "block");
             }
         });
@@ -186,9 +225,29 @@ public class ChatAct extends AppCompatActivity {
 
 
         phoneumber=findViewById(R.id.phoneumber);
+        phoneumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int permissionCheck = ContextCompat.checkSelfPermission(ChatAct.this, Manifest.permission.CALL_PHONE);
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            ChatAct.this,
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            Integer.parseInt("123"));
+                } else {
+                    startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+phoneNumber)));
+                }
+
+                String number=phoneumber.getText().toString();
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+number));
+                startActivity(callIntent);
+            }
+        });
         sentImage=findViewById(R.id.sentImage);
         sentText=findViewById(R.id.text_sent);
 if(Shared.fristTime) {
+
     Shared.fristTime=false;
 //            String msg = "مرحبا اخى...." +
 //                    "كنت اود ان استعلم بخصوص عرضك   " +
@@ -198,13 +257,14 @@ if(Shared.fristTime) {
 //                    " ..وسعره.. " +
     String msg="";
                     Shared.offerKnow.getPrice();
-            FirebaseDatabase.getInstance().getReference().child("user").addValueEventListener(new ValueEventListener() {
+    FirebaseDatabase.getInstance().getReference().child("user").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for(DataSnapshot dt:dataSnapshot.getChildren()){
                         User user=dt.getValue(User.class);
                         if(user.getUserID().equals(Shared.offerKnow.getuID())){
                             phoneumber.setText(user.getName());
+                            phoneNumber=user.getPhoneNumber();
                             break;
                         }
                     }
@@ -222,7 +282,30 @@ if(Shared.fristTime) {
                 sentMeeage(FirebaseAuth.getInstance().getCurrentUser().getUid(), Shared.sent_id, msg);
             sentText.setText("");
         }
+        else if(Shared.chatOfferId!=null){
+            if(Shared.chatOfferId!=null)
+                IDS=(Shared.chatOfferId.split("\\*"));
+            final String finalID = IDS[0];
+            FirebaseDatabase.getInstance().getReference().child("user").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot dt:dataSnapshot.getChildren()){
+                        User user=dt.getValue(User.class);
+                        if(user.getUserID().equals(finalID)){
+                            phoneumber.setText(user.getName());
+                            phoneNumber=user.getPhoneNumber();
+                            break;
+                        }
+                    }
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
         recyclerView=findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -230,6 +313,11 @@ if(Shared.fristTime) {
         recyclerView.setLayoutManager(linearLayoutManager);
         readMessage(FirebaseAuth.getInstance().getUid(),Shared.sent_id,"defualt");
         getUserData(Shared.sent_id);
+        if(Shared.AllMesage){
+            blockingTxt.setVisibility(View.GONE);
+            cv1.setVisibility(View.GONE);
+            cv2.setVisibility(View.GONE);
+        }
     }
     public void Finish(View view){
         finish();
@@ -260,8 +348,15 @@ if(Shared.fristTime) {
                                                         chat.getSender().equals(userID)&&chat.getReciver().equals(myID)){
                                                     if(chat.isIsblock()){
                                                         btt.setVisibility(View.GONE);
+                                                        blockingTxt.setVisibility(View.GONE);
+                                                        //ubblockingTxt.setVisibility(View.VISIBLE);
                                                     }
+                                                    if(chat!=null&& chat.getId()!=null)
+                                                        if((Shared.offerKnow!=null&&
+                                                                chat.getId().equals(Shared.offerKnow.getOfferID())
+                                                                ||chat.getId().equals(Shared.chatOfferId)))
                                                     mChat.add(chat);
+
                                                 }
                                             seenMessage(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                             messageAdapter =new MessageAdapter(ChatAct.this,mChat,imageURL);
@@ -326,7 +421,9 @@ if(Shared.fristTime) {
             }
         });
     }
-    private void sentMeeage(String sender, final String receiver, String message){
+    private void unblock(String sender, final String receiver, String message){
+
+        bottom.setVisibility(View.GONE);
         DatabaseReference mReference=database.getReference();
         HashMap<String,Object>hashMap=new HashMap<>();
         hashMap.put("sender",sender);
@@ -335,6 +432,39 @@ if(Shared.fristTime) {
         hashMap.put("isseen",false);
         hashMap.put("isblock",false);
 
+        mReference.child("Chats").push().setValue(hashMap);
+
+
+
+        final String  msg=message;
+        mReference=FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getUid());
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                if(notify)
+                    sendNotificaion(receiver,user.getName(),msg);
+                notify=false;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void sentMeeage(String sender, final String receiver, String message){
+        DatabaseReference mReference=database.getReference();
+        HashMap<String,Object>hashMap=new HashMap<>();
+        hashMap.put("sender",sender);
+        hashMap.put("reciver",receiver);
+        hashMap.put("message",message);
+        hashMap.put("id",Shared.offerKnow!=null?Shared.offerKnow.getOfferID():Shared.chatOfferId);
+        hashMap.put("isseen",false);
+        hashMap.put("isblock",false);
+
+        MediaPlayer mp = MediaPlayer.create(this,R.raw.sent);
+        mp.start();
         mReference.child("Chats").push().setValue(hashMap);
 
 
@@ -374,7 +504,7 @@ if(Shared.fristTime) {
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if (response.code() == 200) {
                                         if (response.body().success != 1) {
-                                            Toast.makeText(ChatAct.this, "failed", Toast.LENGTH_SHORT).show();
+                                         //   Toast.makeText(ChatAct.this, "failed", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
@@ -446,7 +576,8 @@ if(Shared.fristTime) {
     }
 
     public void openDetails(View view) {
-        startActivity(new Intent(this,MyOrderChatDetia.class));
+        Shared.close=true;
+        finish();
     }
 
     public void openOfferDetalis(View view) {

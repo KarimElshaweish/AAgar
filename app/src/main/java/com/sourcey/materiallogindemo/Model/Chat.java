@@ -1,9 +1,16 @@
 package com.sourcey.materiallogindemo.Model;
 
 public class Chat {
-    private String sender,reciver,message;
+    private String sender,reciver,message,id;
     private boolean isseen,isblock;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void setIsblock(boolean isblock) {
         this.isblock = isblock;

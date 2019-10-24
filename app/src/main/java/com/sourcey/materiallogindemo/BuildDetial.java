@@ -44,6 +44,16 @@ public class BuildDetial extends AppCompatActivity {
     CarouselView carouselView;
     LinearLayout fb;
     ImageView favImage;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Shared.close){
+            Shared.close=false;
+            finish();
+        }
+    }
+
     private void __init__(){
         favImage=findViewById(R.id.faviamge);
         type=findViewById(R.id.type);
@@ -51,7 +61,7 @@ public class BuildDetial extends AppCompatActivity {
         city=findViewById(R.id.city);
         street=findViewById(R.id.street);
         desc=findViewById(R.id.desc);
-        type.setText(offerResult.getSpinnerType());
+        type.setText(offerResult.getType());
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         street.setText(offerResult.getStreet());

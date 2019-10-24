@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:layout_marginTop="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="7dp"
+    android:elevation="1dp"
+    android:id="@+id/card"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +18,6 @@
     android:layout_height="50dp"
     android:src="@drawable/avatar"
     android:id="@+id/profile"/>
-
         <TextView
             android:id="@+id/usernameText"
             android:layout_marginRight="4dp"

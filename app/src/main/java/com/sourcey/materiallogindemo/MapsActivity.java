@@ -490,6 +490,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void RemoveMarker(View view) {
         mMap.clear();
         latLngList.clear();
+        Shared.latLngList.clear();
     }
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -615,7 +616,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if(dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                     for (DataSnapshot dt1 : dt.getChildren()) {
                         OfferResult offer = dt1.getValue(OfferResult.class);
-                        if (offer.getSpinnerType().equals(category)&&offer.getBuildingType().equals(buildType)) {
+                        if (offer.getType().equals(category)&&offer.getBuildingType().equals(buildType)) {
                             Shared.listReult.add(offer);
                             LatLng latLng = new LatLng(offer.getLituide(), offer.getLongtuide());
 //                                    MarkerOptions marker = new MarkerOptions().position(latLng);

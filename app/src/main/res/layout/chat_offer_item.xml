@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="7dp"
+    android:id="@+id/view"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:gravity="right"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="أرض"
+        android:fontFamily="@font/vip_font"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:id="@+id/buildType"/>
+    <TextView
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="شراء"
+        android:fontFamily="@font/vip_font"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:id="@+id/type"/>
+
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:gravity="right"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ريال"
+        android:fontFamily="@font/vip_font"
+        android:textColor="#000"
+        android:textSize="15dp"
+        /> <TextView
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="500"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:id="@+id/price"/>
+    <TextView
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="السعر"
+        android:fontFamily="@font/vip_font"
+        android:textColor="#000"
+        android:textSize="15dp"
+        />
+
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:gravity="right"
+    android:orientation="horizontal">
+    <TextView
+        android:fontFamily="@font/vip_font"
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="الرياض"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:id="@+id/city"/>
+    <TextView
+        android:layout_margin="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="المنطقه"
+        android:fontFamily="@font/vip_font"
+        android:textColor="#000"
+        android:textSize="15dp"
+        />
+
+</LinearLayout>
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/pb"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

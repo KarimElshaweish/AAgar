@@ -47,7 +47,7 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
         holder.desc.setText(offerResultList.get(position).getBuildingType());
         holder.cityText.setText(offerResultList.get(position).getCity());
         holder.priceText.setText(offerResultList.get(position).getPrice()+" "+"ريال");
-        holder.TypeText.setText(offerResultList.get(position).getSpinnerType());
+        holder.TypeText.setText(offerResultList.get(position).getType());
         holder.streetText.setText(offerResultList.get(position).getStreet());
         holder.vs.setVisibility(View.GONE);
         if(offerResultList.get(position).getImageList()!=null&&

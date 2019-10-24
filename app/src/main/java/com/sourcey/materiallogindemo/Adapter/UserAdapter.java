@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.IntentCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,12 +36,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
 
     private Context _ctx;
     private List<User>mList;
-
+    private String offerID;
     String theLastMessage;
 
     public UserAdapter(Context _ctx, List<User> mList) {
         this._ctx = _ctx;
         this.mList = mList;
+    }
+
+    public UserAdapter(Context _ctx, List<User> mList, String offerID) {
+        this._ctx = _ctx;
+        this.mList = mList;
+        this.offerID = offerID;
     }
 
     @NonNull
@@ -54,13 +61,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         final User user=mList.get(position);
-        lastMessage(user.getUserID(),holder.lastMsg);
+        lastMessage(user.getUserID(),holder.lastMsg,holder.card);
         holder.usernameText.setText(user.getName()+"( "+user.getType()+" )");
         Glide.with(_ctx).load(user.getProfilePic()).into(holder.profile);
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Shared.AllMesage=true;
                 Shared.sent_id=user.getUserID();
+                if(offerID!=null){
+                    Shared.chatOfferId=offerID;
+                }
                 Intent intent=new Intent(_ctx,ChatAct.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 _ctx.startActivity(intent);
@@ -78,15 +89,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
         TextView usernameText,lastMsg;
         CircleImageView profile;
         RelativeLayout rl;
+        CardView card;
        public viewholder(View itemView) {
            super(itemView);
            usernameText=itemView.findViewById(R.id.usernameText);
            profile=itemView.findViewById(R.id.profile);
            rl=itemView.findViewById(R.id.rl);
            lastMsg=itemView.findViewById(R.id.last_msg);
+           card=itemView.findViewById(R.id.card);
        }
    }
-   private void lastMessage(final String userId, final TextView last_msg){
+   private void lastMessage(final String userId, final TextView last_msg, final CardView cardView){
         theLastMessage="default";
        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Chats");
        reference.addValueEventListener(new ValueEventListener() {
@@ -94,8 +107,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
            public void onDataChange(DataSnapshot dataSnapshot) {
                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                        Chat chat = snapshot.getValue(Chat.class);
-                       if (chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && chat.getSender().equals(userId) ||
-                               chat.getReciver().equals(userId) && chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                       if (chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                               && chat.getSender().equals(userId) ||
+                               chat.getReciver().equals(userId) &&
+                                       chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                           if(chat.getId().equals(Shared.chatOfferId))
                            theLastMessage = chat.getMessage();
 
                        }
@@ -104,6 +120,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
                switch (theLastMessage){
                    case "default":
                        last_msg.setText("No Message");
+                       cardView.setVisibility(View.GONE);
                        break;
                        default:
                            last_msg.setText(theLastMessage);

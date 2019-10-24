@@ -25,13 +25,13 @@
                 android:src="@drawable/ic_back_black"
                 android:layout_alignParentLeft="true"/>
             <TextView
+                android:drawableLeft="@drawable/ic_call"
                 android:layout_centerHorizontal="true"
                 android:textColor="#000"
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/phoneumber"
-                android:fontFamily="@font/vip"
                 android:text="0101010"
                 android:gravity="center"
                 android:layout_gravity="center"/>
@@ -44,23 +44,41 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="حذر هذا الشخص"
-    android:gravity="center"
-    android:textColor="#3498db"
-    android:layout_below="@id/titleBar"
-    android:id="@+id/blocking"
-    android:padding="5dp"
-    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleBar"
+        android:id="@+id/blockingBar"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="حذر هذا الشخص"
+            android:gravity="center"
+            android:textColor="#3498db"
+            android:id="@+id/blocking"
+            android:padding="5dp"
+            />
+<!--        <TextView-->
+<!--            android:visibility="gone"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="فك حذر هذا الشخص"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="#3498db"-->
+<!--            android:layout_below="@id/titleBar"-->
+<!--            android:id="@+id/ubblocking"-->
+<!--            android:padding="5dp"-->
+<!--            />-->
+    </LinearLayout>
+
     <LinearLayout
 
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/blocking"
+        android:layout_below="@id/blockingBar"
         >
         <include layout="@layout/list_item"
             android:visibility="gone"
