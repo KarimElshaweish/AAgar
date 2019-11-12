@@ -97,11 +97,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
             holder.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    Shared.toID=list.get(position).getUID();
+////                    Shared.offer=list.get(position);
+////                    Shared.offerID=Shared.keyList.get(position);
+////                    _ctx.startActivity(new Intent(_ctx,MapsActivity.class));
+////                    Shared.notCurrent=false;
                     Shared.toID=list.get(position).getUID();
                     Shared.offer=list.get(position);
                     Shared.offerID=Shared.keyList.get(position);
-                    _ctx.startActivity(new Intent(_ctx,MapsActivity.class));
-                    Shared.notCurrent=false;
+                    Intent intent=new Intent(_ctx,OfferResult.class);
+                    intent.putExtra("type",list.get(position).getType());
+                    intent.putExtra("build_type",list.get(position).getBuildingTyp());
+                    intent.putExtra("price",list.get(position).getPrice());
+                    intent.putExtra("city",list.get(position).getCity());
+                    intent.putExtra("userID",list.get(position).getUID());
+                    intent.putExtra("offerID",list.get(position).getOfferID());
+                    Shared.putOfferOnMap=list.get(position);
+                    _ctx.startActivity(intent);
+                    Shared.MyOffer=list.get(position);
                 }
             });
         }

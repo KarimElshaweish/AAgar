@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.sourcey.materiallogindemo.Fragment.OwnerFragmets.ActiveNeedsFragments">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:fontFamily="@font/vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  لاتوجود طلبات تاكد من  ان GPS يعمل"
+            android:padding="10dp"
+            android:id="@+id/noOrder"
+            android:textColor="#000"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:visibility="visible"
+            />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:visibility="gone"
+            android:id="@+id/pb"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+</RelativeLayout>

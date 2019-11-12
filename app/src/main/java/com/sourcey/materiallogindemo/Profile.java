@@ -16,25 +16,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.sourcey.materiallogindemo.Fragment.InformationFragment;
-import com.sourcey.materiallogindemo.Fragment.myOfferFragment;
+import com.sourcey.materiallogindemo.Fragment.ProfileFragments.InformationFragment;
+import com.sourcey.materiallogindemo.Fragment.ProfileFragments.myOfferFragment;
 import com.sourcey.materiallogindemo.Model.User;
-
-import org.w3c.dom.Text;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

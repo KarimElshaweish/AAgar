@@ -4,30 +4,34 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.maps.android.PolyUtil;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
+import com.sourcey.materiallogindemo.Fragment.RecommendFragments.RecomendFragment;
+import com.sourcey.materiallogindemo.Fragment.RecommendFragments.SentOfferFragment;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
-import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.User;
 
 import java.util.ArrayList;
@@ -35,8 +39,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.sourcey.materiallogindemo.Shared.offerID;
-import static com.sourcey.materiallogindemo.Shared.user;
+import static com.sourcey.materiallogindemo.Shared.customer;
 
 public class OfferResult extends AppCompatActivity {
 
@@ -99,18 +102,87 @@ public class OfferResult extends AppCompatActivity {
                 });
     }
 
-    TextView offetText,offerType,offerplace,offerPrice;
+    TextView offetText,offerType,offerplace,offerPrice,offerState;
 
+
+
+    ViewPager vp;
+    TabLayout tab;
+
+    public class PagerAdapter extends FragmentPagerAdapter {
+
+        public PagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 1:
+                    return new SentOfferFragment();
+                case 0:
+                default:
+                    return new RecomendFragment();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
+
+    private void __init__() {
+        tab = findViewById(R.id.tb);
+        vp = findViewById(R.id.vp);
+        vp.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        tab.setupWithViewPager(vp);
+        tab.getTabAt(0).setText("العروض المتاحة المشابه");
+        tab.getTabAt(1).setText("العروض المرسله");
+        for (int i = 0; i < tab.getTabCount(); i++) {
+            //noinspection ConstantConditions
+            TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.custome_tab, null);
+            tab.getTabAt(i).setCustomView(tv);
+        }
+    }
+
+
+    LinearLayout recommencLayout;
+    String type, buildType;
+    public String getType(){
+        return type;
+    }
+    public String getBuildType(){
+        return buildType;
+    }
+    LinearLayout CustomerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_result);
-        offerType=findViewById(R.id.offerType);
+        CustomerLayout=findViewById(R.id.customerLayout);
+        noOffer=findViewById(R.id.noOffer);
+        rv=findViewById(R.id.customerRV);
+        recommencLayout=findViewById(R.id.recommencLayout);
+        offerState=findViewById(R.id.offerState);
         Intent intent=getIntent();
-        String type=intent.getStringExtra("type");
+         type=intent.getStringExtra("type");
         String price=intent.getStringExtra("price");
-        String buildType=intent.getStringExtra("build_type");
+         buildType=intent.getStringExtra("build_type");
         String city=intent.getStringExtra("city");
+        if(customer){
+            offerState.setText("العروض المقدمه من قبل الوسطاء");
+            recommencLayout.setVisibility(View.GONE);
+            CustomerLayout.setVisibility(View.VISIBLE);
+        }else{
+            offerState.setText("العروض المقدمة من قبلك ");
+            recommencLayout.setVisibility(View.VISIBLE);
+            CustomerLayout.setVisibility(View.GONE);
+            __init__();
+
+        }
+        offerType=findViewById(R.id.offerType);
+
         offerType.setText(type+" "+buildType);
         offerplace=findViewById(R.id.offerplace);
         offerplace.setText(city);
@@ -136,19 +208,27 @@ public class OfferResult extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
         dl.addDrawerListener(toggle);
         toggle.syncState();
-        rv=findViewById(R.id.rv1);
         pb=findViewById(R.id.pb);
-        noOffer=findViewById(R.id.noOffer);
         offetText=findViewById(R.id.offerText);
-        rv.setLayoutManager(new LinearLayoutManager(this));
         getUserData();
+        if(Shared.customer)
         getData();
+        else {
+            userID=intent.getStringExtra("userID");
+            offerID=intent.getStringExtra("offerID");
+        }
 
+    }
+    public String getUserID(){
+        return userID;
+    }
+    public String getOfferID(){
+        return offerID;
     }
     String currentUser=FirebaseAuth.getInstance().getCurrentUser().getUid();
     List<com.sourcey.materiallogindemo.Model.OfferResult>list;
     private void getData(){
-        pb.setVisibility(View.VISIBLE);
+//        pb.setVisibility(View.VISIBLE);
         String s="عروض لطلب";
         offetText.setText(s+" "+Shared.MyOffer.getType());
         list=new ArrayList<>();
@@ -156,7 +236,7 @@ public class OfferResult extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
-                pb.setVisibility(View.GONE);
+              pb.setVisibility(View.GONE);
                 if(dataSnapshot.hasChild(currentUser)) {
                     mReference.child(currentUser).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -208,6 +288,13 @@ public class OfferResult extends AppCompatActivity {
     }
 
     public void showOnMap(View view) {
+        if(Shared.customer)
         startActivity(new Intent(this,OfferShowOnMapAct.class));
+        else{
+            startActivity(new Intent(this,MapsActivity.class));
+            Shared.notCurrent=false;
+        }
     }
+    String offerID,userID;
+    List<com.sourcey.materiallogindemo.Model.OfferResult>offerResultList;
 }

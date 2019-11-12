@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:id="@+id/titleBar"
-        android:background="@color/primary_darker">
+        android:background="@color/primary">
         <ImageView
             android:layout_centerVertical="true"
             android:onClick="Finish"

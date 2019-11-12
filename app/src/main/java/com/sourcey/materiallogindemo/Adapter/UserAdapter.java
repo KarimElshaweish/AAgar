@@ -38,6 +38,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
     private List<User>mList;
     private String offerID;
     String theLastMessage;
+    String user;
 
     public UserAdapter(Context _ctx, List<User> mList) {
         this._ctx = _ctx;
@@ -101,6 +102,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
    }
    private void lastMessage(final String userId, final TextView last_msg, final CardView cardView){
         theLastMessage="default";
+        user="default";
        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Chats");
        reference.addValueEventListener(new ValueEventListener() {
            @Override
@@ -111,19 +113,46 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
                                && chat.getSender().equals(userId) ||
                                chat.getReciver().equals(userId) &&
                                        chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                           if(chat.getId().equals(Shared.chatOfferId))
-                           theLastMessage = chat.getMessage();
+                           if(chat.getId().equals(Shared.chatOfferId)
+                                   ||(Shared.offerKnow!=null&&
+                                   chat.getId().equals(Shared.offerKnow.getOfferID())
+                           ))
+                                    theLastMessage = chat.getMessage();
+                                    user=chat.getSender();
 
                        }
 
                }
+               String temp = theLastMessage;
                switch (theLastMessage){
                    case "default":
                        last_msg.setText("No Message");
+                       temp="No Message";
                        cardView.setVisibility(View.GONE);
                        break;
                        default:
                            last_msg.setText(theLastMessage);
+                           break;
+               }
+               theLastMessage="default";
+               switch (user){
+                   case "default":
+                        temp=last_msg.getText().toString();
+                       last_msg.setText(""+temp);
+                       cardView.setVisibility(View.GONE);
+                       break;
+                       default:
+                           if(user.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                               last_msg.setText(temp + " : أنت ");
+                           }
+                           else{
+                               if(Shared.customer){
+                                   last_msg.setText(temp+" : وسيط ");
+                               }else{
+                                   last_msg.setText(temp+" : عميل ");
+
+                               }
+                           }
                            break;
                }
                theLastMessage="default";

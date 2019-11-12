@@ -72,8 +72,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Karim\Downloads\icons8-call-50.png" />
-                                      <entry key="outputName" value="ic_call" />
+                                      <entry key="imageAsset" value="C:\Users\Karim\Downloads\icons8-loading-50.png" />
+                                      <entry key="outputName" value="ic_loading" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>

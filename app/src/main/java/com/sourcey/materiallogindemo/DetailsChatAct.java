@@ -40,6 +40,12 @@ public class DetailsChatAct extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
     public void Map(View view) {
     }
 

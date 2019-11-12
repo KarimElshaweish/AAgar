@@ -6,6 +6,15 @@ import java.util.List;
 
 public class Offer {
     String notificationTyp;
+    Object aspect;
+
+    public Object getAspect() {
+        return aspect;
+    }
+
+    public void setAspect(Object aspect) {
+        this.aspect = aspect;
+    }
 
     public String getNotificationTyp() {
         return notificationTyp;

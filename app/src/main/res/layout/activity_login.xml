@@ -53,6 +53,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:textColor="#000"
             android:fontFamily="@font/vip"
             android:text="تسجيل الدخول"/>
 

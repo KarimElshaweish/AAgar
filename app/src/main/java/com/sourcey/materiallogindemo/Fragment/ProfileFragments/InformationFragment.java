@@ -1,4 +1,4 @@
-package com.sourcey.materiallogindemo.Fragment;
+package com.sourcey.materiallogindemo.Fragment.ProfileFragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;

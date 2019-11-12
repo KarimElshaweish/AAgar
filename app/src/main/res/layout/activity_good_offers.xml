@@ -68,6 +68,19 @@
         </LinearLayout>
 
     </RelativeLayout>
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/primary"
+        app:tabIndicatorHeight="2dp"
+        android:id="@+id/tb"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/vp"></android.support.v4.view.ViewPager>
+
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center"
@@ -171,17 +184,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
 </LinearLayout>
-<android.support.design.widget.FloatingActionButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:backgroundTint="@color/primary"
-    android:src="@drawable/ic_add_white"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_margin="15dp"
-    android:id="@+id/addOffer"
-    android:onClick="openMap"
-   />
+
 </RelativeLayout><android.support.design.widget.NavigationView
     android:id="@+id/navigationView"
     android:layout_width="match_parent"

@@ -1,0 +1,32 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sourcey.materiallogindemo.Fragment.RecommendFragments.SentOfferFragment">
+
+    <ProgressBar
+        android:indeterminateDrawable="@drawable/progress_custome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:id="@+id/pb"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv1"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="لاتوجود عروض"
+        android:padding="10dp"
+        android:id="@+id/noOffer"
+        android:textColor="#000"
+        android:layout_gravity="center"
+        android:textSize="15dp"
+        android:visibility="gone"
+        />
+</FrameLayout>

@@ -52,49 +52,55 @@ public class ChatOfferAdapter extends RecyclerView.Adapter<ChatOfferAdapter.View
         viewHolder.price.setText(offerResult.getPrice());
         viewHolder.type.setText(offerResult.getType());
         viewHolder.buildType.setText(offerResult.getBuildingType());
+        getUsers(offerResult, viewHolder);
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Shared.chatOfferId=offerResult.getOfferID();
-                viewHolder.pb.setVisibility(View.VISIBLE);
-                musers=new ArrayList<>();
-                reference= FirebaseDatabase.getInstance().getReference("user");
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        musers.clear();
-                        for(DataSnapshot dt:dataSnapshot.getChildren()){
-                            User user=dt.getValue(User.class);
-                            for(String id:useList){
-                                if(user.getUserID().equals(id)){
-                                    if(musers.size()!=0){
-                                        for (User user1:musers){
-                                            if(!user.getUserID().equals(user1.getUserID())){
-                                                musers.add(user);
-                                            }
-                                        }
-                                    }else {
-                                        musers.add(user);
-                                    }
-                                }
-                            }
-                        }
-                        userAdapter=new UserAdapter(_ctx,musers,offerResult.getOfferID());
-                        viewHolder.rv.setHasFixedSize(true);
-                        viewHolder.rv.setLayoutManager(new LinearLayoutManager(_ctx));
-                        viewHolder.rv.setAdapter(userAdapter);
-                        viewHolder.pb.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-             //   readCaht();
+                getUsers(offerResult, viewHolder);
+                //   readCaht();
             }
         });
     }
+
+    private void getUsers(final OfferResult offerResult, @NonNull final ViewHolder viewHolder) {
+        Shared.chatOfferId=offerResult.getOfferID();
+        viewHolder.pb.setVisibility(View.VISIBLE);
+        musers=new ArrayList<>();
+        reference= FirebaseDatabase.getInstance().getReference("user");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                musers.clear();
+                for(DataSnapshot dt:dataSnapshot.getChildren()){
+                    User user=dt.getValue(User.class);
+                    for(String id:useList){
+                        if(user.getUserID().equals(id)){
+                            if(musers.size()!=0){
+                                for (User user1:musers){
+                                    if(!user.getUserID().equals(user1.getUserID())){
+                                        musers.add(user);
+                                    }
+                                }
+                            }else {
+                                musers.add(user);
+                            }
+                        }
+                    }
+                }
+                userAdapter=new UserAdapter(_ctx,musers,offerResult.getOfferID());
+                viewHolder.rv.setHasFixedSize(true);
+                viewHolder.rv.setLayoutManager(new LinearLayoutManager(_ctx));
+                viewHolder.rv.setAdapter(userAdapter);
+                viewHolder.pb.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     List<User>musers;
     DatabaseReference reference;
     UserAdapter userAdapter;

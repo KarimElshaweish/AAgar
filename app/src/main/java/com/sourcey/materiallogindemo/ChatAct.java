@@ -352,9 +352,11 @@ if(Shared.fristTime) {
                                                         //ubblockingTxt.setVisibility(View.VISIBLE);
                                                     }
                                                     if(chat!=null&& chat.getId()!=null)
-                                                        if((Shared.offerKnow!=null&&
+
+                                                        if(chat.getId().equals(Shared.chatOfferId)
+                                                                ||(Shared.offerKnow!=null&&
                                                                 chat.getId().equals(Shared.offerKnow.getOfferID())
-                                                                ||chat.getId().equals(Shared.chatOfferId)))
+                                                                ))
                                                     mChat.add(chat);
 
                                                 }

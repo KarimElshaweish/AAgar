@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="200dp"
+    android:gravity="center"
+    android:layout_margin="5dp"
+    android:id="@+id/rl"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+ <LinearLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+  android:orientation="vertical"
+     android:gravity="center">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+   android:background="#95a5a6"/>
+  <com.github.siyamed.shapeimageview.RoundedImageView
+      android:layout_gravity="center"
+      android:layout_width="150dp"
+      android:layout_height="150dp"
+      android:id="@+id/imageCover"
+      android:src="@drawable/load"
+      app:siRadius="15dp"
+    />
+  <LinearLayout
+      android:layout_marginTop="15dp"
+      android:padding="2dp"
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+   >
+   <TextView
+       android:layout_centerVertical="true"
+       android:layout_width="wrap_content"
+       android:text="ريال"
+       android:fontFamily="@font/vip_font"
+       android:textColor="#000"
+       android:layout_height="wrap_content"/>
+   <TextView
+       android:layout_centerVertical="true"
+       android:textColor="#000"
+       android:id="@+id/price"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="150"
+       android:layout_centerHorizontal="true"/>
+  </LinearLayout>
+ </LinearLayout>
+
+<RelativeLayout
+    android:id="@+id/sentLayout"
+    android:visibility="visible"
+    android:background="#AAecf0f1"
+    android:layout_width="160dp"
+    android:layout_height="200dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="49dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_sent"/>
+</RelativeLayout>
+</RelativeLayout>
