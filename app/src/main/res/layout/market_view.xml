@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="الواجهة"
+                android:fontFamily="@font/vip_font"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/spinner"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:padding="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="عرض الشارع"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip_font"/>
+                <TextView
+                    android:id="@+id/streetWitdth"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#000"
+                    />
+
+            </RelativeLayout>
+            <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+                android:id="@+id/marketStreetWidthSeekBar"
+                android:scaleX="-1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:corner_radius="10"
+                app:min_value="0"
+                app:max_value="10"
+                app:bar_color="#ccc"
+                app:bar_highlight_color="@color/primary_dark"
+                app:left_thumb_color="#ccc"
+                app:left_thumb_color_pressed="@color/primary_dark"
+                app:data_type="_integer"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="عقار أقل من"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip_font"/>
+                <TextView
+                    android:id="@+id/buildAge"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#000"
+                    />
+
+            </RelativeLayout>
+            <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
+                android:id="@+id/buildAgeSeekBar"
+                android:scaleX="-1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:corner_radius="10"
+                app:min_value="0"
+                app:max_value="10"
+                app:bar_color="#ccc"
+                app:bar_highlight_color="@color/primary_dark"
+                app:left_thumb_color="#ccc"
+                app:left_thumb_color_pressed="@color/primary_dark"
+                app:data_type="_integer"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="المساحة"
+                android:textSize="16sp"
+                android:layout_margin="10dp"
+                android:id="@+id/total_price"
+                android:fontFamily="@font/vip_font"
+                android:textColor="#000"
+                android:layout_gravity="right"
+                android:gravity="right"/>
+            <EditText
+                android:hint="أدخل هنا"
+                android:id="@+id/total_area_market"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="7dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/tab_layout"
+                android:layout_toLeftOf="@id/total_price"/>
+        </RelativeLayout>
+
+
+        <include layout="@layout/total_price_layout"/>
+        <Button
+            android:visibility="gone"
+            android:onClick="contuinue"
+            android:id="@+id/btt_flat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_layout"
+            android:text="استمرار"
+            android:textSize="20sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="@color/primary"/>
+    </LinearLayout>
+
+</ScrollView>

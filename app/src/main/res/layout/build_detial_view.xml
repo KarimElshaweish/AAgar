@@ -10,92 +10,77 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="2"
-        android:padding="14dp">
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@color/primary"
-            android:textColor="#fff"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="الواجهة"
+                android:fontFamily="@font/vip_font"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/spinner"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:padding="10dp"
+            android:id="@+id/lin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="عوائل"
-            android:textSize="17sp"
-            android:fontFamily="@font/vip_font"
-            android:id="@+id/btnFamily"/>
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#000"
-            android:background="@drawable/tab_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="عزاب"
-            android:textSize="17sp"
-            android:fontFamily="@font/vip_font"
-            android:id="@+id/btnSingle"/>
-    </LinearLayout>
-    <LinearLayout
-        android:padding="10dp"
-        android:id="@+id/lin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:weightSum="3">
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/tab_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/annualText"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="سنوي"/>
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/tab_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/monthlyTxt"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="شهري"/>
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@color/primary"
-            android:id="@+id/dailyText"
-            android:textColor="#fff"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="يومي"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:weightSum="3">
+            <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/tab_layout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="visible"
+                android:id="@+id/annualText"
+                android:textColor="#000"
+                android:fontFamily="@font/vip"
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="تجارى وسكنى"/>
+            <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/tab_layout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="visible"
+                android:id="@+id/monthlyTxt"
+                android:textColor="#000"
+                android:fontFamily="@font/vip"
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="تجارى"/>
+            <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/primary"
+                android:id="@+id/dailyText"
+                android:textColor="#fff"
+                android:fontFamily="@font/vip"
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="سكنى"/>
+        </LinearLayout>
         <LinearLayout
             android:padding="7dp"
             android:layout_width="match_parent"
@@ -109,11 +94,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الصالات"
+                    android:text="عرض الشارع"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/receptionNumber"
+                    android:id="@+id/buildStreetWidthSeekBar"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -150,11 +135,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="عدد دورات المياة"
+                    android:text="عدد الشقق"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/bathRoomsNumber"
+                    android:id="@+id/buildRoomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -192,11 +177,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الغرف"
+                    android:text="عدد المحلات"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/roomsNumber"
+                    android:id="@+id/buildMarketNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -234,11 +219,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الدور"
+                    android:text="عدد الغرف"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/levelNumber"
+                    android:id="@+id/buildRomsSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -324,156 +309,6 @@
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
                     android:id="@+id/readySwitch"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    />
-
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="مطبخ"
-                    android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
-                <Switch
-                    android:theme="@style/SwitchTheme"
-                    android:backgroundTint="@color/primary"
-                    android:trackTint="@color/primary_dark"
-                    android:id="@+id/kitchenSwitch"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    />
-
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ملحق"
-                    android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
-                <Switch
-                    android:theme="@style/SwitchTheme"
-                    android:backgroundTint="@color/primary"
-                    android:trackTint="@color/primary_dark"
-                    android:id="@+id/extentionSwitch"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    />
-
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="مدخل سيارة"
-                    android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
-                <Switch
-                    android:theme="@style/SwitchTheme"
-                    android:backgroundTint="@color/primary"
-                    android:trackTint="@color/primary_dark"
-                    android:id="@+id/carEnternaceSwitch"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    />
-
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="مصعد"
-                    android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
-                <Switch
-                    android:theme="@style/SwitchTheme"
-                    android:backgroundTint="@color/primary"
-                    android:trackTint="@color/primary_dark"
-                    android:id="@+id/elvatorSwitch"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    />
-
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="مكيف"
-                    android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
-                <Switch
-                    android:theme="@style/SwitchTheme"
-                    android:backgroundTint="@color/primary"
-                    android:trackTint="@color/primary_dark"
-                    android:id="@+id/airCondtionSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"

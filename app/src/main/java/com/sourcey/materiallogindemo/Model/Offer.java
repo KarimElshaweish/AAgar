@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 public class Offer {
+
     String notificationTyp;
     Object aspect;
 

@@ -28,14 +28,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +52,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sourcey.materiallogindemo.Adapter.UploadListAdapter;
+import com.sourcey.materiallogindemo.Model.Flat;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
 import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.OfferResult;
@@ -159,7 +164,7 @@ ListView listView;
         rv.setAdapter(uploadListAdapter);
         spinnerCity = findViewById(R.id.citySpinner);
         spinnerType = findViewById(R.id.spinnerType);
-        priceText = findViewById(R.id.priceText);
+        priceText = findViewById(R.id.price_flat);
         descText = findViewById(R.id.descText);
         streetText = findViewById(R.id.StreetText);
         setTypeSpinner();
@@ -204,7 +209,7 @@ ListView listView;
         listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
         tabsArray2 =new ArrayList<>();
-        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "إرض ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
+        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
         list2.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray2);
         list2.setAdapter(adapter2);
@@ -291,6 +296,263 @@ ListView listView;
         }
     }
 
+    Button btnContinue;
+    TextView btnSingle,btnFamily,dailyText,monthlyTxt,annualText,receptionNumber,bathRoomsNumber,roomsNumber,levelNumber,buildAge;
+    CrystalSeekbar receptionSeekBar,bathRoomsSeekBar,roomsSeekBar,levelSeekBar,buildAgeSeekBar;
+    Switch readySwitch,kitchenSwitch,extentionSwitch,carEnternaceSwitch,elvatorSwitch,airCondtionSwitch;
+    Boolean readySwitchbool=false
+            ,kitchenSwitchbool=false
+            ,extentionSwitchbool=false
+            ,carEnternaceSwitchbool=false
+            ,elvatorSwitchbool=false
+            ,airCondtionSwitchbool=false;
+    boolean family=true;
+    boolean daily=true,monthly=false,annual=false;
+    View flatView;
+    private void __init__flat(){
+
+        airCondtionSwitch=findViewById(R.id.airCondtionSwitch);
+        airCondtionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                airCondtionSwitchbool=b;
+            }
+        });
+        elvatorSwitch=findViewById(R.id.elvatorSwitch);
+        elvatorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                elvatorSwitchbool=b;
+            }
+        });
+        carEnternaceSwitch=findViewById(R.id.carEnternaceSwitch);
+        carEnternaceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                carEnternaceSwitchbool=b;
+            }
+        });
+        extentionSwitch=findViewById(R.id.extentionSwitch);
+        extentionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                extentionSwitchbool=b;
+            }
+        });
+        kitchenSwitch=findViewById(R.id.kitchenSwitch);
+        kitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                kitchenSwitchbool=b;
+            }
+        });
+        readySwitch=findViewById(R.id.readySwitch);
+        readySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                readySwitchbool=b;
+            }
+        });
+//        btnContinue=findViewById(R.id.btt);
+//        btnContinue.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String dutration="";
+//                if(daily){
+//                    dutration="daily";
+//                }else if(monthly){
+//                    dutration="monthly";
+//                }else{
+//                    dutration="annual";
+//                }
+//                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
+//                        ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
+//                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
+//                        levelNumber.getText().toString(),buildAge.getText().toString());
+//                time++;
+//                flatView.setVisibility(View.GONE);
+//                totalPriceView.setVisibility(View.VISIBLE);
+//                //cv4.setVisibility(View.VISIBLE);
+//                // ch
+//            }
+//        });
+
+        receptionNumber=findViewById(R.id.receptionNumber);
+        receptionSeekBar=findViewById(R.id.receptionSeekBar);
+        btnSingle=findViewById(R.id.btnSingle);
+        btnFamily=findViewById(R.id.btnFamily);
+
+        dailyText=findViewById(R.id.dailyText);
+        monthlyTxt=findViewById(R.id.monthlyTxt);
+        annualText=findViewById(R.id.annualText);
+
+        bathRoomsSeekBar=findViewById(R.id.bathRoomsSeekBar);
+        bathRoomsNumber=findViewById(R.id.bathRoomsNumber);
+
+        roomsSeekBar=findViewById(R.id.roomsSeekBar);
+        roomsNumber=findViewById(R.id.roomsNumber);
+
+        levelSeekBar=findViewById(R.id.levelSeekBar);
+        levelNumber=findViewById(R.id.levelNumber);
+
+        buildAgeSeekBar=findViewById(R.id.buildAgeSeekBar);
+        buildAge=findViewById(R.id.buildAge);
+
+
+        buildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                String year="سنه" ;
+                if(Integer.parseInt(value.toString())==0){
+                    buildAge.setText(year);
+                }else{
+                    buildAge.setText(value.toString()+" "+year);
+                }
+            }
+        });
+        levelSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                if(Integer.parseInt(value.toString())==0){
+                    levelNumber.setText("أرضى");
+                }else{
+                    levelNumber.setText(value.toString());
+                }
+            }
+        });
+        roomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                roomsNumber.setText(value.toString());
+
+            }
+        });
+        bathRoomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                bathRoomsNumber.setText(value.toString());
+            }
+        });
+        receptionSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                receptionNumber.setText(value.toString());
+            }
+        });
+        btnSingle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(family){
+                    family=false;
+                    btnFamily.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    btnFamily.setTextColor(Color.parseColor("#000000"));
+
+                    btnSingle.setBackgroundColor(getResources().getColor(R.color.primary));
+                    btnSingle.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+
+
+        btnFamily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!family){
+                    family=true;
+                    btnSingle.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    btnSingle.setTextColor(Color.parseColor("#000000"));
+
+                    btnFamily.setBackgroundColor(getResources().getColor(R.color.primary));
+                    btnFamily.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+
+        dailyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!daily){
+                    daily=true;
+                    monthly=false;
+                    annual=false;
+
+                    dailyText.setBackgroundColor(getResources().getColor(R.color.primary));
+                    dailyText.setTextColor(Color.parseColor("#ffffff"));
+
+                    monthlyTxt.setTextColor(Color.parseColor("#000000"));
+                    monthlyTxt.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+                    annualText.setTextColor(Color.parseColor("#000000"));
+                    annualText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+                }
+            }
+        });
+
+        monthlyTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!monthly){
+                    daily=false;
+                    monthly=true;
+                    annual=false;
+
+                    monthlyTxt.setBackgroundColor(getResources().getColor(R.color.primary));
+                    monthlyTxt.setTextColor(Color.parseColor("#ffffff"));
+
+                    dailyText.setTextColor(Color.parseColor("#000000"));
+                    dailyText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+                    annualText.setTextColor(Color.parseColor("#000000"));
+                    annualText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+                }
+
+            }
+        });
+
+        annualText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!annual){
+                    daily=false;
+                    monthly=false;
+                    annual=true;
+
+                    annualText.setBackgroundColor(getResources().getColor(R.color.primary));
+                    annualText.setTextColor(Color.parseColor("#ffffff"));
+
+                    dailyText.setTextColor(Color.parseColor("#000000"));
+                    dailyText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+                    monthlyTxt.setTextColor(Color.parseColor("#000000"));
+                    monthlyTxt.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+                }
+
+            }
+        });
+    }
+    public void contuinue(View view){
+                        String dutration="";
+                if(daily){
+                    dutration="daily";
+                }else if(monthly){
+                    dutration="monthly";
+                }else{
+                    dutration="annual";
+                }
+                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
+                        ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
+                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
+                        levelNumber.getText().toString(),buildAge.getText().toString());
+                time++;
+                flatView.setVisibility(View.GONE);
+                //cv4.setVisibility(View.VISIBLE);
+                // ch
+
+    }
+    Flat flat;
     private void uploadResult() {
         final ProgressDialog progressDialog = new ProgressDialog(this,
                 R.style.AppTheme_Dark_Dialog);
@@ -302,6 +564,25 @@ ListView listView;
         offerResult.setId(Calendar.getInstance().getTime().toString());
         offerResult.setDescription(offerResult.getId());
         offerResult.setBuildingType(buildType);
+        if(buildType.equals("شقة ")){
+            flatView=findViewById(R.id.flat_view);
+            flatView.setVisibility(View.VISIBLE);
+            __init__flat();
+            String dutration="";
+            if(daily){
+                dutration="daily";
+            }else if(monthly){
+                dutration="monthly";
+            }else{
+                dutration="annual";
+            }
+            flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
+                    ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
+                    bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
+                    levelNumber.getText().toString(),buildAge.getText().toString());
+
+            offerResult.setAspect(flat);
+        }
         offerResult.setType(type);
         offerResult.setLituide(Shared.lituide);
         offerResult.setLongtuide(Shared.longtuide);
@@ -402,13 +683,39 @@ ListView listView;
             if (!getType)
                 Toast.makeText(this, "من فضلك ادخل نوع العقار", Toast.LENGTH_SHORT).show();
             else {
+
                 time++;
                 hideView(cv2, cv3);
                 changeColor(orderType, orderDescription);
             }
 
         } else if (time == 2) {
-
+            if(buildType.equals("شقة ")) {
+                View flatView=findViewById(R.id.flat_view);
+                flatView.setVisibility(View.VISIBLE);
+                __init__flat();
+            }else if(buildType.equals("فيلا ")){
+                View villaView=findViewById(R.id.villa_view);
+                villaView.setVisibility(View.VISIBLE);
+            }else if(buildType.equals("عمارة ")){
+                View build_view=findViewById(R.id.build_view);
+                build_view.setVisibility(View.VISIBLE);
+            }else if(buildType.equals("بيت ")){
+                View homeView=findViewById(R.id.home_view);
+                homeView.setVisibility(View.VISIBLE);
+            }else if(buildType.equals("دور ")){
+                View levelView=findViewById(R.id.level_view);
+                levelView.setVisibility(View.VISIBLE);
+            }else if(buildType.equals("مزرعه ")){
+                View farmView=findViewById(R.id.farme_view);
+                farmView.setVisibility(View.VISIBLE);
+            }else if(buildType.equals("محل ")){
+                View marketView=findViewById(R.id.market_view);
+                marketView.setVisibility(View.VISIBLE);
+            }else if(buildType.equals("استراحه ")){
+                View sweetView=findViewById(R.id.sweet_view);
+                sweetView.setVisibility(View.VISIBLE);
+            }
             if (!getBuildType) {
                 Toast.makeText(this, "من فضلك ادخل وصف المنشاءه", Toast.LENGTH_SHORT).show();
                 priceText.setError("من فضلك ادخل سعر المنشاءه");
@@ -422,6 +729,8 @@ ListView listView;
             if (price.equals("")) {
                 Toast.makeText(this, "من فضلك ادخل سعر المنشاءه", Toast.LENGTH_SHORT).show();
                 priceText.setError("من فضلك ادخل سعر المنشاءه");
+                View flatView=findViewById(R.id.flat_view);
+
             } else {
                 uploadResult();
             }

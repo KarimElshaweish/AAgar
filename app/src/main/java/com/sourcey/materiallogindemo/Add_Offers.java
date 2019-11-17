@@ -169,6 +169,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     boolean family=true;
     boolean daily=true,monthly=false,annual=false;
     View flatView;
+
     private void __init__flat(){
         airCondtionSwitch=findViewById(R.id.airCondtionSwitch);
         airCondtionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -192,6 +193,12 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
             }
         });
         extentionSwitch=findViewById(R.id.extentionSwitch);
+        extentionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                extentionSwitchbool=b;
+            }
+        });
         elvatorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -464,8 +471,8 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                         levelNumber.getText().toString(),buildAge.getText().toString());
                 time++;
                 flatView.setVisibility(View.GONE);
-                cv4.setVisibility(View.VISIBLE);
-                changeColor(priceNext1,notificationTyp);
+                //cv4.setVisibility(View.VISIBLE);
+               // changeColor(priceNext1,notificationTyp);
             }
         });
         notifcationTypListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

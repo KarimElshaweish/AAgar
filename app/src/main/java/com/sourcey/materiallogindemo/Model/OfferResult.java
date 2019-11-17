@@ -3,6 +3,16 @@ package com.sourcey.materiallogindemo.Model;
 import java.util.List;
 
 public class OfferResult {
+    Object aspect;
+
+    public Object getAspect() {
+        return aspect;
+    }
+
+    public void setAspect(Object aspect) {
+        this.aspect = aspect;
+    }
+
     String id;
 
     public String getId() {

@@ -10,92 +10,92 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="2"
-        android:padding="14dp">
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@color/primary"
-            android:textColor="#fff"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="عوائل"
-            android:textSize="17sp"
-            android:fontFamily="@font/vip_font"
-            android:id="@+id/btnFamily"/>
-        <TextView
-            android:layout_gravity="center"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:textColor="#000"
-            android:background="@drawable/tab_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:weightSum="2"
+            android:padding="14dp">
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/primary"
+                android:textColor="#fff"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="عوائل"
+                android:textSize="17sp"
+                android:fontFamily="@font/vip_font"
+                android:id="@+id/btnFamily"/>
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#000"
+                android:background="@drawable/tab_layout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="عزاب"
+                android:textSize="17sp"
+                android:fontFamily="@font/vip_font"
+                android:id="@+id/btnSingle"/>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="10dp"
+            android:id="@+id/lin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="عزاب"
-            android:textSize="17sp"
-            android:fontFamily="@font/vip_font"
-            android:id="@+id/btnSingle"/>
-    </LinearLayout>
-    <LinearLayout
-        android:padding="10dp"
-        android:id="@+id/lin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:weightSum="3">
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/tab_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/annualText"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="سنوي"/>
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/tab_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/monthlyTxt"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="شهري"/>
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@color/primary"
-            android:id="@+id/dailyText"
-            android:textColor="#fff"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="يومي"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:weightSum="3">
+            <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/tab_layout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="visible"
+                android:id="@+id/annualText"
+                android:textColor="#000"
+                android:fontFamily="@font/vip"
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="سنوي"/>
+            <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/tab_layout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="visible"
+                android:id="@+id/monthlyTxt"
+                android:textColor="#000"
+                android:fontFamily="@font/vip"
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="شهري"/>
+            <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/primary"
+                android:id="@+id/dailyText"
+                android:textColor="#fff"
+                android:fontFamily="@font/vip"
+                android:textSize="15sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="يومي"/>
+        </LinearLayout>
         <LinearLayout
             android:padding="7dp"
             android:layout_width="match_parent"
@@ -316,6 +316,41 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="السعر"
+                    android:id="@+id/price_text_flat"
+                    android:textColor="#000"
+                    android:fontFamily="@font/vip_font"/>
+                <EditText
+                    android:inputType="number"
+                    android:theme   ="@style/SwitchTheme"
+                    android:id="@+id/price_flat"
+                    android:layout_below="@id/price_text_flat"
+                    android:textSize="17sp"
+                    android:background="@drawable/linear_layout"
+                    android:hint="السعر"
+                    android:layout_margin="7dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="مؤثثة"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
@@ -484,10 +519,10 @@
             </RelativeLayout>
         </LinearLayout>
         <include layout="@layout/total_price_layout"/>
+
         <Button
             android:visibility="gone"
-            android:onClick="contuinue"
-            android:id="@+id/btt_flat"
+            android:id="@+id/btnContinue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/tab_layout"

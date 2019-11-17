@@ -10,92 +10,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="2"
-        android:padding="14dp">
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@color/primary"
-            android:textColor="#fff"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="عوائل"
-            android:textSize="17sp"
-            android:fontFamily="@font/vip_font"
-            android:id="@+id/btnFamily"/>
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#000"
-            android:background="@drawable/tab_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="عزاب"
-            android:textSize="17sp"
-            android:fontFamily="@font/vip_font"
-            android:id="@+id/btnSingle"/>
-    </LinearLayout>
-    <LinearLayout
-        android:padding="10dp"
-        android:id="@+id/lin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:weightSum="3">
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/tab_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/annualText"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="سنوي"/>
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/tab_layout"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/monthlyTxt"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="شهري"/>
-        <TextView
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:background="@color/primary"
-            android:id="@+id/dailyText"
-            android:textColor="#fff"
-            android:fontFamily="@font/vip"
-            android:textSize="15sp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="يومي"/>
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="الواجهة"
+                android:fontFamily="@font/vip_font"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/spinner"/>
+        </RelativeLayout>
         <LinearLayout
             android:padding="7dp"
             android:layout_width="match_parent"
@@ -109,11 +40,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الصالات"
+                    android:text="عدد الصالات"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/receptionNumber"
+                    android:id="@+id/homeReceptionNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -150,11 +81,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="عدد دورات المياة"
+                    android:text="عدد دورات المياه"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/bathRoomsNumber"
+                    android:id="@+id/homeBathRomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -196,7 +127,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/roomsNumber"
+                    android:id="@+id/homeRoomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -234,11 +165,11 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="الدور"
+                    android:text="عرض الشارع"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/levelNumber"
+                    android:id="@+id/SweetStreetWidth"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -249,11 +180,12 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/levelSeekBar"
+                android:id="@+id/SweetStreetWidthSeekbar"
+                android:scaleX="-1"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:corner_radius="10"
-                android:scaleX="-1"
                 app:min_value="0"
                 app:max_value="10"
                 app:bar_color="#ccc"
@@ -262,6 +194,7 @@
                 app:left_thumb_color_pressed="@color/primary_dark"
                 app:data_type="_integer"/>
         </LinearLayout>
+
         <LinearLayout
             android:padding="7dp"
             android:layout_width="match_parent"
@@ -316,14 +249,14 @@
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="مؤثثة"
+                    android:text="مسبح"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <Switch
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/readySwitch"
+                    android:id="@+id/sweetPoolSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -341,19 +274,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="مطبخ"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/vip_font"
+                    android:text="ملعب كرة قدم"
                     android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
+                    android:textSize="17sp" />
                 <Switch
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/kitchenSwitch"
+                    android:id="@+id/sweetFootballGroundSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -371,19 +305,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ملحق"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/vip_font"
+                    android:text="ملعب كرة طائرة"
                     android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
+                    android:textSize="17sp" />
                 <Switch
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/extentionSwitch"
+                    android:id="@+id/sweetVolleyBallGroundSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -401,19 +336,52 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="مدخل سيارة"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/vip_font"
+                    android:text="بيت شعر"
                     android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
+                    android:textSize="17sp" />
                 <Switch
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/carEnternaceSwitch"
+                    android:id="@+id/homeHairRoomSwitch"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/vip_font"
+                    android:text="ملاهى"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+                <Switch
+                    android:theme="@style/SwitchTheme"
+                    android:backgroundTint="@color/primary"
+                    android:trackTint="@color/primary_dark"
+                    android:id="@+id/sweetEntertanmentPlace"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -431,19 +399,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="مصعد"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/vip_font"
+                    android:text="قسم عوائل"
                     android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
+                    android:textSize="17sp" />
                 <Switch
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/elvatorSwitch"
+                    android:id="@+id/sweetBigBathSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -453,36 +422,7 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <LinearLayout
-            android:padding="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="مكيف"
-                    android:textColor="#000"
-                    android:fontFamily="@font/vip_font"/>
-                <Switch
-                    android:theme="@style/SwitchTheme"
-                    android:backgroundTint="@color/primary"
-                    android:trackTint="@color/primary_dark"
-                    android:id="@+id/airCondtionSwitch"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    />
 
-            </RelativeLayout>
-        </LinearLayout>
         <include layout="@layout/total_price_layout"/>
         <Button
             android:visibility="gone"
