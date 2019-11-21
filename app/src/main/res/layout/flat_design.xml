@@ -483,7 +483,6 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <include layout="@layout/total_price_layout"/>
         <Button
             android:visibility="gone"
             android:onClick="contuinue"

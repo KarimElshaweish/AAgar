@@ -63,6 +63,36 @@
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:background="#a0000000">
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vip_font"
+                        android:text="ريال"
+                        android:textSize="20sp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignLeft="@id/ttPrice"
+                        android:padding="7dp"
+                        android:textColor="#fff"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ttPrice"
+                        android:fontFamily="@font/vip_font"
+                        android:text="1800"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:padding="7dp"
+                        android:textSize="20sp"
+                        android:textColor="#fff"/>
+
+                </LinearLayout>
+
                 <ImageView
                     android:id="@+id/faviamge"
                     android:onClick="AddToFavoutit"
@@ -79,6 +109,7 @@
 
 
     <android.support.v7.widget.CardView
+        android:visibility="gone"
         android:id="@+id/cv"
         app:cardCornerRadius="7dp"
         android:elevation="7dp"
@@ -221,6 +252,44 @@
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <include
+            android:visibility="gone"
+            android:id="@+id/Building"
+            layout="@layout/build_detials_view" />
+        <include layout="@layout/flat_detials_view"
+            android:id="@+id/flat_view"
+            android:visibility="gone"/>
+            <include
+                android:visibility="gone"
+                android:id="@+id/home_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/home_layout_detials_view"/>
+            <include android:visibility="gone"
+                android:id="@+id/villa_view"
+                layout="@layout/villa_detials_view"/>
+            <include android:visibility="gone"
+                android:id="@+id/level_view"
+                layout="@layout/level_view_detials"/>
+            <include layout="@layout/farm_view_detials"
+                android:id="@+id/farm_view_details"
+                android:visibility="gone"/>
+            <include layout="@layout/market_detials_view"
+                android:id="@+id/market_view_detials"
+                android:visibility="gone"/>
+            <include layout="@layout/sweet_view_detials"
+                android:id="@+id/ressort_details_view"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
     <LinearLayout
         android:id="@+id/bottomlin"

@@ -4,35 +4,36 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_gravity="right"
-    android:gravity="right"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <TextView
-        android:layout_alignParentRight="true"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="السعر الإجمالى"
-        android:textSize="16sp"
-        android:layout_margin="10dp"
-        android:id="@+id/total_price"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_gravity="right"
-        android:gravity="right"/>
-    <EditText
-        android:hint="أدخل هنا"
         android:layout_width="match_parent"
+        android:layout_gravity="right"
+        android:gravity="right"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:padding="7dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/tab_layout"
-        android:layout_toLeftOf="@id/total_price"/>
-</RelativeLayout>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="السعر الإجمالى"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:id="@+id/total_price"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_gravity="right"
+            android:gravity="right"/>
+        <EditText
+            android:id="@+id/total_price_edit"
+            android:hint="أدخل هنا"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="7dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/tab_layout"
+            android:layout_toLeftOf="@id/total_price"/>
+    </RelativeLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +49,7 @@
         android:layout_height="150dp"
         android:background="@drawable/tab_layout"
         android:layout_margin="10dp"
-        android:id="@+id/detials"/>
+        android:id="@+id/detialsFull"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_gravity="right"

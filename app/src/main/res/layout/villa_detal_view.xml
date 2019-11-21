@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/spinner"/>
+                android:id="@+id/Villaspinner"/>
         </RelativeLayout>
         <LinearLayout
             android:padding="7dp"
@@ -44,7 +44,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/receptionNumber"
+                    android:id="@+id/villaReceptionNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/receptionSeekBar"
+                android:id="@+id/villaReceptionSeekBar"
                 android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/bathRoomsNumber"
+                    android:id="@+id/villaBathRoomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/bathRoomsSeekBar"
+                android:id="@+id/villaBathRoomsSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/StreetWidth"
+                    android:id="@+id/villaStreetWidth"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/StreetWidthSeekBar"
+                android:id="@+id/villaStreetWidthSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -170,7 +170,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/roomsNumber"
+                    android:id="@+id/villaRoomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/roomsSeekBar"
+                android:id="@+id/villaRoomsSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -212,7 +212,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/levelNumber"
+                    android:id="@+id/villaLevelNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/levelSeekBar"
+                android:id="@+id/villaLevelSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:corner_radius="10"
@@ -253,7 +253,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/buildAge"
+                    android:id="@+id/villaBuildAge"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -264,7 +264,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/buildAgeSeekBar"
+                android:id="@+id/villaBuildAgeSeekBar"
                 android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,6 +295,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <EditText
+                    android:visibility="gone"
                     android:inputType="number"
                     android:theme   ="@style/SwitchTheme"
                     android:id="@+id/price_flat"
@@ -332,7 +333,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/receptionSwitch"
+                    android:id="@+id/villaReceptionSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -362,7 +363,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/driverSwitch"
+                    android:id="@+id/villaDriverSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -392,7 +393,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/billGirlRoomSwitch"
+                    android:id="@+id/villaBillGirlRoomSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -422,7 +423,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/poolSwitch"
+                        android:id="@+id/VillaPoolSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -452,7 +453,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/hairRoomSwitch"
+                        android:id="@+id/villaHairRoomSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -482,7 +483,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/hallSwitch"
+                    android:id="@+id/VillaHallSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -512,7 +513,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/vaultSwitch"
+                    android:id="@+id/villaVaultSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -543,7 +544,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/readySwitch"
+                        android:id="@+id/villaReadySwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -573,7 +574,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/kitchenSwitch"
+                    android:id="@+id/villaKitchenSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -633,7 +634,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/carEnternaceSwitch"
+                    android:id="@+id/villaCarEnternaceSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -663,7 +664,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/elvatorSwitch"
+                    android:id="@+id/villaElvatorSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -693,7 +694,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/airCondtionSwitch"
+                    android:id="@+id/villaAirCondtionSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -723,7 +724,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/dublexSwitch"
+                    android:id="@+id/villaDublexSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -733,7 +734,6 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <include layout="@layout/total_price_layout"/>
 
         <Button
             android:visibility="gone"

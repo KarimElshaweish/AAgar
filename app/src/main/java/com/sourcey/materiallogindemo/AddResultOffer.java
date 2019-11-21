@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -52,10 +54,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sourcey.materiallogindemo.Adapter.UploadListAdapter;
+import com.sourcey.materiallogindemo.Model.Build;
+import com.sourcey.materiallogindemo.Model.Farm;
 import com.sourcey.materiallogindemo.Model.Flat;
+import com.sourcey.materiallogindemo.Model.Home;
+import com.sourcey.materiallogindemo.Model.Level;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
+import com.sourcey.materiallogindemo.Model.Market;
 import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.sourcey.materiallogindemo.Model.Ressort;
+import com.sourcey.materiallogindemo.Model.Villa;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +83,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mReference = database.getReference("OfferResult");
     Spinner spinnerCity, spinnerType;
-    EditText priceText, descText, streetText;
+    EditText priceText, descText, streetText,detials;
     RecyclerView rv;
     static final int PICK_VIDEO_REQUEST = 777;
     private List<String> fileNameList;
@@ -142,6 +151,9 @@ ListView listView;
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_result_offer);
+        navigationAdapter= new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item,naviagations);
+
         list2=findViewById(R.id.list2);
         cv4=findViewById(R.id.cv4);
         cv3=findViewById(R.id.cv3);
@@ -164,7 +176,8 @@ ListView listView;
         rv.setAdapter(uploadListAdapter);
         spinnerCity = findViewById(R.id.citySpinner);
         spinnerType = findViewById(R.id.spinnerType);
-        priceText = findViewById(R.id.price_flat);
+        priceText = findViewById(R.id.total_price_edit);
+        detials=findViewById(R.id.detials);
         descText = findViewById(R.id.descText);
         streetText = findViewById(R.id.StreetText);
         setTypeSpinner();
@@ -533,6 +546,661 @@ ListView listView;
             }
         });
     }
+    Spinner Villaspinner;
+    String[]naviagations=new String[]{"غرب","شمال","جنوب","شرق"};
+    ArrayAdapter<String> navigationAdapter ;
+    TextView villaReceptionNumber,villaBathRoomsNumber,villaStreetWidth,villaRoomsNumber,villaLevelNumber
+            ,villaBuildAge;
+    CrystalSeekbar villaReceptionSeekBar,villaBathRoomsSeekBar,villaStreetWidthSeekBar,villaRoomsSeekBar,villaLevelSeekBar
+            ,villaBuildAgeSeekBar;
+    Switch villaReceptionSwitch,villaDriverSwitch,villaBillGirlRoomSwitch,VillaPoolSwitch,villaHairRoomSwitch,VillaHallSwitch
+            ,villaVaultSwitch,villaReadySwitch,villaKitchenSwitch,villaCarEnternaceSwitch,villaElvatorSwitch,villaAirCondtionSwitch,
+            villaDublexSwitch;
+    Boolean villaReceptionSwitchBool=false,villaDriverSwitchBool=false,villaBillGirlRoomSwitchBool=false,VillaPoolSwitchBool=false
+            ,villaHairRoomSwitchBool=false,VillaHallSwitchBool=false,villaVaultSwitchBool=false,villaReadySwitchBool=false
+            ,villaKitchenSwitchBool=false,villaCarEnternaceSwitchBool=false,villaElvatorSwitchBool=false,villaAirCondtionSwitchBool=false,
+            villaDublexSwitchBool=false;
+    String villaNavigation="";
+    private void __init__villa(){
+        Villaspinner=findViewById(R.id.Villaspinner);
+        Villaspinner.setAdapter(navigationAdapter);
+        Villaspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                villaNavigation=naviagations[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        villaReceptionNumber=findViewById(R.id.villaReceptionNumber);
+        villaReceptionSeekBar=findViewById(R.id.villaReceptionSeekBar);
+        villaReceptionSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                villaReceptionNumber.setText(value.toString());
+            }
+        });
+        villaBathRoomsNumber=findViewById(R.id.villaBathRoomsNumber);
+        villaBathRoomsSeekBar=findViewById(R.id.villaBathRoomsSeekBar);
+        villaBathRoomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                villaBathRoomsNumber.setText(value.toString());
+            }
+        });
+        villaStreetWidth=findViewById(R.id.villaStreetWidth);
+        villaStreetWidthSeekBar=findViewById(R.id.villaStreetWidthSeekBar);
+        villaStreetWidthSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                villaStreetWidth.setText(value.toString());
+            }
+        });
+        villaRoomsNumber=findViewById(R.id.villaRoomsNumber);
+        villaRoomsSeekBar=findViewById(R.id.villaRoomsSeekBar);
+        villaRoomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                villaRoomsNumber.setText(value.toString());
+            }
+        });
+        villaLevelNumber=findViewById(R.id.villaLevelNumber);
+        villaLevelSeekBar=findViewById(R.id.villaLevelSeekBar);
+        villaLevelSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                villaLevelNumber.setText(value.toString());
+            }
+        });
+        villaBuildAge=findViewById(R.id.villaBuildAge);
+        villaBuildAgeSeekBar=findViewById(R.id.villaBuildAgeSeekBar);
+        villaBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                villaBuildAge.setText(value.toString());
+            }
+        });
+        villaReceptionSwitch=findViewById(R.id.villaReceptionSwitch);
+        villaReceptionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaReceptionSwitchBool=b;
+            }
+        });
+        villaDriverSwitch=findViewById(R.id.villaDriverSwitch);
+        villaDriverSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaDriverSwitchBool=b;
+            }
+        });
+        villaBillGirlRoomSwitch=findViewById(R.id.villaBillGirlRoomSwitch);
+        villaBillGirlRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaBillGirlRoomSwitchBool=b;
+            }
+        });
+        VillaPoolSwitch=findViewById(R.id.VillaPoolSwitch);
+        VillaPoolSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                VillaPoolSwitchBool=b;
+            }
+        });
+        villaHairRoomSwitch=findViewById(R.id.villaHairRoomSwitch);
+        villaHairRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaHairRoomSwitchBool=b;
+            }
+        });
+        VillaHallSwitch=findViewById(R.id.VillaHallSwitch);
+        VillaHallSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                VillaHallSwitchBool=b;
+            }
+        });
+        villaVaultSwitch=findViewById(R.id.villaVaultSwitch);
+        villaVaultSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaVaultSwitchBool=b;
+            }
+        });
+        villaReadySwitch=findViewById(R.id.villaReadySwitch);
+        villaReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaReadySwitchBool=b;
+            }
+        });
+        villaKitchenSwitch=findViewById(R.id.villaKitchenSwitch);
+        villaKitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaKitchenSwitchBool=false;
+            }
+        });
+        villaCarEnternaceSwitch=findViewById(R.id.villaCarEnternaceSwitch);
+        villaCarEnternaceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaCarEnternaceSwitchBool=b;
+            }
+        });
+        villaElvatorSwitch=findViewById(R.id.villaElvatorSwitch);
+        villaElvatorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaElvatorSwitchBool=b;
+            }
+        });
+        villaAirCondtionSwitch=findViewById(R.id.villaAirCondtionSwitch);
+        villaAirCondtionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaAirCondtionSwitchBool=b;
+            }
+        });
+        villaDublexSwitch=findViewById(R.id.villaDublexSwitch);
+        villaDublexSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                villaDublexSwitchBool=b;
+            }
+        });
+    }
+    Spinner Buildspinner;
+    TextView buildCommericeAndHomming,commeice,homing,buildStreetWidth,buildRoomsNumber,buildMarketNumber,buildRomsNumber
+            ,bbuildAge;
+    Boolean buildCommericeAndHommingBool=true,commeiceBool=false,homingBool=false;
+    CrystalSeekbar buildStreetWidthSeekBar,buildRoomsNumberSeekBar,buildMarketNumberSeekBar,buildRomsNumberSeekBar,
+            bbuildAgeSeekBar;
+    Switch buildReadySwitch;
+    Boolean buildReadySwitchBool=false;
+    String buildNavigation="";
+    private void __init_build(){
+        Buildspinner=findViewById(R.id.Buildspinner);
+        Buildspinner.setAdapter(navigationAdapter);
+        Buildspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                buildNavigation=naviagations[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        buildCommericeAndHomming=findViewById(R.id.buildCommericeAndHomming);
+        commeice=findViewById(R.id.commeice);
+        homing=findViewById(R.id.homing);
+        commeice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!commeiceBool){
+                    commeiceBool=true;
+                    homingBool=false;
+                    buildCommericeAndHommingBool=false;
+                    buildCommericeAndHomming.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    buildCommericeAndHomming.setTextColor(Color.parseColor("#000000"));
+
+                    homing.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    homing.setTextColor(Color.parseColor("#000000"));
+
+                    commeice.setBackgroundColor(getResources().getColor(R.color.primary));
+                    commeice.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        buildCommericeAndHomming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!buildCommericeAndHommingBool){
+                    buildCommericeAndHommingBool=true;
+                    commeiceBool=false;
+                    homingBool=false;
+                    commeice.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    commeice.setTextColor(Color.parseColor("#000000"));
+
+                    homing.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    homing.setTextColor(Color.parseColor("#000000"));
+
+                    buildCommericeAndHomming.setBackgroundColor(getResources().getColor(R.color.primary));
+                    buildCommericeAndHomming.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        homing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!homingBool){
+                    homingBool=true;
+                    commeiceBool=false;
+                    buildCommericeAndHommingBool=false;
+                    commeice.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    commeice.setTextColor(Color.parseColor("#000000"));
+
+                    buildCommericeAndHomming.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    buildCommericeAndHomming.setTextColor(Color.parseColor("#000000"));
+
+                    homing.setBackgroundColor(getResources().getColor(R.color.primary));
+                    homing.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        buildStreetWidth=findViewById(R.id.buildStreetWidth);
+        buildStreetWidthSeekBar=findViewById(R.id.buildStreetWidthSeekBar);
+        buildStreetWidthSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                buildStreetWidth.setText(value.toString());
+            }
+        });
+        buildRoomsNumber=findViewById(R.id.buildRoomsNumber);
+        buildRoomsNumberSeekBar=findViewById(R.id.buildRoomsNumberSeekBar);
+        buildRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                buildRoomsNumber.setText(value.toString());
+            }
+        });
+        buildMarketNumber=findViewById(R.id.buildMarketNumber);
+        buildMarketNumberSeekBar=findViewById(R.id.buildMarketNumberSeekBar);
+        buildMarketNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                buildMarketNumber.setText(value.toString());
+            }
+        });
+        buildRomsNumber=findViewById(R.id.buildRomsNumber);
+        buildRomsNumberSeekBar=findViewById(R.id.buildRomsNumberSeekBar);
+        buildRomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                buildRomsNumber.setText(value.toString());
+            }
+        });
+        bbuildAge=findViewById(R.id.bbuildAge);
+        bbuildAgeSeekBar=findViewById(R.id.bbuildAgeSeekBar);
+        bbuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                bbuildAge.setText(value.toString());
+            }
+        });
+        buildReadySwitch=findViewById(R.id.buildReadySwitch);
+        buildReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                buildReadySwitchBool=b;
+            }
+        });
+    }
+    Spinner home_spinner;
+    TextView homeReceptionNumber,homeBathRomsNumber,homeRoomsNumber,homeBuildAge;
+    CrystalSeekbar homeReceptionNumberSeekBar,homeBathRomsNumberSeekBar,homeRoomsNumberSeekBar,homeBuildAgeSeekBar;
+    Switch homeReadySwitch,homeDriverRoomSwitch,homeBillGirlRoomSwitch,homeHairRoomSwitch,homeHailSwitch,homeKitchenSwitch;
+    boolean homeReadySwitchBool=false,homeDriverRoomSwitchBool=false,homeBillGirlRoomSwitchBool=false
+            ,homeHairRoomSwitchBool=false,homeHailSwitchBool=false,homeKitchenSwitchBool=false;
+    String homeNavigation;
+    private void __init_home(){
+        home_spinner=findViewById(R.id.home_spinner);
+        home_spinner.setAdapter(navigationAdapter);
+        home_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                homeNavigation=naviagations[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        homeReceptionNumber=findViewById(R.id.homeReceptionNumber);
+        homeReceptionNumberSeekBar=findViewById(R.id.homeReceptionNumberSeekBar);
+        homeReceptionNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                homeReceptionNumber.setText(value.toString());
+            }
+        });
+        homeBathRomsNumber=findViewById(R.id.homeBathRomsNumber);
+        homeBathRomsNumberSeekBar=findViewById(R.id.homeBathRomsNumberSeekBar);
+        homeBathRomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                homeBathRomsNumber.setText(value.toString());
+            }
+        });
+        homeRoomsNumber=findViewById(R.id.homeRoomsNumber);
+        homeRoomsNumberSeekBar=findViewById(R.id.homeRoomsNumberSeekBar);
+        homeRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                homeRoomsNumber.setText(value.toString());
+            }
+        });
+        homeBuildAge=findViewById(R.id.homeBuildAge);
+        homeBuildAgeSeekBar=findViewById(R.id.homeBuildAgeSeekBar);
+        homeBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                homeBuildAge.setText(value.toString());
+            }
+        });
+        homeReadySwitch=findViewById(R.id.homeReadySwitch);
+        homeReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                homeReadySwitchBool=b;
+            }
+        });
+        homeDriverRoomSwitch=findViewById(R.id.homeDriverRoomSwitch);
+        homeDriverRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                homeDriverRoomSwitchBool=b;
+            }
+        });
+        homeBillGirlRoomSwitch=findViewById(R.id.homeBillGirlRoomSwitch);
+        homeBillGirlRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                homeBillGirlRoomSwitchBool=b;
+            }
+        });
+        homeHairRoomSwitch=findViewById(R.id.homeHairRoomSwitch);
+        homeHairRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                homeHairRoomSwitchBool=b;
+            }
+        });
+        homeHailSwitch=findViewById(R.id.homeHailSwitch);
+        homeHailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                homeHailSwitchBool=b;
+            }
+        });
+        homeKitchenSwitch=findViewById(R.id.homeKitchenSwitch);
+        homeKitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                homeKitchenSwitchBool=b;
+            }
+        });
+    }
+    Spinner levelSpinner;
+    TextView lrRectiption,levelBathRoomsNumber,levelRoomsNumber,llevelNumber,levelBuildAge;
+    CrystalSeekbar levelReceptionNumberSeekBar,levelBathRoomsNumberSeekBar,levelRoomsNumberSeekBar
+            ,llevelNumberSeekBar,levelBuildAgeSeekBar;
+    Switch levelReadySwitch,levelcarEnternaceSwitch,levelAirCondtionSwitch;
+    Boolean levelReadySwitchBool=false,levelcarEnternaceSwitchBool=false,levelAirCondtionSwitchBool=false;
+    String levelNavigaiton="";
+    private void  __init_level(){
+        levelSpinner=findViewById(R.id.levelSpinner);
+        levelSpinner.setAdapter(navigationAdapter);
+        levelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                levelNavigaiton=naviagations[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        lrRectiption=findViewById(R.id.levelReceptionNumber);
+        levelReceptionNumberSeekBar=findViewById(R.id.levelReceptionNumberSeekBar);
+        levelReceptionNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                lrRectiption.setText(value.toString());
+            }
+        });
+        levelBathRoomsNumber=findViewById(R.id.levelBathRoomsNumber);
+        levelBathRoomsNumberSeekBar=findViewById(R.id.levelBathRoomsNumberSeekBar);
+        levelBathRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                levelBathRoomsNumber.setText(value.toString());
+            }
+        });
+        levelRoomsNumber=findViewById(R.id.levelRoomsNumber);
+        levelRoomsNumberSeekBar=findViewById(R.id.levelRoomsNumberSeekBar);
+        levelRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                levelRoomsNumber.setText(value.toString());
+            }
+        });
+        llevelNumber=findViewById(R.id.llevelNumber);
+        llevelNumberSeekBar=findViewById(R.id.llevelNumberSeekBar);
+        llevelNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                llevelNumber.setText(value.toString());
+            }
+        });
+        levelBuildAge=findViewById(R.id.levelBuildAge);
+        levelBuildAgeSeekBar=findViewById(R.id.levelBuildAgeSeekBar);
+        levelBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                levelBuildAge.setText(value.toString());
+            }
+        });
+        levelReadySwitch=findViewById(R.id.levelReadySwitch);
+        levelReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                levelReadySwitchBool=b;
+            }
+        });
+        levelcarEnternaceSwitch=findViewById(R.id.levelcarEnternaceSwitch);
+        levelcarEnternaceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                levelcarEnternaceSwitchBool=b;
+            }
+        });
+        levelAirCondtionSwitch=findViewById(R.id.levelAirCondtionSwitch);
+        levelAirCondtionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                levelAirCondtionSwitchBool=b;
+            }
+        });
+    }
+
+    TextView farmeWaterFailNumber,treeNumber;
+    CrystalSeekbar farmeWaterFailNumberSeekBar,treeNumberSeekBar;
+    Switch farmHomeHairRoomSwitch;
+    Boolean farmHomeHairRoomSwitchBool=false;
+    private void __init_farm(){
+        farmeWaterFailNumber=findViewById(R.id.farmeWaterFailNumber);
+        farmeWaterFailNumberSeekBar=findViewById(R.id.farmeWaterFailNumberSeekBar);
+        farmeWaterFailNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                farmeWaterFailNumber.setText(value.toString());
+            }
+        });
+        treeNumber=findViewById(R.id.treeNumber);
+        treeNumberSeekBar=findViewById(R.id.treeNumberSeekBar);
+        treeNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                treeNumber.setText(value.toString());
+            }
+        });
+        farmHomeHairRoomSwitch=findViewById(R.id.farmHomeHairRoomSwitch);
+        farmHomeHairRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                farmHomeHairRoomSwitchBool=b;
+            }
+        });
+
+    }
+    Spinner marketSpinner;
+    TextView marketStreetWitdth,marketBuildAge;
+    CrystalSeekbar marketStreetWidthSeekBar,marketBuildAgeSeekBar;
+    String marketNavigaiton="";
+    private void __init__market(){
+        marketSpinner=findViewById(R.id.marketSpinner);
+        marketSpinner.setAdapter(navigationAdapter);
+        marketSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                marketNavigaiton=naviagations[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        marketStreetWitdth=findViewById(R.id.marketStreetWitdth);
+        marketStreetWidthSeekBar=findViewById(R.id.marketStreetWidthSeekBar);
+        marketBuildAge=findViewById(R.id.marketBuildAge);
+        marketStreetWidthSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                marketStreetWitdth.setText(value.toString());
+            }
+        });
+        marketBuildAgeSeekBar=findViewById(R.id.marketBuildAgeSeekBar);
+        marketBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                marketBuildAge.setText(value.toString());
+            }
+        });
+    }
+    Spinner sweetSpinner;
+    TextView sweetReceptionNumber,sweetBathRomsNumber,sweetRoomsNumber,SweetStreetWidth,sweetBuildAge;
+    CrystalSeekbar sweetReceptionNumberSeekBar,sweetRoomsSeekBar,sweetRoomsNumberSeekBar,SweetStreetWidthSeekbar,
+            sweetBuildAgeSeekBar;
+    Switch sweetPoolSwitch,sweetFootballGroundSwitch,sweetVolleyBallGroundSwitch,sweetHairRoomSwitch,
+            sweetEntertanmentPlace,sweetBigBathSwitch;
+    Boolean sweetPoolSwitchBool=false,sweetFootballGroundSwitchBool=false,sweetVolleyBallGroundSwitchBool=false,
+            sweetHairRoomSwitchBool=false,sweetEntertanmentPlaceBool=false,sweetBigBathSwitchBool=false;
+    String ressortNevigation="";
+    private void __init__ressort(){
+        sweetSpinner=findViewById(R.id.sweetSpinner);
+        sweetSpinner.setAdapter(navigationAdapter);
+        sweetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ressortNevigation=naviagations[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        sweetReceptionNumber=findViewById(R.id.sweetReceptionNumber);
+        sweetReceptionNumberSeekBar=findViewById(R.id.sweetReceptionNumberSeekBar);
+        sweetReceptionNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                sweetReceptionNumber.setText(value.toString());
+            }
+        });
+        sweetBathRomsNumber=findViewById(R.id.sweetBathRomsNumber);
+        sweetRoomsSeekBar=findViewById(R.id.sweetRoomsSeekBar);
+        sweetRoomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                sweetBathRomsNumber.setText(value.toString());
+            }
+        });
+        sweetRoomsNumber=findViewById(R.id.sweetRoomsNumber);
+        sweetRoomsNumberSeekBar=findViewById(R.id.sweetRoomsNumberSeekBar);
+        sweetRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                sweetRoomsNumber.setText(value.toString());
+            }
+        });
+        SweetStreetWidth=findViewById(R.id.SweetStreetWidth);
+        SweetStreetWidthSeekbar=findViewById(R.id.SweetStreetWidthSeekbar);
+        SweetStreetWidthSeekbar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                SweetStreetWidth.setText(value.toString());
+            }
+        });
+        sweetBuildAge=findViewById(R.id.sweetBuildAge);
+        sweetBuildAgeSeekBar=findViewById(R.id.sweetBuildAgeSeekBar);
+        sweetBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                sweetBuildAge.setText(value.toString());
+            }
+        });
+        sweetPoolSwitch=findViewById(R.id.sweetPoolSwitch);
+        sweetPoolSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sweetPoolSwitchBool=b;
+            }
+        });
+        sweetFootballGroundSwitch=findViewById(R.id.sweetFootballGroundSwitch);
+        sweetFootballGroundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sweetFootballGroundSwitchBool=b;
+            }
+        });
+        sweetVolleyBallGroundSwitch=findViewById(R.id.sweetVolleyBallGroundSwitch);
+        sweetVolleyBallGroundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sweetVolleyBallGroundSwitchBool=b;
+            }
+        });
+        sweetHairRoomSwitch=findViewById(R.id.sweetHairRoomSwitch);
+        sweetHairRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sweetHairRoomSwitchBool=b;
+            }
+        });
+        sweetEntertanmentPlace=findViewById(R.id.sweetEntertanmentPlace);
+        sweetEntertanmentPlace.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sweetEntertanmentPlaceBool=b;
+            }
+        });
+        sweetBigBathSwitch=findViewById(R.id.sweetBigBathSwitch);
+        sweetBigBathSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sweetBigBathSwitchBool=b;
+            }
+        });
+
+    }
     public void contuinue(View view){
                         String dutration="";
                 if(daily){
@@ -553,6 +1221,13 @@ ListView listView;
 
     }
     Flat flat;
+    Villa villa;
+    Build build;
+    Home home;
+    Level level;
+    Farm farm;
+    Market market;
+    Ressort ressort;
     private void uploadResult() {
         final ProgressDialog progressDialog = new ProgressDialog(this,
                 R.style.AppTheme_Dark_Dialog);
@@ -564,30 +1239,84 @@ ListView listView;
         offerResult.setId(Calendar.getInstance().getTime().toString());
         offerResult.setDescription(offerResult.getId());
         offerResult.setBuildingType(buildType);
-        if(buildType.equals("شقة ")){
-            flatView=findViewById(R.id.flat_view);
-            flatView.setVisibility(View.VISIBLE);
-            __init__flat();
-            String dutration="";
-            if(daily){
-                dutration="daily";
-            }else if(monthly){
-                dutration="monthly";
-            }else{
-                dutration="annual";
-            }
-            flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
-                    ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
-                    bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
-                    levelNumber.getText().toString(),buildAge.getText().toString());
+        switch (buildType){
+            case "شقة ":
+                String dutration="";
+                if(daily){
+                    dutration="daily";
+                }else if(monthly){
+                    dutration="monthly";
+                }else{
+                    dutration="annual";
+                }
+                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
+                        ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
+                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
+                        levelNumber.getText().toString(),buildAge.getText().toString());
 
-            offerResult.setAspect(flat);
+                offerResult.setAspect(flat);
+                break;
+            case "فيلا ":
+                villa=new Villa(villaNavigation,villaReceptionNumber.getText().toString(),villaBathRoomsNumber.getText().toString(),
+                        villaStreetWidth.getText().toString(),villaRoomsNumber.getText().toString(),
+                        villaLevelNumber.getText().toString(),villaBuildAge.getText().toString(),
+                        villaReceptionSwitchBool,villaDriverSwitchBool,
+                        villaBillGirlRoomSwitchBool,VillaPoolSwitchBool,villaHairRoomSwitchBool,VillaHallSwitchBool,villaVaultSwitchBool,
+                        villaReadySwitchBool,villaKitchenSwitchBool,extentionSwitchbool,villaCarEnternaceSwitchBool,
+                        villaElvatorSwitchBool,villaAirCondtionSwitchBool,villaDublexSwitchBool);
+                offerResult.setAspect(villa);
+                break;
+            case "عمارة ":
+                String buildTypeTrade="";
+                if(commeiceBool){
+                    buildTypeTrade="تجارى";
+                }else if(buildCommericeAndHommingBool){
+                    buildTypeTrade="تجارى وسكنى";
+                }else {
+                    buildTypeTrade="سكنى";
+                }
+                build=new Build(buildNavigation,buildTypeTrade,buildStreetWidth.getText().toString(),buildRoomsNumber.getText().toString(),
+                        buildMarketNumber.getText().toString(),buildRomsNumber.getText().toString(),bbuildAge.getText().toString(),
+                        buildReadySwitchBool);
+                offerResult.setAspect(build);
+                break;
+            case "بيت ":
+                home=new Home(homeNavigation,homeReceptionNumber.getText().toString(),homeBathRomsNumber.getText().toString(),
+                        homeRoomsNumber.getText().toString(),homeBuildAge.getText().toString(),homeReadySwitchBool,
+                        homeDriverRoomSwitchBool,homeBillGirlRoomSwitchBool,homeHairRoomSwitchBool,homeHailSwitchBool,homeKitchenSwitchBool);
+                offerResult.setAspect(home);
+                break;
+            case "دور ":
+                level=new Level(levelNavigaiton,lrRectiption.getText().toString(),levelBathRoomsNumber.getText().toString(),levelRoomsNumber.getText().toString(),
+                        llevelNumber.getText().toString(),levelBuildAge.getText().toString(),levelReadySwitchBool,
+                        levelcarEnternaceSwitchBool,levelAirCondtionSwitchBool);
+                offerResult.setAspect(level);
+                break;
+            case "مزرعه ":
+                farm=new Farm(farmeWaterFailNumber.getText().toString(),treeNumber.getText().toString(),farmHomeHairRoomSwitchBool);
+                offerResult.setAspect(farm);
+                break;
+            case "محل ":
+                market=new Market(marketNavigaiton,marketStreetWitdth.getText().toString(),marketBuildAge.getText().toString());
+                offerResult.setAspect(market);
+                break;
+            case "استراحه ":
+                ressort=new Ressort(ressortNevigation,sweetReceptionNumber.getText().toString(),sweetBathRomsNumber.getText().toString(),
+                        sweetRoomsNumber.getText().toString(),sweetBigBathSwitch.getText().toString(),sweetBuildAge.getText().toString(),
+                        sweetPoolSwitchBool,sweetFootballGroundSwitchBool,sweetVolleyBallGroundSwitchBool,sweetHairRoomSwitchBool,sweetEntertanmentPlaceBool,
+                        sweetBigBathSwitchBool);
+                offerResult.setAspect(ressort);
+                break;
+
         }
+        String dtFull=((EditText)(findViewById(R.id.detialsFull2))).getText().toString();
+        offerResult.setFullDetials(dtFull);
         offerResult.setType(type);
         offerResult.setLituide(Shared.lituide);
         offerResult.setLongtuide(Shared.longtuide);
         offerResult.setSpinnerType(spinnerType.getSelectedItem().toString());
-        offerResult.setPrice(priceText.getText().toString());
+        String total_price=((EditText)findViewById(R.id.total_price_edit2)).getText().toString();
+        offerResult.setPrice(total_price);
         offerResult.setCity(spinnerCity.getSelectedItem().toString());
         offerResult.setStreet(streetText.getText().toString());
         offerResult.setOfferID(FirebaseAuth.getInstance().getUid() + "*" + offerResult.getDescription());
@@ -683,7 +1412,6 @@ ListView listView;
             if (!getType)
                 Toast.makeText(this, "من فضلك ادخل نوع العقار", Toast.LENGTH_SHORT).show();
             else {
-
                 time++;
                 hideView(cv2, cv3);
                 changeColor(orderType, orderDescription);
@@ -697,24 +1425,31 @@ ListView listView;
             }else if(buildType.equals("فيلا ")){
                 View villaView=findViewById(R.id.villa_view);
                 villaView.setVisibility(View.VISIBLE);
+                __init__villa();
             }else if(buildType.equals("عمارة ")){
                 View build_view=findViewById(R.id.build_view);
                 build_view.setVisibility(View.VISIBLE);
+                __init_build();
             }else if(buildType.equals("بيت ")){
                 View homeView=findViewById(R.id.home_view);
                 homeView.setVisibility(View.VISIBLE);
+                __init_home();
             }else if(buildType.equals("دور ")){
                 View levelView=findViewById(R.id.level_view);
                 levelView.setVisibility(View.VISIBLE);
+                __init_level();
             }else if(buildType.equals("مزرعه ")){
                 View farmView=findViewById(R.id.farme_view);
                 farmView.setVisibility(View.VISIBLE);
+                __init_farm();
             }else if(buildType.equals("محل ")){
                 View marketView=findViewById(R.id.market_view);
                 marketView.setVisibility(View.VISIBLE);
+                __init__market();
             }else if(buildType.equals("استراحه ")){
                 View sweetView=findViewById(R.id.sweet_view);
                 sweetView.setVisibility(View.VISIBLE);
+                __init__ressort();
             }
             if (!getBuildType) {
                 Toast.makeText(this, "من فضلك ادخل وصف المنشاءه", Toast.LENGTH_SHORT).show();
@@ -726,14 +1461,14 @@ ListView listView;
             }
         } else if (time == 3) {
             String price = priceText.getText().toString();
-            if (price.equals("")) {
-                Toast.makeText(this, "من فضلك ادخل سعر المنشاءه", Toast.LENGTH_SHORT).show();
-                priceText.setError("من فضلك ادخل سعر المنشاءه");
-                View flatView=findViewById(R.id.flat_view);
-
-            } else {
+//            if (price.equals("")) {
+//                Toast.makeText(this, "من فضلك ادخل سعر المنشاءه", Toast.LENGTH_SHORT).show();
+//                priceText.setError("من فضلك ادخل سعر المنشاءه");
+//                View flatView=findViewById(R.id.flat_view);
+//
+//            } else {
                 uploadResult();
-            }
+         //   }
         }
         //   btn.setText("إنهاء العرض");
 

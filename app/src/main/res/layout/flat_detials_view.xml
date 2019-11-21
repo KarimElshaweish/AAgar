@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:padding="4dp"
+        android:paddingRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="النوع"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="عماره"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatType"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="المدينه"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="القاهره"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatCity"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:paddingRight="7dp"         android:padding="4dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="السعر"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18000"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatPrice"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ريال"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:paddingLeft="10dp"
+            android:layout_alignParentLeft="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="@color/base"         android:padding="4dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="المطلوب"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="إيجار"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatcommtype"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:paddingRight="7dp"         android:padding="4dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="عمر العقار"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="سنه"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:paddingLeft="10dp"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatAge"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="عدد الصالات"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatReceptionNumber"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:paddingRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="الدور"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="أرضى"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatLevel"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="عدد الحمامات"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatBathrooms"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:paddingRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="عدد الغرف"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatroomNumbers"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مكيف"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نعم"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatAirCondtion"/>
+
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:paddingRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مدخل السياره"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نعم"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatCarEnterance"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="المدة"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="يومي"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatDurationType"/>
+
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:paddingRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ملحق"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نعم"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatExstention"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="السكن"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="عائلى"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/people"/>
+
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:paddingRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مؤثثة"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نعم"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:layout_centerHorizontal="true"
+                android:id="@+id/flatFurnished"/>
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:background="@color/base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مطبخ"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نعم"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/flatKitchen"/>
+
+    </RelativeLayout>
+    <RelativeLayout         android:padding="4dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="التفاصيل"
+            android:textSize="15sp"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نعم"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/detialsFull"/>
+    </RelativeLayout>
+</LinearLayout>

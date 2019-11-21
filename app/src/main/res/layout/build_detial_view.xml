@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/spinner"/>
+                    android:id="@+id/Buildspinner"/>
         </RelativeLayout>
         <LinearLayout
             android:padding="10dp"
@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:visibility="visible"
-                android:id="@+id/annualText"
+                android:id="@+id/buildCommericeAndHomming"
                 android:textColor="#000"
                 android:fontFamily="@font/vip"
                 android:textSize="15sp"
@@ -58,7 +58,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:visibility="visible"
-                android:id="@+id/monthlyTxt"
+                android:id="@+id/commeice"
                 android:textColor="#000"
                 android:fontFamily="@font/vip"
                 android:textSize="15sp"
@@ -72,7 +72,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@color/primary"
-                android:id="@+id/dailyText"
+                android:id="@+id/homing"
                 android:textColor="#fff"
                 android:fontFamily="@font/vip"
                 android:textSize="15sp"
@@ -98,7 +98,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/buildStreetWidthSeekBar"
+                    android:id="@+id/buildStreetWidth"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/receptionSeekBar"
+                android:id="@+id/buildStreetWidthSeekBar"
                 android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/bathRoomsSeekBar"
+                android:id="@+id/buildRoomsNumberSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -192,7 +192,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/roomsSeekBar"
+                android:id="@+id/buildMarketNumberSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -223,7 +223,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/buildRomsSwitch"
+                    android:id="@+id/buildRomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -234,7 +234,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/levelSeekBar"
+                android:id="@+id/buildRomsNumberSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:corner_radius="10"
@@ -263,19 +263,20 @@
                     android:text="عقار أقل من"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
+
                 <TextView
-                    android:id="@+id/buildAge"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
+                    android:id="@+id/bbuildAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="-3dp"
                     android:text="0"
                     android:textColor="#000"
-                    />
+                    android:textSize="17sp" />
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/buildAgeSeekBar"
+                android:id="@+id/bbuildAgeSeekBar"
                 android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -308,7 +309,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/readySwitch"
+                    android:id="@+id/buildReadySwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -318,7 +319,7 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <include layout="@layout/total_price_layout"/>
+
         <Button
             android:visibility="gone"
             android:onClick="contuinue"

@@ -26,15 +26,16 @@
                     android:text="عدد الأبار"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
+
                 <TextView
                     android:id="@+id/farmeWaterFailNumber"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="-1dp"
                     android:text="0"
                     android:textColor="#000"
-                    />
+                    android:textSize="17sp" />
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
@@ -115,7 +116,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/homeHairRoomSwitch"
+                    android:id="@+id/farmHomeHairRoomSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -127,7 +128,6 @@
         </LinearLayout>
 
 
-        <include layout="@layout/total_price_layout"/>
         <Button
             android:visibility="gone"
             android:onClick="contuinue"

@@ -52,6 +52,16 @@ public class OfferResult {
     String toID;
     String offerID;
     List<String>imageList;
+    String fullDetials;
+
+    public String getFullDetials() {
+        return fullDetials;
+    }
+
+    public void setFullDetials(String fullDetials) {
+        this.fullDetials = fullDetials;
+    }
+
     boolean fav;
 
     public boolean isFav() {

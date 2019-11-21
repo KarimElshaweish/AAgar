@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/spinner"/>
+                android:id="@+id/levelSpinner"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -45,7 +45,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/receptionNumber"
+                        android:id="@+id/levelReceptionNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/receptionSeekBar"
+                    android:id="@+id/levelReceptionNumberSeekBar"
                 android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/bathRoomsNumber"
+                    android:id="@+id/levelBathRoomsNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/bathRoomsSeekBar"
+                android:id="@+id/levelBathRoomsNumberSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -127,19 +127,20 @@
                     android:text="الغرف"
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
+
                 <TextView
-                    android:id="@+id/roomsNumber"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="17sp"
+                    android:id="@+id/levelRoomsNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="-2dp"
                     android:text="0"
                     android:textColor="#000"
-                    />
+                    android:textSize="17sp" />
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/roomsSeekBar"
+                android:id="@+id/levelRoomsNumberSeekBar"
                 android:scaleX="-1"
 
                 android:layout_width="match_parent"
@@ -170,7 +171,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/levelNumber"
+                        android:id="@+id/llevelNumber"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -181,7 +182,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/levelSeekBar"
+                android:id="@+id/llevelNumberSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:corner_radius="10"
@@ -211,7 +212,7 @@
                     android:textColor="#000"
                     android:fontFamily="@font/vip_font"/>
                 <TextView
-                    android:id="@+id/buildAge"
+                    android:id="@+id/levelBuildAge"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -222,7 +223,7 @@
 
             </RelativeLayout>
             <com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar
-                android:id="@+id/buildAgeSeekBar"
+                android:id="@+id/levelBuildAgeSeekBar"
                 android:scaleX="-1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,7 +256,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/readySwitch"
+                    android:id="@+id/levelReadySwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -285,7 +286,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/carEnternaceSwitch"
+                    android:id="@+id/levelcarEnternaceSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -315,7 +316,7 @@
                     android:theme="@style/SwitchTheme"
                     android:backgroundTint="@color/primary"
                     android:trackTint="@color/primary_dark"
-                    android:id="@+id/airCondtionSwitch"
+                    android:id="@+id/levelAirCondtionSwitch"
                     android:layout_alignParentLeft="true"
                     android:textSize="17sp"
                     android:layout_width="wrap_content"
@@ -325,7 +326,6 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <include layout="@layout/total_price_layout"/>
         <Button
             android:visibility="gone"
             android:onClick="contuinue"

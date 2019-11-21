@@ -454,27 +454,27 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                 }
             }
         });
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String dutration="";
-                if(daily){
-                    dutration="daily";
-                }else if(monthly){
-                    dutration="monthly";
-                }else{
-                    dutration="annual";
-                }
-                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
-                ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
-                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
-                        levelNumber.getText().toString(),buildAge.getText().toString());
-                time++;
-                flatView.setVisibility(View.GONE);
-                //cv4.setVisibility(View.VISIBLE);
-               // changeColor(priceNext1,notificationTyp);
-            }
-        });
+//        btnContinue.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String dutration="";
+//                if(daily){
+//                    dutration="daily";
+//                }else if(monthly){
+//                    dutration="monthly";
+//                }else{
+//                    dutration="annual";
+//                }
+//                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
+//                ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
+//                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
+//                        levelNumber.getText().toString(),buildAge.getText().toString());
+//                time++;
+//                flatView.setVisibility(View.GONE);
+//                //cv4.setVisibility(View.VISIBLE);
+//               // changeColor(priceNext1,notificationTyp);
+//            }
+//        });
         notifcationTypListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
