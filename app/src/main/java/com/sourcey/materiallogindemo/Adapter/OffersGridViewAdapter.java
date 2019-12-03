@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import com.sourcey.materiallogindemo.MapsActivity;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -55,7 +58,7 @@ public class OffersGridViewAdapter extends BaseAdapter {
     }
 
     private void sentOffer(final OfferResult noffer){
-        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(noffer.getDescription())){
@@ -78,21 +81,26 @@ public class OffersGridViewAdapter extends BaseAdapter {
             }
         });
     }
-    private void checkIfSent(final OfferResult offerResult, final RelativeLayout sentRl){
+    private void checkIfSent(final int positon, final RelativeLayout sentRl,final Button btn){
+   //     finalI=positon;
         FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(offerResult.getDescription())){
-                    sentRl.setVisibility(View.VISIBLE);
+                for(DataSnapshot dt:dataSnapshot.getChildren()){
+                        OfferResult dataOfferResult = dt.getValue(OfferResult.class);
+                        if (offerResultList.get(positon).getOfferID().equals(dataOfferResult.getOfferID())) {
+                            sentRl.setVisibility(View.VISIBLE);
+                            btn.setVisibility(View.GONE);
+                    }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
+    int i=0;
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View root= LayoutInflater.from(_ctx).inflate(R.layout.offer_image_item,viewGroup,false);
@@ -100,10 +108,14 @@ public class OffersGridViewAdapter extends BaseAdapter {
         RoundedImageView roundedImageView=root.findViewById(R.id.imageCover);
         Glide.with(_ctx).load(offerResult.getImageList().get(0)).into(roundedImageView);
         TextView price=root.findViewById(R.id.price);
+        TextView type=root.findViewById(R.id.type);
+        type.setText(offerResult.getType());
+        TextView buildType=root.findViewById(R.id.buildType);
+        buildType.setText(offerResult.getBuildingType());
         price.setText(offerResult.getPrice());
-        RelativeLayout share=root.findViewById(R.id.rl);
+        Button share=root.findViewById(R.id.sent);
         RelativeLayout sentLayout=root.findViewById(R.id.sentLayout);
-        checkIfSent(offerResult,sentLayout);
+            checkIfSent(i, sentLayout,share);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

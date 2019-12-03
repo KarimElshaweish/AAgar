@@ -48,6 +48,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Model.Flat;
 import com.sourcey.materiallogindemo.Model.Offer;
 
@@ -106,7 +107,8 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
 
     }
 
-    ProgressDialog progressDialog;
+
+
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
@@ -155,235 +157,17 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
         }
     };
     private FusedLocationProviderClient fusedLocationClient;
-
-    Button btnContinue;
-    TextView btnSingle,btnFamily,dailyText,monthlyTxt,annualText,receptionNumber,bathRoomsNumber,roomsNumber,levelNumber,buildAge;
-    CrystalSeekbar receptionSeekBar,bathRoomsSeekBar,roomsSeekBar,levelSeekBar,buildAgeSeekBar;
-    Switch readySwitch,kitchenSwitch,extentionSwitch,carEnternaceSwitch,elvatorSwitch,airCondtionSwitch;
-    Boolean readySwitchbool=false
-            ,kitchenSwitchbool=false
-            ,extentionSwitchbool=false
-            ,carEnternaceSwitchbool=false
-            ,elvatorSwitchbool=false
-            ,airCondtionSwitchbool=false;
-    boolean family=true;
-    boolean daily=true,monthly=false,annual=false;
-    View flatView;
-
-    private void __init__flat(){
-        airCondtionSwitch=findViewById(R.id.airCondtionSwitch);
-        airCondtionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                airCondtionSwitchbool=b;
-            }
-        });
-        elvatorSwitch=findViewById(R.id.elvatorSwitch);
-        elvatorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                elvatorSwitchbool=b;
-            }
-        });
-        carEnternaceSwitch=findViewById(R.id.carEnternaceSwitch);
-        carEnternaceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                carEnternaceSwitchbool=b;
-            }
-        });
-        extentionSwitch=findViewById(R.id.extentionSwitch);
-        extentionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                extentionSwitchbool=b;
-            }
-        });
-        elvatorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                elvatorSwitchbool=b;
-            }
-        });
-        kitchenSwitch=findViewById(R.id.kitchenSwitch);
-        kitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                kitchenSwitchbool=b;
-            }
-        });
-        readySwitch=findViewById(R.id.readySwitch);
-        readySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                readySwitchbool=b;
-            }
-        });
-        btnContinue=findViewById(R.id.btnContinue);
-        flatView=findViewById(R.id.flatView);
-        receptionNumber=findViewById(R.id.receptionNumber);
-        receptionSeekBar=findViewById(R.id.receptionSeekBar);
-        btnSingle=findViewById(R.id.btnSingle);
-        btnFamily=findViewById(R.id.btnFamily);
-
-        dailyText=findViewById(R.id.dailyText);
-        monthlyTxt=findViewById(R.id.monthlyTxt);
-        annualText=findViewById(R.id.annualText);
-
-        bathRoomsSeekBar=findViewById(R.id.bathRoomsSeekBar);
-        bathRoomsNumber=findViewById(R.id.bathRoomsNumber);
-
-        roomsSeekBar=findViewById(R.id.roomsSeekBar);
-        roomsNumber=findViewById(R.id.roomsNumber);
-
-        levelSeekBar=findViewById(R.id.levelSeekBar);
-        levelNumber=findViewById(R.id.levelNumber);
-
-        buildAgeSeekBar=findViewById(R.id.buildAgeSeekBar);
-        buildAge=findViewById(R.id.buildAge);
-
-
-        buildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                String year="سنه" ;
-                if(Integer.parseInt(value.toString())==0){
-                    buildAge.setText(year);
-                }else{
-                    buildAge.setText(value.toString()+" "+year);
-                }
-            }
-        });
-        levelSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                if(Integer.parseInt(value.toString())==0){
-                    levelNumber.setText("أرضى");
-                }else{
-                    levelNumber.setText(value.toString());
-                }
-            }
-        });
-        roomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                    roomsNumber.setText(value.toString());
-
-            }
-        });
-        bathRoomsSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                bathRoomsNumber.setText(value.toString());
-            }
-        });
-        receptionSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                receptionNumber.setText(value.toString());
-            }
-        });
-        btnSingle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(family){
-                    family=false;
-                    btnFamily.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-                    btnFamily.setTextColor(Color.parseColor("#000000"));
-
-                    btnSingle.setBackgroundColor(getResources().getColor(R.color.primary));
-                    btnSingle.setTextColor(Color.parseColor("#ffffff"));
-                }
-            }
-        });
-
-
-        btnFamily.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!family){
-                    family=true;
-                    btnSingle.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-                    btnSingle.setTextColor(Color.parseColor("#000000"));
-
-                    btnFamily.setBackgroundColor(getResources().getColor(R.color.primary));
-                    btnFamily.setTextColor(Color.parseColor("#ffffff"));
-                }
-            }
-        });
-
-        dailyText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!daily){
-                    daily=true;
-                    monthly=false;
-                    annual=false;
-
-                    dailyText.setBackgroundColor(getResources().getColor(R.color.primary));
-                    dailyText.setTextColor(Color.parseColor("#ffffff"));
-
-                    monthlyTxt.setTextColor(Color.parseColor("#000000"));
-                    monthlyTxt.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-
-                    annualText.setTextColor(Color.parseColor("#000000"));
-                    annualText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-
-                }
-            }
-        });
-
-        monthlyTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!monthly){
-                    daily=false;
-                    monthly=true;
-                    annual=false;
-
-                    monthlyTxt.setBackgroundColor(getResources().getColor(R.color.primary));
-                    monthlyTxt.setTextColor(Color.parseColor("#ffffff"));
-
-                    dailyText.setTextColor(Color.parseColor("#000000"));
-                    dailyText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-
-                    annualText.setTextColor(Color.parseColor("#000000"));
-                    annualText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-
-                }
-
-            }
-        });
-
-        annualText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!annual){
-                    daily=false;
-                    monthly=false;
-                    annual=true;
-
-                    annualText.setBackgroundColor(getResources().getColor(R.color.primary));
-                    annualText.setTextColor(Color.parseColor("#ffffff"));
-
-                    dailyText.setTextColor(Color.parseColor("#000000"));
-                    dailyText.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-
-                    monthlyTxt.setTextColor(Color.parseColor("#000000"));
-                    monthlyTxt.setBackground(getResources().getDrawable(R.drawable.tab_layout));
-
-                }
-
-            }
-        });
-    }
     Flat flat;
+    KProgressHUD hud;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__offers);
         __init__();
-        __init__flat();
+         hud = KProgressHUD.create(Add_Offers.this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("جارى رفع العرض")
+                .setMaxProgress(100);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -398,10 +182,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            progressDialog =new ProgressDialog(Add_Offers.this);
-                            progressDialog.setTitle("جارى تحميل المدينة");
-                            progressDialog.setCanceledOnTouchOutside(false);
-                            progressDialog.show();
+                            hud.show();
                             // Logic to handle location object
                             onLocationChanged(location);
                         }
@@ -434,11 +215,6 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                 if(!getBuildType)
                     Toast.makeText(getBaseContext(), "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
                 else {
-                    if(build.equals("شقة ")){
-                        cv2.setVisibility(View.GONE);
-                        flatView.setVisibility(View.VISIBLE);
-                        changeColor(buildType, priceNext1);
-                    }else {
                         time++;
                         priceNext1.setVisibility(View.VISIBLE);
                         btnNtextStep.setVisibility(View.VISIBLE);
@@ -448,7 +224,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                             roomlin.setVisibility(View.GONE);
 
                         }
-                    }
+
                     //  linPrice.setVisibility(View.VISIBLE);
                     // list2.setVisibility(View.GONE);
                 }
@@ -639,7 +415,7 @@ ListView notifcationTypListView;
             streetText.setText(address.get(0).getLocality()+" " +address.get(0).getAdminArea());
             streetText.setEnabled(false);
             addressTxt.setText(streetText.getText());
-            progressDialog.dismiss();
+            hud.dismiss();
 
         } catch (IOException e) {
             // Handle IOException
@@ -703,9 +479,7 @@ ListView notifcationTypListView;
             if(!getBuildType)
                 Toast.makeText(this, "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
             else {
-                if(build.equals("شقة ")){
-                    flatView.setVisibility(View.VISIBLE);
-                }else {
+
                     time++;
                     priceNext1.setVisibility(View.VISIBLE);
                     changeColor(buildType, priceNext1);
@@ -713,7 +487,7 @@ ListView notifcationTypListView;
                     if (!build.equals(tabsArray2.get(3))) {
                         roomlin.setVisibility(View.GONE);
                     }
-                }
+
                 //  linPrice.setVisibility(View.VISIBLE);
                 // list2.setVisibility(View.GONE);
             }

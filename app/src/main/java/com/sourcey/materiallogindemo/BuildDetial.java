@@ -27,6 +27,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.sourcey.materiallogindemo.Edit.BuildEdit;
+import com.sourcey.materiallogindemo.Edit.FarmEditActivity;
+import com.sourcey.materiallogindemo.Edit.FlatEditActivity;
+import com.sourcey.materiallogindemo.Edit.HomeEditActivity;
+import com.sourcey.materiallogindemo.Edit.LandEditActivity;
+import com.sourcey.materiallogindemo.Edit.LevelEditActivity;
+import com.sourcey.materiallogindemo.Edit.MarketEditActivity;
+import com.sourcey.materiallogindemo.Edit.RessortEditActivity;
+import com.sourcey.materiallogindemo.Edit.VillaEdit;
 import com.sourcey.materiallogindemo.Model.Build;
 import com.sourcey.materiallogindemo.Model.Deals;
 import com.sourcey.materiallogindemo.Model.Farm;
@@ -54,7 +64,7 @@ public class BuildDetial extends AppCompatActivity {
     OfferResult offerResult=Shared.offerKnow;
     TextView type,price,city,streetWidth,reception,Btype,buildAge,marketNumber,navigation,buildready,roomNumbers,buildTypeComm,detials,
     Level,Bathrooms,AirCondtion,carEnternace,durationType,extenstion,peopleType,Furnished,kitchen,billRoom,hall,duplex,Elvator,hairRoom,
-    pool,valut,waterFaillNumber,tree,bigBath,entertanmetPlalce,footballSwitch,volleyPlaygroundSwitch,ttPrice;
+    pool,valut,waterFaillNumber,tree,bigBath,entertanmetPlalce,footballSwitch,volleyPlaygroundSwitch,ttPrice,groundArea,groundMeterPrice;
     CarouselView carouselView;
     LinearLayout fb;
     ImageView favImage;
@@ -66,6 +76,10 @@ public class BuildDetial extends AppCompatActivity {
         super.onResume();
         if(Shared.close){
             Shared.close=false;
+            finish();
+        }
+        if(Shared.Edit){
+            Shared.Edit=false;
             finish();
         }
     }
@@ -106,11 +120,40 @@ public class BuildDetial extends AppCompatActivity {
             case "استراحه ":
                 __init__ressort();
                 break;
+            case "أرض":
+                __init__ground();
+                break;
 
         }
 
         favImage=findViewById(R.id.faviamge);
         fb=findViewById(R.id.bottomlin);
+    }
+    View ground;
+    private void __init__ground(){
+        ground=findViewById(R.id.groundDetials);
+        ground.setVisibility(View.VISIBLE);
+        type=findViewById(R.id.groundType);
+        type.setText(offerResult.getType());
+        city=findViewById(R.id.groundCity);
+        city.setText(offerResult.getCity());
+        price=findViewById(R.id.groundPrice);
+        price.setText(offerResult.getPrice());
+        build = (Map<String, String>) offerResult.getAspect();
+        buildTypeComm=findViewById(R.id.groundcommtype);
+        buildTypeComm.setText(build.get("groundCommType"));
+        groundArea=findViewById(R.id.groundArea);
+        groundArea.setText(build.get("groundArea"));
+        groundMeterPrice=findViewById(R.id.groundMeterPrice);
+        groundMeterPrice.setText(build.get("groundMeterPrice"));
+        navigation=findViewById(R.id.groundNavigation);
+        navigation.setText(build.get("navigation"));
+        streetWidth=findViewById(R.id.groundStreetWidth);
+        streetWidth.setText(build.get("streetWidth"));
+        detials=findViewById(R.id.detialsFull);
+        detials.setText(offerResult.getFullDetials());
+
+
     }
     private void __init__ressort(){
         ressort = findViewById(R.id.ressort_details_view);
@@ -398,10 +441,12 @@ public class BuildDetial extends AppCompatActivity {
         kitchen.setText(build.get("kitchen")=="true"?"نعم":"لا");
     }
 
+    FloatingActionButton editFabButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_detial);
+        editFabButton=findViewById(R.id.fab_edit);
         __init__();
         if(offerResult.isFav()){
             favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_yallewo));
@@ -410,6 +455,45 @@ public class BuildDetial extends AppCompatActivity {
         }
         if(Shared.user.getType().equals(Shared.Array[0]))
             fb.setVisibility(View.GONE);
+        else
+            editFabButton.setVisibility(View.GONE);
+        editFabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Shared.editOffer=offerResult;
+                switch (offerResult.getBuildingType()){
+                    case "شقة ":
+                        startActivity(new Intent(BuildDetial.this, FlatEditActivity.class));
+                        break;
+                    case "فيلا ":
+                        startActivity(new Intent(BuildDetial.this, VillaEdit.class));
+                        break;
+                    case "عمارة ":
+                        startActivity(new Intent(BuildDetial.this, BuildEdit.class));
+                        break;
+                    case "بيت ":
+                        startActivity(new Intent(BuildDetial.this, HomeEditActivity.class));
+                        break;
+                    case "دور ":
+                        startActivity(new Intent(BuildDetial.this, LevelEditActivity.class));
+                        break;
+                    case "مزرعه ":
+                        startActivity(new Intent(BuildDetial.this, FarmEditActivity.class));
+                        break;
+                    case "محل ":
+                        startActivity(new Intent(BuildDetial.this, MarketEditActivity.class));
+                        break;
+                    case "استراحه ":
+                        startActivity(new Intent(BuildDetial.this, RessortEditActivity.class));
+                        break;
+                    case "أرض":
+                        startActivity(new Intent(BuildDetial.this, LandEditActivity.class));
+                        break;
+
+                }
+
+            }
+        });
         carouselView = (CarouselView) findViewById(R.id.carouselView);
         carouselView.setPageCount(offerResult.getImageList().size());
 
@@ -461,10 +545,11 @@ public class BuildDetial extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String text=input.getText().toString();
                 if(!text.equals("")){
-                    final ProgressDialog progressDialog = new ProgressDialog(BuildDetial.this);
-                    progressDialog.setTitle("جارى الاختيار");
-                    progressDialog.setCanceledOnTouchOutside(false);
-                    progressDialog.show();
+                    KProgressHUD hud = KProgressHUD.create(BuildDetial.this)
+                            .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
                     FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -474,7 +559,6 @@ public class BuildDetial extends AppCompatActivity {
                                     FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.MyOffer).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            progressDialog.dismiss();
                                             Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
                                             FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
                                                     .child(Shared.MyOffer.getOfferID()).setValue(null);
@@ -587,4 +671,6 @@ public class BuildDetial extends AppCompatActivity {
             });
         }
     }
+
+
 }

@@ -55,6 +55,8 @@ public static boolean fristTime=false;
     public static boolean AllMesage;
     public static String chatOfferId;
     public static List<String> useList;
+    public static OfferResult editOffer;
+    public static boolean Edit;
 
     public static  void reset(){
         customer=false;

@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Fragment.RecommendFragments.RecomendFragment;
 import com.sourcey.materiallogindemo.Fragment.RecommendFragments.SentOfferFragment;
@@ -75,22 +77,22 @@ public class OfferResult extends AppCompatActivity {
         });
         return idList;
     }
-    ProgressDialog progressDialog;
     User user;
     CircleImageView navAvatar;
     TextView dlName;
     private void  getUserData(){
         navAvatar=findViewById(R.id.navAvatar);
         dlName=findViewById(R.id.dlName);
-        progressDialog=new ProgressDialog(this);
-        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        progressDialog.dismiss();
+                        hud.dismiss();
                         user=dataSnapshot.getValue(User.class);
                         Glide.with(OfferResult.this).load(user.getProfilePic()).placeholder(R.drawable.avatar)
                                 .into(navAvatar);
@@ -163,6 +165,8 @@ public class OfferResult extends AppCompatActivity {
         CustomerLayout=findViewById(R.id.customerLayout);
         noOffer=findViewById(R.id.noOffer);
         rv=findViewById(R.id.customerRV);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
         recommencLayout=findViewById(R.id.recommencLayout);
         offerState=findViewById(R.id.offerState);
         Intent intent=getIntent();
@@ -255,8 +259,8 @@ public class OfferResult extends AppCompatActivity {
                                 noOffer.setVisibility(View.VISIBLE);
                             }else{
                                 offerAdapter Adapter=new offerAdapter(OfferResult.this,list);
+
                                 rv.setAdapter(Adapter);
-                                pb.setVisibility(View.GONE);
                             }
                             pb.setVisibility(View.GONE);
                         }

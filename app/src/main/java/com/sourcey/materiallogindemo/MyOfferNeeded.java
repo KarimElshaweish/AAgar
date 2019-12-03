@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
 import com.sourcey.materiallogindemo.Adapter.OfferListChatAdapter;
 import com.sourcey.materiallogindemo.Model.Offer;
@@ -207,22 +208,22 @@ public class MyOfferNeeded extends AppCompatActivity {
     public void profile(View view) {
         startActivity(new Intent(this,Profile.class));
     }
-    ProgressDialog progressDialog;
     User user;
     CircleImageView navAvatar;
     TextView dlName;
     private void  getUserData(){
         navAvatar=findViewById(R.id.navAvatar);
         dlName=findViewById(R.id.dlName);
-        progressDialog=new ProgressDialog(this);
-        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        progressDialog.dismiss();
+                        hud.dismiss();
                         user=dataSnapshot.getValue(User.class);
                         Glide.with(MyOfferNeeded.this).load(user.getProfilePic()).placeholder(R.drawable.avatar)
                                 .into(navAvatar);

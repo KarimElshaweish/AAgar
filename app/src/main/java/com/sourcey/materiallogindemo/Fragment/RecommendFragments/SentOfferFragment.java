@@ -1,5 +1,6 @@
 package com.sourcey.materiallogindemo.Fragment.RecommendFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,8 +42,11 @@ public class SentOfferFragment extends Fragment {
         getOfferResult();
         return root;
     }
+
     List<com.sourcey.materiallogindemo.Model.OfferResult>offerResultList;
+    offerAdapter Adapter;
     private void  getOfferResult(){
+        offerResultList=new ArrayList<>();
         OfferResult activity=(OfferResult) getActivity();
         pb.setVisibility(View.VISIBLE);
         FirebaseDatabase.getInstance().getReference("linkOffer")
@@ -65,7 +69,7 @@ public class SentOfferFragment extends Fragment {
                     pb.setVisibility(View.GONE);
                     noOffer.setVisibility(View.VISIBLE);
                 }else{
-                    offerAdapter Adapter=new offerAdapter(getContext(),offerResultList);
+                    Adapter=new offerAdapter(getContext(),offerResultList);
                     rv.setAdapter(Adapter);
                     pb.setVisibility(View.GONE);
                 }

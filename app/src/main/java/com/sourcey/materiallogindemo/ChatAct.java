@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.MessageAdapter;
 import com.sourcey.materiallogindemo.Model.Chat;
 import com.sourcey.materiallogindemo.Model.Offer;
@@ -124,19 +125,19 @@ public class ChatAct extends AppCompatActivity {
         reference.child(FirebaseAuth.getInstance().getUid()).setValue(token1);
     }
     TextView order,result;
-    ProgressDialog progressDialog;
     User user;
     CardView cv1,cv2;
     private void  getUserData(String usreID){
-        progressDialog=new ProgressDialog(this);
-        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         FirebaseDatabase.getInstance().getReference("user").child(usreID)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        progressDialog.dismiss();
+                        hud.dismiss();
                         user=dataSnapshot.getValue(User.class);
                         Glide.with(ChatAct.this).load(user.getProfilePic()).placeholder(R.drawable.avatar)
                                 .into(avatar);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="primary">#1c1c1e</color>
-  <color name="primary_dark">#1c1c1e</color>
+  <color name="primary">#e74c3c</color>
+  <color name="primary_dark">#c0392b</color>
   <color name="primary_darker">#ffffff</color>
   <color name="accent">#FFFFFF</color>
 <color name="bkGroundBagq">#fbfbf8</color>

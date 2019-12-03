@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Fragment.ProfileFragments.InformationFragment;
 import com.sourcey.materiallogindemo.Fragment.ProfileFragments.myOfferFragment;
 import com.sourcey.materiallogindemo.Model.User;
@@ -147,13 +148,13 @@ public class Profile extends AppCompatActivity {
             uploadImage(fileUri);
         }
     }
-    ProgressDialog progressDialog;
     private void uploadImage(Uri fileUri) {
 
-        progressDialog=new ProgressDialog(this);
-        progressDialog.setTitle("جار تحديث البيانات");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         FirebaseStorage.getInstance().getReference("profile").child(FirebaseAuth.getInstance().getCurrentUser().toString())
                 .putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -163,7 +164,7 @@ public class Profile extends AppCompatActivity {
                         .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
+                        hud.dismiss();
                     }
                 });
             }

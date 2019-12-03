@@ -15,26 +15,27 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Model.User;
 import com.sourcey.materiallogindemo.Profile;
 import com.sourcey.materiallogindemo.R;
 
 public class InformationFragment extends Fragment {
-    ProgressDialog progressDialog;
     User user=new User();
     public User getUser(){
         return this.user;
     }
     private void  getUserData(){
-        progressDialog=new ProgressDialog(getContext());
-        progressDialog.setTitle("جارى تحميل الصفحه الشخصيه");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        final KProgressHUD hud = KProgressHUD.create(getContext())
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        progressDialog.dismiss();
+                        hud.dismiss();
                         user=dataSnapshot.getValue(User.class);
                         setData();
                         ((Profile)getActivity()).setUser(user);

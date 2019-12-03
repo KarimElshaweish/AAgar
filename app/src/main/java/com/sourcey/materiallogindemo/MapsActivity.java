@@ -391,7 +391,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             new LatLng(latLngList.get(1).latitude, latLngList.get(1).longitude),
                                             new LatLng(latLngList.get(2).latitude, latLngList.get(2).longitude),
                                             new LatLng(latLngList.get(3).latitude, latLngList.get(3).longitude))
-                                    .strokeColor(Color.parseColor("#000000")).fillColor(Color.parseColor("#26E12929"))
+                                    .strokeColor(Color.parseColor("#26E12929")).fillColor(Color.parseColor("#26E12929"))
                                     .strokeWidth(2));
                             if (!Shared.notCurrent) {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLngList.get(0).latitude, latLngList.get(0).longitude), 13));

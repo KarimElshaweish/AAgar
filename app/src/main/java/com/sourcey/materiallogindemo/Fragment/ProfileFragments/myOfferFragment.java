@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
+import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Model.Offer;
+import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.MyOfferNeeded;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
@@ -46,6 +48,8 @@ public class myOfferFragment extends Fragment {
          rv.setLayoutManager(new LinearLayoutManager(getContext()));
          if(Shared.user.getType().equals(Array[1])){
              getClientData();
+         }else{
+             getOwnerData();
          }
          return view;
     }
@@ -78,5 +82,35 @@ public class myOfferFragment extends Fragment {
         });
     }
 
+    List<OfferResult>list2;
+    private void getOwnerData(){
+        list2=new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference("OfferResult").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list2=new ArrayList<>();
+                for(DataSnapshot dt:dataSnapshot.getChildren()){
+                    if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        for(DataSnapshot dt1:dt.getChildren()) {
+                            list2.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
+                        }
+
+                    }
+                }
+                if(list2.size()==0){
+                    noOffer.setVisibility(View.VISIBLE);
+                }
+                if (getContext()!=null) {
+                    offerAdapter Adapter = new offerAdapter(getContext(), list2);
+                    rv.setAdapter(Adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

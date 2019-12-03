@@ -21,6 +21,15 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
+        <activity android:name=".Edit.LandEditActivity"></activity>
+        <activity android:name=".Edit.RessortEditActivity" />
+        <activity android:name=".Edit.MarketEditActivity" />
+        <activity android:name=".Edit.FarmEditActivity" />
+        <activity android:name=".Edit.LevelEditActivity" />
+        <activity android:name=".Edit.HomeEditActivity" />
+        <activity android:name=".Edit.BuildEdit" />
+        <activity android:name=".Edit.VillaEdit" />
+        <activity android:name=".Edit.FlatEditActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

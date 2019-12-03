@@ -293,6 +293,10 @@ android:orientation="vertical">
                 android:layout_height="match_parent"
                 layout="@layout/sweet_view"/>
 
+                <include
+                        android:id="@+id/groundView"
+                    layout="@layout/ground_layout_view"
+                    android:visibility="gone"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_gravity="right"

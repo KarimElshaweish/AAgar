@@ -53,10 +53,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.UploadListAdapter;
 import com.sourcey.materiallogindemo.Model.Build;
 import com.sourcey.materiallogindemo.Model.Farm;
 import com.sourcey.materiallogindemo.Model.Flat;
+import com.sourcey.materiallogindemo.Model.Ground;
 import com.sourcey.materiallogindemo.Model.Home;
 import com.sourcey.materiallogindemo.Model.Level;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
@@ -208,7 +210,7 @@ ListView listView;
     }
     ArrayList<String>tabsArray2;
 
-    String buildType,type;
+        String buildType,type;
     boolean getBuildType=false,getType=false;
      String[]tabsArray;
     private void setTypeSpinner() {
@@ -222,7 +224,7 @@ ListView listView;
         listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
         tabsArray2 =new ArrayList<>();
-        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
+        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "أرض","مزرعه "}));
         list2.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray2);
         list2.setAdapter(adapter2);
@@ -272,7 +274,7 @@ ListView listView;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK && choseImage) {
-            imgViewUpload.setVisibility(View.GONE);
+          //  imgViewUpload.setVisibility(View.GONE);
             choseImage = false;
             if (data.getClipData() != null) {
                 int totalItemSelected = data.getClipData().getItemCount();
@@ -366,30 +368,6 @@ ListView listView;
                 readySwitchbool=b;
             }
         });
-//        btnContinue=findViewById(R.id.btt);
-//        btnContinue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String dutration="";
-//                if(daily){
-//                    dutration="daily";
-//                }else if(monthly){
-//                    dutration="monthly";
-//                }else{
-//                    dutration="annual";
-//                }
-//                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
-//                        ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
-//                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
-//                        levelNumber.getText().toString(),buildAge.getText().toString());
-//                time++;
-//                flatView.setVisibility(View.GONE);
-//                totalPriceView.setVisibility(View.VISIBLE);
-//                //cv4.setVisibility(View.VISIBLE);
-//                // ch
-//            }
-//        });
-
         receptionNumber=findViewById(R.id.receptionNumber);
         receptionSeekBar=findViewById(R.id.receptionSeekBar);
         btnSingle=findViewById(R.id.btnSingle);
@@ -547,7 +525,7 @@ ListView listView;
         });
     }
     Spinner Villaspinner;
-    String[]naviagations=new String[]{"غرب","شمال","جنوب","شرق"};
+    String[]naviagations=new String[]{"غير محدد","غرب","شمال","جنوب","شمال شرق","جنوب شرقى","جنوب غربى","شمال غربى","4 شوارع","3 شوارع","شرق"};
     ArrayAdapter<String> navigationAdapter ;
     TextView villaReceptionNumber,villaBathRoomsNumber,villaStreetWidth,villaRoomsNumber,villaLevelNumber
             ,villaBuildAge;
@@ -1201,6 +1179,98 @@ ListView listView;
         });
 
     }
+    TextView groundArea,groundStreetWidth,ground_meter_price,building,groundCommeice,groundCommerceAndBuilding;
+    Spinner groundSpinner;
+    String groundNavigation="";
+    CrystalSeekbar groundStreetWidthSeekBar;
+    boolean groundCommerce=false,groundBuilding=true,groundCommerceAndBuildingl=false;
+    String GroundType="سكنى";
+    private void __init__ground(){
+        groundCommerceAndBuilding=findViewById(R.id.groundCommericeAndHomming);
+        groundCommeice=findViewById(R.id.groundCommeice);
+        building=findViewById(R.id.groundhoming);
+        building.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!groundBuilding){
+                    groundBuilding=true;
+                    groundCommerce=false;
+                    groundCommerceAndBuildingl=false;
+                    GroundType="سكنى";
+                    groundCommerceAndBuilding.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    groundCommerceAndBuilding.setTextColor(Color.parseColor("#000000"));
+
+                    groundCommeice.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    groundCommeice.setTextColor(Color.parseColor("#000000"));
+
+                    building.setBackgroundColor(getResources().getColor(R.color.primary));
+                    building.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        groundCommerceAndBuilding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!groundCommerceAndBuildingl){
+                    groundCommerceAndBuildingl=true;
+                    groundBuilding=false;
+                    groundCommerce=false;
+                    GroundType="سكنى وتجارى";
+                    building.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    building.setTextColor(Color.parseColor("#000000"));
+
+                    groundCommeice.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    groundCommeice.setTextColor(Color.parseColor("#000000"));
+
+                    groundCommerceAndBuilding.setBackgroundColor(getResources().getColor(R.color.primary));
+                    groundCommerceAndBuilding.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        groundCommeice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!groundCommerce){
+                    groundCommerce =true;
+                    groundBuilding=false;
+                    groundCommerceAndBuildingl=false;
+                    GroundType="تجارى";
+                    building.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    building.setTextColor(Color.parseColor("#000000"));
+
+                    groundCommerceAndBuilding.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+                    groundCommerceAndBuilding.setTextColor(Color.parseColor("#000000"));
+
+                    groundCommeice.setBackgroundColor(getResources().getColor(R.color.primary));
+                    groundCommeice.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+        });
+        groundSpinner=findViewById(R.id.groundspinner);
+        groundSpinner.setAdapter(navigationAdapter);
+        groundSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                groundNavigation=naviagations[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        groundStreetWidth=findViewById(R.id.groundStreetWidth);
+        groundStreetWidthSeekBar=findViewById(R.id
+        .groundStreetWidthSeekBar);
+        groundStreetWidthSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number value) {
+                groundStreetWidth.setText(value.toString());
+            }
+        });
+        groundArea=findViewById(R.id.ground_meter_ground);
+        ground_meter_price=findViewById(R.id.ground_meter_price);
+    }
     public void contuinue(View view){
                         String dutration="";
                 if(daily){
@@ -1228,12 +1298,13 @@ ListView listView;
     Farm farm;
     Market market;
     Ressort ressort;
+    Ground ground;
     private void uploadResult() {
-        final ProgressDialog progressDialog = new ProgressDialog(this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("تحميل");
-        progressDialog.show();
+        final KProgressHUD hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         downloadUrl = new ArrayList<>();
         final OfferResult offerResult = new OfferResult();
         offerResult.setId(Calendar.getInstance().getTime().toString());
@@ -1281,10 +1352,10 @@ ListView listView;
                 offerResult.setAspect(build);
                 break;
             case "بيت ":
-                home=new Home(homeNavigation,homeReceptionNumber.getText().toString(),homeBathRomsNumber.getText().toString(),
-                        homeRoomsNumber.getText().toString(),homeBuildAge.getText().toString(),homeReadySwitchBool,
-                        homeDriverRoomSwitchBool,homeBillGirlRoomSwitchBool,homeHairRoomSwitchBool,homeHailSwitchBool,homeKitchenSwitchBool);
-                offerResult.setAspect(home);
+                    home=new Home(homeNavigation,homeReceptionNumber.getText().toString(),homeBathRomsNumber.getText().toString(),
+                            homeRoomsNumber.getText().toString(),homeBuildAge.getText().toString(),homeReadySwitchBool,
+                            homeDriverRoomSwitchBool,homeBillGirlRoomSwitchBool,homeHairRoomSwitchBool,homeHailSwitchBool,homeKitchenSwitchBool);
+                    offerResult.setAspect(home);
                 break;
             case "دور ":
                 level=new Level(levelNavigaiton,lrRectiption.getText().toString(),levelBathRoomsNumber.getText().toString(),levelRoomsNumber.getText().toString(),
@@ -1306,6 +1377,11 @@ ListView listView;
                         sweetPoolSwitchBool,sweetFootballGroundSwitchBool,sweetVolleyBallGroundSwitchBool,sweetHairRoomSwitchBool,sweetEntertanmentPlaceBool,
                         sweetBigBathSwitchBool);
                 offerResult.setAspect(ressort);
+                break;
+            case "أرض":
+                ground=new Ground(groundNavigation,GroundType,groundStreetWidth.getText().toString(),groundArea.getText().toString(),
+                        ground_meter_price.getText().toString());
+                offerResult.setAspect(ground);
                 break;
 
         }
@@ -1352,7 +1428,7 @@ ListView listView;
                                                     .setValue(offerResult.getType()+" "+
                                                             offerResult.getBuildingType()+" "+
                                                             offerResult.getPrice());
-                                            progressDialog.dismiss();
+                                            hud.dismiss();
                                             finish();
                                         }
                                     });
@@ -1378,7 +1454,7 @@ ListView listView;
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(AddResultOffer.this, "تم الإضافه", Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
+                                    hud.dismiss();
                                     finish();
                                     Shared.AddRandomButton = false;
 
@@ -1404,6 +1480,7 @@ ListView listView;
     FloatingActionButton imgViewUpload;
     public void next(View view) {
         if (time == 0) {
+            imgViewUpload.setVisibility(View.GONE);
             time++;
             hideView(cv1, cv2);
             changeColor(orderPicture, orderType);
@@ -1450,6 +1527,10 @@ ListView listView;
                 View sweetView=findViewById(R.id.sweet_view);
                 sweetView.setVisibility(View.VISIBLE);
                 __init__ressort();
+            }else if(buildType.equals("أرض")){
+                View groundView=findViewById(R.id.groundView);
+                groundView.setVisibility(View.VISIBLE);
+                __init__ground();
             }
             if (!getBuildType) {
                 Toast.makeText(this, "من فضلك ادخل وصف المنشاءه", Toast.LENGTH_SHORT).show();
@@ -1460,7 +1541,7 @@ ListView listView;
                 changeColor(orderDescription, orderPrice);
             }
         } else if (time == 3) {
-            String price = priceText.getText().toString();
+//            String price = priceText.getText().toString();
 //            if (price.equals("")) {
 //                Toast.makeText(this, "من فضلك ادخل سعر المنشاءه", Toast.LENGTH_SHORT).show();
 //                priceText.setError("من فضلك ادخل سعر المنشاءه");
