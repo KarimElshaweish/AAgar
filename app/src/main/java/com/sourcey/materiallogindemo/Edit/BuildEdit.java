@@ -247,4 +247,7 @@ public class BuildEdit extends AppCompatActivity {
         else
             return false;
     }
+
+    public void AddPicture(View view) {
+    }
 }

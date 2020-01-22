@@ -79,7 +79,12 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Shared.offerKnow=offerResultList.get(position);
+                Shared.offerKnow=new OfferResult();
+                try {
+                    Shared.offerKnow= (OfferResult) offerResultList.get(position).clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 _ctx.startActivity(new Intent(_ctx,BuildDetial.class));
             }
         });

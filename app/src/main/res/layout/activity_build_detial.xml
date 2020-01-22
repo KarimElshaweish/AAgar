@@ -73,11 +73,13 @@
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:background="#a0000000">
+
                 <LinearLayout
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -102,7 +104,6 @@
                         android:textColor="#fff"/>
 
                 </LinearLayout>
-
                 <ImageView
                     android:id="@+id/faviamge"
                     android:onClick="AddToFavoutit"
@@ -300,67 +301,82 @@
         </LinearLayout>
 
 </LinearLayout>
-    <LinearLayout
-        android:id="@+id/bottomlin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/lin"
-        android:weightSum="3"
-        android:padding="7dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center">
-        <Button
-            android:layout_marginRight="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:onClick="Chat"
+        <LinearLayout
+            android:id="@+id/bottomlin"
             android:layout_below="@id/lin"
-            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:text="تواصل"
-            android:textColor="#fff"
-            android:fontFamily="@font/vip"
-            android:textSize="15dp"
-            />
-        <Button
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:onClick="choseOffer"
-            android:layout_below="@id/lin"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:text="اختيار هذا العرض"
-            android:textColor="#fff"
-            android:fontFamily="@font/vip"
-            android:textSize="15dp"
-            />
-<Button
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:padding="7dp"
+                android:gravity="center">
+                <Button
+                    android:layout_marginRight="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary"
+                    android:onClick="Chat"
+                    android:layout_below="@id/lin"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:text="تواصل"
+                    android:textColor="#fff"
+                    android:fontFamily="@font/vip"
+                    android:textSize="15dp"
+                    />
+                <Button
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary"
+                    android:onClick="choseOffer"
+                    android:layout_below="@id/lin"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:text="اختيار هذا العرض"
+                    android:textColor="#fff"
+                    android:fontFamily="@font/vip"
+                    android:textSize="15dp"
+                    />
+                <Button
 
-    android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_width="0dp"
-    android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:onClick="Map"
-            android:layout_below="@id/lin"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:text="مشاهدة على الخريطه"
-            android:textColor="#fff"
-            android:fontFamily="@font/vip"
-            android:textSize="15dp"
-            />
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary"
+                    android:onClick="Map"
+                    android:layout_below="@id/lin"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:text="مشاهدة على الخريطه"
+                    android:textColor="#fff"
+                    android:fontFamily="@font/vip"
+                    android:textSize="15dp"
+                    />
 
 
-    </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="إبلاغ عن هذا العرض"
+                android:fontFamily="@font/vip"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="offerFeedBack"
+                android:padding="10dp"
+                android:textColor="@color/wallet_holo_blue_light"/>
+        </LinearLayout>
     </LinearLayout>
     </ScrollView>
 <android.support.design.widget.FloatingActionButton

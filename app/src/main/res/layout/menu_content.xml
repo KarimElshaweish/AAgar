@@ -90,7 +90,7 @@
     android:text="طرق الدقع"/>
         <TextView
             android:gravity="center_vertical"
-
+android:id="@+id/feedback"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -99,7 +99,7 @@
     android:textColor="#000"
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_feedback"
-    android:text="التقيم"/>
+    android:text="الشكاوى"/>
         <TextView
             android:gravity="center_vertical"
 

@@ -53,7 +53,7 @@ public class VillaEdit extends AppCompatActivity {
                         villaBillGirlRoomSwitchBool,VillaPoolSwitchBool,villaHairRoomSwitchBool,VillaHallSwitchBool,villaVaultSwitchBool,
                         villaReadySwitchBool,villaKitchenSwitchBool,false,villaCarEnternaceSwitchBool,
                         villaElvatorSwitchBool,villaAirCondtionSwitchBool,villaDublexSwitchBool);
-                Shared.editOffer.setAspect(villa);
+                Shared.editOffer.setAspect((Map<String, String>)villa);
                 mReference.child(FirebaseAuth.getInstance().getUid()).child(Shared.editOffer.getDescription()).setValue(Shared.editOffer).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

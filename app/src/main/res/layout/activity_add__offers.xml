@@ -21,9 +21,10 @@
             android:onClick="Finish"
             />
         <TextView
+            android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="مطلوب"
+            android:text="نوع الطلب"
             android:textSize="20dp"
             android:fontFamily="@font/vip"
             android:textColor="#fff"

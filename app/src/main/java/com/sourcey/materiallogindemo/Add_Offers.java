@@ -1,49 +1,34 @@
 package com.sourcey.materiallogindemo;
 
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.design.widget.CoordinatorLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
-import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -53,12 +38,9 @@ import com.sourcey.materiallogindemo.Model.Flat;
 import com.sourcey.materiallogindemo.Model.Offer;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -159,6 +141,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     private FusedLocationProviderClient fusedLocationClient;
     Flat flat;
     KProgressHUD hud;
+    TextView titleText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,6 +182,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                     buildType.setVisibility(View.VISIBLE);
                     changeColor(orderTypeNext,buildType);
                     hideView(cv1,cv2);
+                    titleText.setText("نوع العقار");
                     //  listView.setVisibility(View.GONE);
                 }
                 else{
@@ -220,7 +204,9 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                         btnNtextStep.setVisibility(View.VISIBLE);
                         changeColor(buildType, priceNext1);
                         hideView(cv2, cv3);
-                        if (!build.equals(tabsArray2.get(3))) {
+                    titleText.setText("تفاصيل الطلب");
+
+                    if (!build.equals(tabsArray2.get(3))) {
                             roomlin.setVisibility(View.GONE);
 
                         }
@@ -301,6 +287,7 @@ ListView notifcationTypListView;
     LinearLayout roomlin;
     FloatingActionButton btnNtextStep;
     private void __init__() {
+        titleText=findViewById(R.id.titleText);
         Shared.addoffMethod=true;
         btnNtextStep=findViewById(R.id.btnNtextStep);
         roomlin=findViewById(R.id.roomlin);
@@ -320,6 +307,66 @@ ListView notifcationTypListView;
         linearDetials=findViewById(R.id.linearDetials);
         detailsNewText=findViewById(R.id.detailsNewText);
         orderTypeNext=findViewById(R.id.orderType);
+        orderTypeNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText("نوع الطلب");
+                cv1.setVisibility(View.VISIBLE);
+                cv2.setVisibility(View.GONE);
+                cv3.setVisibility(View.GONE);
+                cv4.setVisibility(View.GONE);
+                orderTypeNext.setTextColor(Color.parseColor("#ffffff"));
+                orderTypeNext.setBackgroundColor(getResources().getColor(R.color.primary));
+                changeOffline(buildType);
+                changeOffline(priceNext1);
+                changeOffline(notificationTyp);
+            }
+        });
+        buildType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(buildType.getText().toString());
+                cv1.setVisibility(View.GONE);
+                cv2.setVisibility(View.VISIBLE);
+                cv3.setVisibility(View.GONE);
+                cv4.setVisibility(View.GONE);
+                buildType.setTextColor(Color.parseColor("#ffffff"));
+                buildType.setBackgroundColor(getResources().getColor(R.color.primary));
+                changeOffline(orderTypeNext);
+                changeOffline(priceNext1);
+                changeOffline(notificationTyp);
+            }
+        });
+        priceNext1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(priceText.getText().toString());
+                cv1.setVisibility(View.GONE);
+                cv2.setVisibility(View.GONE);
+                cv3.setVisibility(View.VISIBLE);
+                cv4.setVisibility(View.GONE);
+                priceNext1.setTextColor(Color.parseColor("#ffffff"));
+                priceNext1.setBackgroundColor(getResources().getColor(R.color.primary));
+                changeOffline(orderTypeNext);
+                changeOffline(buildType);
+                changeOffline(notificationTyp);
+            }
+        });
+        notificationTyp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(notificationTyp.getText().toString());
+                cv1.setVisibility(View.GONE);
+                cv2.setVisibility(View.GONE);
+                cv3.setVisibility(View.GONE);
+                cv4.setVisibility(View.VISIBLE);
+                notificationTyp.setTextColor(Color.parseColor("#ffffff"));
+                notificationTyp.setBackgroundColor(getResources().getColor(R.color.primary));
+                changeOffline(orderTypeNext);
+                changeOffline(buildType);
+                changeOffline(priceNext1);
+            }
+        });
         descrtiptionNext=findViewById(R.id.orderDescription);
         //   priceNext1=findViewById(R.id.orderNext);
         listView=findViewById(R.id.list);
@@ -472,10 +519,16 @@ ListView notifcationTypListView;
         next.setTextColor(Color.parseColor("#ffffff"));
         next.setBackgroundColor(getResources().getColor(R.color.primary));
     }
+    private void changeOffline(TextView off){
+        off.setTextColor(Color.parseColor("#000000"));
+        off.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+
+    }
     public void next(View view) {
      //   Button btn=(Button)view;
         if(time==0){
         }else if(time==1) {
+            titleText.setText("نوع العقار");
             if(!getBuildType)
                 Toast.makeText(this, "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
             else {
@@ -484,7 +537,9 @@ ListView notifcationTypListView;
                     priceNext1.setVisibility(View.VISIBLE);
                     changeColor(buildType, priceNext1);
                     hideView(cv2, cv3);
-                    if (!build.equals(tabsArray2.get(3))) {
+                titleText.setText("استلام العرض");
+
+                if (!build.equals(tabsArray2.get(3))) {
                         roomlin.setVisibility(View.GONE);
                     }
 
@@ -492,11 +547,13 @@ ListView notifcationTypListView;
                 // list2.setVisibility(View.GONE);
             }
         }else if(time==2){
+            titleText.setText("تفاصيل الطلب");
             String price=piceTextNew.getText().toString();
             if(price.equals("")) {
                 piceTextNew.setError("من فضلك ادخل سعر الطلب");
             }else {
                 hideView(cv3, cv4);
+                titleText.setText("سعر الطلب");
                 changeColor(priceNext1, notificationTyp);
 //            String details=detailsNewText.getText().toString();
 //            if(details.equals("")){
@@ -514,7 +571,7 @@ ListView notifcationTypListView;
             //    btn.setText("تحديد الموقع على الخريطه");
 //            }
         }else if(time ==3){
-
+            titleText.setText("استلام العرض");
             if(!getNotification){
                 piceTextNew.setError("من فضلك اختار نوع الاشعارات");
             }else{

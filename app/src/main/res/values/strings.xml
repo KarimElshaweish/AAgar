@@ -20,4 +20,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_offer_show_on_map">Map</string>
+    <string name="uploaded">uploaded</string>
+    <string name="title_activity_edit_map">Map</string>
+    <string name="title_location_permission">إذن تحديد المكان</string>
+    <string name="text_location_permission">تحديد المكان</string>
+    <string name="ok">موافقه</string>
+    <string name="changeText">تعديل الموقع</string>
+    <string name="please_be_in_edit_mode">من فضلك اضغط على تعديل الموقع</string>
 </resources>

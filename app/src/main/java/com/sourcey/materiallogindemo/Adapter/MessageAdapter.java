@@ -61,13 +61,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user= dataSnapshot.getValue(User.class);
-                        if(user.getProfilePic()!=null)
-                        Glide.with(_ctx).load(user.getProfilePic())
-                                .placeholder(R.mipmap.ic_launcher)
-                                .into(holder.profileImage);
-                        else
+                        if(dataSnapshot.toString().equals("admin")){
                             holder.profileImage.setImageDrawable(_ctx.getResources().getDrawable(R.mipmap.ic_launcher));
+                        }else {
+                            User user = dataSnapshot.getValue(User.class);
+                            if (user!=null&&user.getProfilePic() != null)
+                                Glide.with(_ctx).load(user.getProfilePic())
+                                        .placeholder(R.mipmap.ic_launcher)
+                                        .into(holder.profileImage);
+                            else
+                                holder.profileImage.setImageDrawable(_ctx.getResources().getDrawable(R.mipmap.ic_launcher));
+                        }
                     }
 
                     @Override

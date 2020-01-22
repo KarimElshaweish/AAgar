@@ -1,5 +1,6 @@
 package com.sourcey.materiallogindemo;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -44,11 +45,15 @@ import com.sourcey.materiallogindemo.Model.Flat;
 import com.sourcey.materiallogindemo.Model.Home;
 import com.sourcey.materiallogindemo.Model.Level;
 import com.sourcey.materiallogindemo.Model.Market;
+import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.Model.Ressort;
 import com.sourcey.materiallogindemo.Model.Villa;
+import com.sourcey.materiallogindemo.OfferEdit.OfferEdit;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,8 +65,7 @@ import static com.sourcey.materiallogindemo.Shared.offer;
 
 public class BuildDetial extends AppCompatActivity {
 
-
-    OfferResult offerResult=Shared.offerKnow;
+    OfferResult offerResult=new OfferResult();
     TextView type,price,city,streetWidth,reception,Btype,buildAge,marketNumber,navigation,buildready,roomNumbers,buildTypeComm,detials,
     Level,Bathrooms,AirCondtion,carEnternace,durationType,extenstion,peopleType,Furnished,kitchen,billRoom,hall,duplex,Elvator,hairRoom,
     pool,valut,waterFaillNumber,tree,bigBath,entertanmetPlalce,footballSwitch,volleyPlaygroundSwitch,ttPrice,groundArea,groundMeterPrice;
@@ -442,10 +446,12 @@ public class BuildDetial extends AppCompatActivity {
     }
 
     FloatingActionButton editFabButton;
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_detial);
+        offerResult=Shared.offerKnow;
         editFabButton=findViewById(R.id.fab_edit);
         __init__();
         if(offerResult.isFav()){
@@ -460,43 +466,16 @@ public class BuildDetial extends AppCompatActivity {
         editFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Shared.editOffer=new OfferResult();
                 Shared.editOffer=offerResult;
-                switch (offerResult.getBuildingType()){
-                    case "شقة ":
-                        startActivity(new Intent(BuildDetial.this, FlatEditActivity.class));
-                        break;
-                    case "فيلا ":
-                        startActivity(new Intent(BuildDetial.this, VillaEdit.class));
-                        break;
-                    case "عمارة ":
-                        startActivity(new Intent(BuildDetial.this, BuildEdit.class));
-                        break;
-                    case "بيت ":
-                        startActivity(new Intent(BuildDetial.this, HomeEditActivity.class));
-                        break;
-                    case "دور ":
-                        startActivity(new Intent(BuildDetial.this, LevelEditActivity.class));
-                        break;
-                    case "مزرعه ":
-                        startActivity(new Intent(BuildDetial.this, FarmEditActivity.class));
-                        break;
-                    case "محل ":
-                        startActivity(new Intent(BuildDetial.this, MarketEditActivity.class));
-                        break;
-                    case "استراحه ":
-                        startActivity(new Intent(BuildDetial.this, RessortEditActivity.class));
-                        break;
-                    case "أرض":
-                        startActivity(new Intent(BuildDetial.this, LandEditActivity.class));
-                        break;
-
-                }
+                startActivity(new Intent(BuildDetial.this, OfferEdit.class));
+//
+//                }
 
             }
         });
-        carouselView = (CarouselView) findViewById(R.id.carouselView);
+        carouselView = findViewById(R.id.carouselView);
         carouselView.setPageCount(offerResult.getImageList().size());
-
         carouselView.setImageListener(imageListener);
 
     }
@@ -672,5 +651,39 @@ public class BuildDetial extends AppCompatActivity {
         }
     }
 
+    private String m_Text = "";
+    public void offerFeedBack(View view) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("الشكوى");
+// Set up the input
+        final EditText input = new EditText(this);
+        builder.setView(input);
 
+// Set up the buttons
+        builder.setPositiveButton("إرسال", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+                FirebaseDatabase.getInstance().getReference("OfferFeedBack")
+                        .child(offerResult.getOfferID())
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(Calendar.getInstance().getTime().toString())
+                        .setValue(m_Text).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getBaseContext(),"تم إرسال الشكوى",Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        builder.setNegativeButton("إالغاء", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 }

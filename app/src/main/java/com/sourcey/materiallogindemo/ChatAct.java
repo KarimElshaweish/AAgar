@@ -169,6 +169,26 @@ public class ChatAct extends AppCompatActivity {
                 break;
         }
     }
+    private void getOffer(){
+        String offID=Shared.offerKnow!=null?Shared.offerKnow.getOfferID():Shared.chatOfferId;
+        String uID=(offID.split("\\*"))[0];
+        String oID=(offID.split("\\*"))[1];
+        FirebaseDatabase.getInstance().getReference("OfferResult")
+                .child(uID)
+                .child(oID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                OfferResult offerResult=dataSnapshot.getValue(OfferResult.class);
+                result.setText(offerResult.getBuildingType());
+                Shared.offerKnow=offerResult;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     String []IDS ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,16 +213,11 @@ public class ChatAct extends AppCompatActivity {
         avatar=findViewById(R.id.avatar);
         order=findViewById(R.id.order);
         result=findViewById(R.id.result);
+        getOffer();
         if(Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
         result.setText(Shared.MyOffer.getType()+" "+Shared.MyOffer.getBuildingTyp()+" "+Shared.MyOffer.getPrice()+" "+"ريال");
-        else{
-           linTop.setVisibility(View.GONE);
-        }
         if(Shared.offerKnow!=null&&Shared.MyOffer.getType()!=null)
         order.setText(Shared.offerKnow.getSpinnerType()+"  "+Shared.offerKnow.getBuildingType()+" "+Shared.offerKnow.getPrice()+" ريال ");
-       else{
-           linTop.setVisibility(View.GONE);
-        }
         if(Shared.offerKnow!=null) {
             String id = FirebaseAuth.getInstance().getUid();
             bottom = findViewById(R.id.bottom);
@@ -312,12 +327,12 @@ if(Shared.fristTime) {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        readMessage(FirebaseAuth.getInstance().getUid(),Shared.sent_id,"defualt");
+            readMessage(FirebaseAuth.getInstance().getUid(),Shared.sent_id,"defualt");
         getUserData(Shared.sent_id);
         if(Shared.AllMesage){
-            blockingTxt.setVisibility(View.GONE);
+         //   blockingTxt.setVisibility(View.GONE);
             cv1.setVisibility(View.GONE);
-            cv2.setVisibility(View.GONE);
+       //     cv2.setVisibility(View.GONE);
         }
     }
     public void Finish(View view){
@@ -393,7 +408,6 @@ if(Shared.fristTime) {
         updateToken(FirebaseInstanceId.getInstance().getToken());
     }
     private void block(String sender, final String receiver, String message){
-
         bottom.setVisibility(View.GONE);
         DatabaseReference mReference=database.getReference();
         HashMap<String,Object>hashMap=new HashMap<>();
@@ -465,13 +479,9 @@ if(Shared.fristTime) {
         hashMap.put("id",Shared.offerKnow!=null?Shared.offerKnow.getOfferID():Shared.chatOfferId);
         hashMap.put("isseen",false);
         hashMap.put("isblock",false);
-
         MediaPlayer mp = MediaPlayer.create(this,R.raw.sent);
         mp.start();
         mReference.child("Chats").push().setValue(hashMap);
-
-
-
         final String  msg=message;
         mReference=FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getUid());
         mReference.addValueEventListener(new ValueEventListener() {

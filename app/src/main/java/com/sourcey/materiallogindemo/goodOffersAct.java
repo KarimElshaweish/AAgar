@@ -69,18 +69,20 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
         @Override
         public Fragment getItem(int position) {
             switch (position) {
+                case 2:
+                    return new OwnerSoldFragment();
                 case 1:
-
-                    return new ActiveNeedsFragments();
+                    return new OwnerOffersFragment();
                 case 0:
                 default:
-                    return new MyAllOfferFragment();
+                return new ActiveNeedsFragments();
+
             }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 
@@ -89,8 +91,9 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
         vp = findViewById(R.id.vp);
         vp.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         tab.setupWithViewPager(vp);
-        tab.getTabAt(0).setText("عروضى");
-        tab.getTabAt(1).setText("الطلبات النشطه");
+        tab.getTabAt(0).setText("الطلبات النشطه");
+        tab.getTabAt(1).setText("عروضى النشطة");
+        tab.getTabAt(2).setText("عروضى المباعة");
         for (int i = 0; i < tab.getTabCount(); i++) {
             //noinspection ConstantConditions
             TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.custome_tab, null);
@@ -145,7 +148,7 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
                 });
     }
 
-    TextView profile_nav, fav, order, chat_nav, txtLogout, myWallet;
+    TextView profile_nav,feedback_nav, fav, order, chat_nav, txtLogout, myWallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +162,9 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
                 switch (menuItem.getItemId()) {
                     case R.id.profile_nav:
                         startActivity(new Intent(goodOffersAct.this, Profile.class));
+                        return true;
+                    case R.id.feedback:
+                        startActivity(new Intent(goodOffersAct.this,feedback.class));
                         return true;
                 }
                 return false;
@@ -207,6 +213,13 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(goodOffersAct.this, Profile.class));
+            }
+        });
+        feedback_nav=findViewById(R.id.feedback);
+        feedback_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(goodOffersAct.this,feedback.class));
             }
         });
         txtLogout = findViewById(R.id.txtLogout);

@@ -268,6 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             String fnialAddress = address.get(0).getAdminArea()+" "+address.get(0).getLocality();//This is the complete address.
             cityName.setText(fnialAddress);
+            Shared.city=cityName;
 
 
         } catch (IOException e) {

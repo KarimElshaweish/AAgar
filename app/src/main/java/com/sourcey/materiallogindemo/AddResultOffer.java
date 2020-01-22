@@ -75,6 +75,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.sourcey.materiallogindemo.Shared.CityArray;
 import static com.sourcey.materiallogindemo.Shared.offer;
@@ -95,37 +96,37 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
     private StorageReference mStorage;
     LinearLayout layoutForm;
     private FusedLocationProviderClient fusedLocationClient;
-ListView listView;
+    ListView listView;
     @Override
-    public void onLocationChanged(Location location) {
-        //You had this as int. It is advised to have Lat/Loing as double.
-        double lat = location.getLatitude();
-        double lng = location.getLongitude();
-        Locale locale = new Locale("ar");
-        Geocoder geoCoder = new Geocoder(this, locale);
-        StringBuilder builder = new StringBuilder();
-        try {
-            List<Address> address = geoCoder.getFromLocation(lat, lng, 1);
-            int maxLines = address.get(0).getMaxAddressLineIndex();
-            for (int i = 0; i < maxLines; i++) {
-                String addressStr = address.get(0).getAddressLine(i);
-                builder.append(addressStr);
-                builder.append(" ");
+        public void onLocationChanged(Location location) {
+            //You had this as int. It is advised to have Lat/Loing as double.
+            double lat = location.getLatitude();
+            double lng = location.getLongitude();
+            Locale locale = new Locale("ar");
+            Geocoder geoCoder = new Geocoder(this, locale);
+            StringBuilder builder = new StringBuilder();
+            try {
+                List<Address> address = geoCoder.getFromLocation(lat, lng, 1);
+                int maxLines = address.get(0).getMaxAddressLineIndex();
+                for (int i = 0; i < maxLines; i++) {
+                    String addressStr = address.get(0).getAddressLine(i);
+                    builder.append(addressStr);
+                    builder.append(" ");
+                }
+
+                String fnialAddress = address.get(0).getAdminArea();
+                String[] tabsArray =
+                        new String[]{fnialAddress};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tabsArray);
+                spinnerCity.setAdapter(adapter);
+                streetText.setText(address.get(0).getLocality() + " " + address.get(0).getThoroughfare());
+
+            } catch (IOException e) {
+                // Handle IOException
+            } catch (NullPointerException e) {
+                // Handle NullPointerException
             }
-
-            String fnialAddress = address.get(0).getAdminArea();
-            String[] tabsArray =
-                    new String[]{fnialAddress};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tabsArray);
-            spinnerCity.setAdapter(adapter);
-            streetText.setText(address.get(0).getLocality() + " " + address.get(0).getThoroughfare());
-
-        } catch (IOException e) {
-            // Handle IOException
-        } catch (NullPointerException e) {
-            // Handle NullPointerException
         }
-    }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
@@ -148,11 +149,35 @@ ListView listView;
 
     CardView cv1,cv2,cv3,cv4;
     ListView list2;
+    TextView titleText,adress;
+    private void changeOffline(TextView off){
+        off.setBackground(getResources().getDrawable(R.drawable.tab_layout));
+        off.setTextColor(Color.parseColor("#000000"));
+    }
+    private void changeOnline(TextView online){
+        online.setBackgroundColor(getResources().getColor(R.color.primary));
+        online.setTextColor(Color.parseColor("#ffffff"));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_result_offer);
+        adress=findViewById(R.id.adress);
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(Shared.lituide, Shared.longtuide, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            String knownName = addresses.get(0).getFeatureName();
+            adress.setText(knownName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        titleText=findViewById(R.id.titleText);
         navigationAdapter= new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item,naviagations);
 
@@ -167,15 +192,75 @@ ListView listView;
         orderDescription = findViewById(R.id.orderDescription);
         orderType = findViewById(R.id.orderType);
         orderPicture = findViewById(R.id.orderPicture);
+
+        orderPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                titleText.setText(orderPicture.getText().toString());
+                cv1.setVisibility(View.VISIBLE);
+                cv2.setVisibility(View.GONE);
+                cv3.setVisibility(View.GONE);
+                cv4.setVisibility(View.GONE);
+                changeOnline(orderPicture);
+                changeOffline(orderType);
+                changeOffline(orderDescription);
+                changeOffline(orderPrice);
+            }
+        });
+        orderType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(orderType.getText().toString());
+                cv1.setVisibility(View.GONE);
+                cv2.setVisibility(View.VISIBLE);
+                cv3.setVisibility(View.GONE);
+                cv4.setVisibility(View.GONE);
+                changeOnline(orderType);
+                changeOffline(orderPicture);
+                changeOffline(orderDescription);
+                changeOffline(orderPrice);
+            }
+        });
+        orderDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(orderDescription.getText().toString());
+                cv1.setVisibility(View.GONE);
+                cv2.setVisibility(View.GONE);
+                cv3.setVisibility(View.VISIBLE);
+                cv4.setVisibility(View.GONE);
+                changeOnline(orderDescription);
+                changeOffline(orderPicture);
+                changeOffline(orderType);
+                changeOffline(orderPrice);
+            }
+        });
+        orderPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleText.setText(orderPrice.getText().toString());
+                cv1.setVisibility(View.GONE);
+                cv2.setVisibility(View.GONE);
+                cv3.setVisibility(View.GONE);
+                cv4.setVisibility(View.VISIBLE);
+                changeOnline(orderPrice);
+                changeOffline(orderPicture);
+                changeOffline(orderType);
+                changeOffline(orderDescription);
+            }
+        });
         mStorage = FirebaseStorage.getInstance().getReference();
         layoutForm = findViewById(R.id.layoutForm);
+        fileNameList = new ArrayList<>();
+        fileDoneList = new ArrayList<>();
         rv = findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setHasFixedSize(true);
-        fileNameList = new ArrayList<>();
-        fileDoneList = new ArrayList<>();
         uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList, uriList);
         rv.setAdapter(uploadListAdapter);
+
+
         spinnerCity = findViewById(R.id.citySpinner);
         spinnerType = findViewById(R.id.spinnerType);
         priceText = findViewById(R.id.total_price_edit);
@@ -247,18 +332,10 @@ ListView listView;
         });
 
     }
-
-    private void setCity() {
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, CityArray);
-        spinnerCity.setAdapter(adapter);
-    }
-
     @SuppressLint("RestrictedApi")
     public void AddPicture(View view) {
         getMedia();
     }
-
     private void getMedia() {
         rv.setVisibility(View.VISIBLE);
         choseImage = true;
@@ -1299,6 +1376,7 @@ ListView listView;
     Market market;
     Ressort ressort;
     Ground ground;
+    @SuppressLint("RestrictedApi")
     private void uploadResult() {
         final KProgressHUD hud = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
@@ -1480,12 +1558,13 @@ ListView listView;
     FloatingActionButton imgViewUpload;
     public void next(View view) {
         if (time == 0) {
-            imgViewUpload.setVisibility(View.GONE);
+            titleText.setText("نوع العقار");
             time++;
             hideView(cv1, cv2);
             changeColor(orderPicture, orderType);
 
         } else if (time == 1) {
+            titleText.setText("تفاصيل الطلب");
             if (!getType)
                 Toast.makeText(this, "من فضلك ادخل نوع العقار", Toast.LENGTH_SHORT).show();
             else {
@@ -1495,6 +1574,7 @@ ListView listView;
             }
 
         } else if (time == 2) {
+            titleText.setText("استلام العرض");
             if(buildType.equals("شقة ")) {
                 View flatView=findViewById(R.id.flat_view);
                 flatView.setVisibility(View.VISIBLE);
@@ -1575,4 +1655,7 @@ ListView listView;
         view.startAnimation(animation);
     }
 
+    public void finish(View view) {
+        finish();
+    }
 }

@@ -20,9 +20,10 @@ android:orientation="vertical">
             android:onClick="Finish"
             />
         <TextView
+            android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="مطلوب"
+            android:text="صور الطلب"
             android:textSize="20dp"
             android:fontFamily="@font/vip"
             android:textColor="#fff"
@@ -48,15 +49,10 @@ android:orientation="vertical">
             android:fontFamily="@font/vip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="الأن أطلب عقارك"/>
+            android:text=" العنوان"/>
+
         <TextView
-            android:textColor="#000"
-            android:textSize="15dp"
-            android:fontFamily="@font/vip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="و تواصل مع جميع العقارين في"/>
-        <TextView
+            android:id="@+id/adress"
             android:textColor="#000"
             android:textSize="15dp"
             android:fontFamily="@font/vip"
@@ -64,6 +60,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:text="مدينتك"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_below="@id/descLin"
         android:padding="10dp"
@@ -87,7 +84,7 @@ android:orientation="vertical">
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="سعر الطلب"/>
+            android:text="التفاصيل"/>
         <TextView
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
@@ -101,7 +98,7 @@ android:orientation="vertical">
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="وصف الطلب"/>
+            android:text=" الطلب"/>
         <TextView
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
@@ -132,6 +129,7 @@ android:orientation="vertical">
             android:text="صور الطلب"/>
     </LinearLayout>
     <LinearLayout
+        android:orientation="vertical"
         android:layout_below="@id/lin"
         android:layout_above="@id/bottom"
         android:layout_width="match_parent"
@@ -164,11 +162,27 @@ android:orientation="vertical">
             android:elevation="7dp"
             app:cardCornerRadius="7dp"
             app:contentPadding="7dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            <android.support.design.widget.FloatingActionButton
+                android:onClick="AddPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_upload_image"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/imgViewUpload"
+                app:elevation="7dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:backgroundTint="#fff"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -180,18 +194,7 @@ android:orientation="vertical">
         android:orientation="vertical"
         android:layout_below="@id/lin"
         android:layout_above="@id/bottom">
-        <android.support.design.widget.FloatingActionButton
-            android:onClick="AddPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_upload_image"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:id="@+id/imgViewUpload"
-            app:elevation="7dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            app:backgroundTint="#fff"/>
+
         <android.support.v7.widget.CardView
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -332,7 +335,6 @@ android:orientation="vertical">
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="match_parent">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -389,7 +391,7 @@ android:orientation="vertical">
                         android:gravity="center"
                         android:textSize="15sp"/>
                     <Button
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_margin="7dp"
                         android:id="@+id/btnContinue"
                         android:layout_width="match_parent"
@@ -397,6 +399,7 @@ android:orientation="vertical">
                         android:background="@drawable/tab_layout"
                         android:text="استمرار"
                         android:textSize="20sp"
+                        android:onClick="uploadToFirebase"
                         android:fontFamily="@font/vip_font"
                         android:textColor="@color/primary"/>
                 </LinearLayout>

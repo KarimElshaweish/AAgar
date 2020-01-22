@@ -52,7 +52,7 @@ KProgressHUD hud;
                         sweetRoomsNumber.getText().toString(),sweetBigBathSwitch.getText().toString(),sweetBuildAge.getText().toString(),
                         sweetPoolSwitchBool,sweetFootballGroundSwitchBool,sweetVolleyBallGroundSwitchBool,sweetHairRoomSwitchBool,sweetEntertanmentPlaceBool,
                         sweetBigBathSwitchBool);
-                Shared.editOffer.setAspect(ressort);
+                Shared.editOffer.setAspect((Map<String, String>)ressort);
                 mReference.child(FirebaseAuth.getInstance().getUid()).child(Shared.editOffer.getDescription()).setValue(Shared.editOffer).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

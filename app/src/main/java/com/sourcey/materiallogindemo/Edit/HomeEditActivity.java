@@ -73,106 +73,106 @@ public class HomeEditActivity extends AppCompatActivity {
     String[]naviagations=new String[]{"غير محدد","غرب","شمال","جنوب","شمال شرق","جنوب شرقى","جنوب غربى","شمال غربى","4 شوارع","3 شوارع","شرق"};
     ArrayAdapter<String> navigationAdapter ;
     Map<String,String>build;
-    private void __init_home(){
-        home_spinner=findViewById(R.id.home_spinner);
-        navigationAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,naviagations);
-        home_spinner.setAdapter(navigationAdapter);
-        home_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                homeNavigation=naviagations[i];
+        private void __init_home(){
+            home_spinner=findViewById(R.id.home_spinner);
+            navigationAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,naviagations);
+            home_spinner.setAdapter(navigationAdapter);
+            home_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    homeNavigation=naviagations[i];
 
-            }
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-        homeReceptionNumber=findViewById(R.id.homeReceptionNumber);
-        homeReceptionNumberSeekBar=findViewById(R.id.homeReceptionNumberSeekBar);
-        homeReceptionNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                homeReceptionNumber.setText(value.toString());
-            }
-        });
-        homeBathRomsNumber=findViewById(R.id.homeBathRomsNumber);
-        homeBathRomsNumberSeekBar=findViewById(R.id.homeBathRomsNumberSeekBar);
-        homeBathRomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                homeBathRomsNumber.setText(value.toString());
-            }
-        });
-        homeRoomsNumber=findViewById(R.id.homeRoomsNumber);
-        homeRoomsNumberSeekBar=findViewById(R.id.homeRoomsNumberSeekBar);
-        homeRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                homeRoomsNumber.setText(value.toString());
-            }
-        });
-        homeBuildAge=findViewById(R.id.homeBuildAge);
-        homeBuildAgeSeekBar=findViewById(R.id.homeBuildAgeSeekBar);
-        homeBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number value) {
-                homeBuildAge.setText(value.toString());
-            }
-        });
-        homeReadySwitch=findViewById(R.id.homeReadySwitch);
-        homeReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                homeReadySwitchBool=b;
-            }
-        });
-        homeDriverRoomSwitch=findViewById(R.id.homeDriverRoomSwitch);
-        homeDriverRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                homeDriverRoomSwitchBool=b;
-            }
-        });
-        homeBillGirlRoomSwitch=findViewById(R.id.homeBillGirlRoomSwitch);
-        homeBillGirlRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                homeBillGirlRoomSwitchBool=b;
-            }
-        });
-        homeHairRoomSwitch=findViewById(R.id.homeHairRoomSwitch);
-        homeHairRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                homeHairRoomSwitchBool=b;
-            }
-        });
-        homeHailSwitch=findViewById(R.id.homeHailSwitch);
-        homeHailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                homeHailSwitchBool=b;
-            }
-        });
-        homeKitchenSwitch=findViewById(R.id.homeKitchenSwitch);
-        homeKitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                homeKitchenSwitchBool=b;
-            }
-        });
-        build= (Map<String,String>) Shared.editOffer.getAspect();
-        homeKitchenSwitch.setChecked(checkTrue(build.get("homeKitchenSwitch")));
-        homeReadySwitch.setChecked(checkTrue(build.get("homeReadySwitch")));
-        homeBillGirlRoomSwitch.setChecked(checkTrue(build.get("homeBillGirlRoomSwitch")));
-        homeHailSwitch.setChecked(checkTrue(checkTrue(build.get("homeHailSwitch"))));
-        homeBathRomsNumber.setText(build.get("homeBathRomsNumber"));
-        homeReceptionNumber.setText(build.get("homeReceptionNumber"));
-        homeBuildAge.setText(build.get("homeBuildAge"));
-        homeRoomsNumber.setText(build.get("homeRoomsNumber"));
-    }
+                }
+            });
+            homeReceptionNumber=findViewById(R.id.homeReceptionNumber);
+            homeReceptionNumberSeekBar=findViewById(R.id.homeReceptionNumberSeekBar);
+            homeReceptionNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+                @Override
+                public void valueChanged(Number value) {
+                    homeReceptionNumber.setText(value.toString());
+                }
+            });
+            homeBathRomsNumber=findViewById(R.id.homeBathRomsNumber);
+            homeBathRomsNumberSeekBar=findViewById(R.id.homeBathRomsNumberSeekBar);
+            homeBathRomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+                @Override
+                public void valueChanged(Number value) {
+                    homeBathRomsNumber.setText(value.toString());
+                }
+            });
+            homeRoomsNumber=findViewById(R.id.homeRoomsNumber);
+            homeRoomsNumberSeekBar=findViewById(R.id.homeRoomsNumberSeekBar);
+            homeRoomsNumberSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+                @Override
+                public void valueChanged(Number value) {
+                    homeRoomsNumber.setText(value.toString());
+                }
+            });
+            homeBuildAge=findViewById(R.id.homeBuildAge);
+            homeBuildAgeSeekBar=findViewById(R.id.homeBuildAgeSeekBar);
+            homeBuildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
+                @Override
+                public void valueChanged(Number value) {
+                    homeBuildAge.setText(value.toString());
+                }
+            });
+            homeReadySwitch=findViewById(R.id.homeReadySwitch);
+            homeReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    homeReadySwitchBool=b;
+                }
+            });
+            homeDriverRoomSwitch=findViewById(R.id.homeDriverRoomSwitch);
+            homeDriverRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    homeDriverRoomSwitchBool=b;
+                }
+            });
+            homeBillGirlRoomSwitch=findViewById(R.id.homeBillGirlRoomSwitch);
+            homeBillGirlRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    homeBillGirlRoomSwitchBool=b;
+                }
+            });
+            homeHairRoomSwitch=findViewById(R.id.homeHairRoomSwitch);
+            homeHairRoomSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    homeHairRoomSwitchBool=b;
+                }
+            });
+            homeHailSwitch=findViewById(R.id.homeHailSwitch);
+            homeHailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    homeHailSwitchBool=b;
+                }
+            });
+            homeKitchenSwitch=findViewById(R.id.homeKitchenSwitch);
+            homeKitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    homeKitchenSwitchBool=b;
+                }
+            });
+            build= (Map<String,String>) Shared.editOffer.getAspect();
+            homeKitchenSwitch.setChecked(checkTrue(build.get("homeKitchenSwitch")));
+            homeReadySwitch.setChecked(checkTrue(build.get("homeReadySwitch")));
+            homeBillGirlRoomSwitch.setChecked(checkTrue(build.get("homeBillGirlRoomSwitch")));
+            homeHailSwitch.setChecked(checkTrue(checkTrue(build.get("homeHailSwitch"))));
+            homeBathRomsNumber.setText(build.get("homeBathRomsNumber"));
+            homeReceptionNumber.setText(build.get("homeReceptionNumber"));
+            homeBuildAge.setText(build.get("homeBuildAge"));
+            homeRoomsNumber.setText(build.get("homeRoomsNumber"));
+        }
     private Boolean checkTrue(Object checking){
         if(checking=="true")
             return true;

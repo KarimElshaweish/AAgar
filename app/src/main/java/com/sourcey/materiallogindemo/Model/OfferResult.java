@@ -2,7 +2,13 @@ package com.sourcey.materiallogindemo.Model;
 
 import java.util.List;
 
-public class OfferResult {
+public class OfferResult implements Cloneable {
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     Object aspect;
 
     public Object getAspect() {

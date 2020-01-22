@@ -65,7 +65,7 @@
                     android:id="@+id/rl">
 
                     <TextView
-                        android:id="@+id/cityName"
+                            android:id="@+id/cityName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"

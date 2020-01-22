@@ -1,5 +1,7 @@
 package com.sourcey.materiallogindemo;
 
+import android.widget.TextView;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
 import com.sourcey.materiallogindemo.Model.Offer;
@@ -57,6 +59,7 @@ public static boolean fristTime=false;
     public static List<String> useList;
     public static OfferResult editOffer;
     public static boolean Edit;
+    public static TextView city;
 
     public static  void reset(){
         customer=false;
