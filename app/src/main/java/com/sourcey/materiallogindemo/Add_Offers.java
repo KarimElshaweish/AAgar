@@ -387,7 +387,7 @@ ListView notifcationTypListView;
         notifcationTypListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         notifcationTypListView.setAdapter(adapter3);
         tabsArray2 =new ArrayList<>();
-        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "إرض ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
+        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "ارض ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
         tabsArray=new ArrayList<>();
         tabsArray.addAll(Arrays.asList(new String[]{"شراء", "إيجار"}));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray);

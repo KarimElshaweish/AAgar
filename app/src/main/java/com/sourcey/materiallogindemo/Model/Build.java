@@ -7,7 +7,8 @@ public class Build {
     public Build() {
     }
 
-    public Build(String buildNavigation, String durationType, String buildStreetWidth, String buildRoomsNumber, String buildMarketNumber, String buildRomsNumber, String bbuildAge, boolean buildReadySwitch) {
+    public Build(String buildNavigation, String durationType, String buildStreetWidth, String buildRoomsNumber,
+                 String buildMarketNumber, String buildRomsNumber, String bbuildAge, boolean buildReadySwitch) {
         this.buildNavigation = buildNavigation;
         this.durationType = durationType;
         this.buildStreetWidth = buildStreetWidth;

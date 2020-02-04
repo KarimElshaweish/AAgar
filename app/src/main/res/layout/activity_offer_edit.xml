@@ -363,45 +363,6 @@
                             android:background="@drawable/tab_layout"
                             android:layout_margin="10dp"
                             android:id="@+id/detialsFull2"/>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_gravity="right"
-                            android:gravity="right"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <CheckBox
-                                android:layout_centerVertical="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="16sp"
-                                android:layout_margin="10dp"
-                                android:id="@+id/checkbox"
-                                android:fontFamily="@font/vip_font"
-                                android:textColor="#000"
-                                android:layout_gravity="right"
-                                android:gravity="right"/>
-                            <TextView
-                                android:text="أوافق على الشروط و أحكام شركة تطبيق مطلوب العقارية وأنا المسؤول عن كافة البيانات المدخلى فى محتوى الإعلان"
-                                android:fontFamily="@font/vip_font"
-                                android:textColor="#000"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:padding="7dp"
-                                android:textSize="15sp"
-                                android:layout_margin="10dp"
-                                android:layout_toLeftOf="@id/checkbox"/>
-                        </RelativeLayout>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="الشروط و الأحكام "
-                            android:fontFamily="@font/vip_font"
-                            android:textColor="#3498db"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="15sp"/>
                     </LinearLayout>
                 </LinearLayout>
 

@@ -101,14 +101,17 @@ public class ChatAct extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                         Chat chat=dt.getValue(Chat.class);
-                        if(chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                &&chat.getSender().equals(userid)||
-                                chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        &&chat.getReciver().equals(userid)
-                        ){
-                            HashMap<String,Object>hashMap=new HashMap<>();
-                            hashMap.put("isseen",true);
-                            dt.getRef().updateChildren(hashMap);
+                        if(chat!=null) {
+                            String[] offid = chat.getId().split("\\*");
+                            if (chat.getReciver().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    && chat.getSender().equals(userid) ||
+                                    chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            && chat.getReciver().equals(userid)
+                            ) {
+                                HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("isseen", true);
+                                dt.getRef().updateChildren(hashMap);
+                            }
                         }
                 }
             }
@@ -179,8 +182,10 @@ public class ChatAct extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 OfferResult offerResult=dataSnapshot.getValue(OfferResult.class);
-                result.setText(offerResult.getBuildingType());
-                Shared.offerKnow=offerResult;
+                if(offerResult!=null) {
+                    result.setText(offerResult.getBuildingType());
+                    Shared.offerKnow = offerResult;
+                }
             }
 
             @Override
@@ -216,7 +221,7 @@ public class ChatAct extends AppCompatActivity {
         getOffer();
         if(Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
         result.setText(Shared.MyOffer.getType()+" "+Shared.MyOffer.getBuildingTyp()+" "+Shared.MyOffer.getPrice()+" "+"ريال");
-        if(Shared.offerKnow!=null&&Shared.MyOffer.getType()!=null)
+        if(Shared.offerKnow!=null&&Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
         order.setText(Shared.offerKnow.getSpinnerType()+"  "+Shared.offerKnow.getBuildingType()+" "+Shared.offerKnow.getPrice()+" ريال ");
         if(Shared.offerKnow!=null) {
             String id = FirebaseAuth.getInstance().getUid();
@@ -368,7 +373,6 @@ if(Shared.fristTime) {
                                                         //ubblockingTxt.setVisibility(View.VISIBLE);
                                                     }
                                                     if(chat!=null&& chat.getId()!=null)
-
                                                         if(chat.getId().equals(Shared.chatOfferId)
                                                                 ||(Shared.offerKnow!=null&&
                                                                 chat.getId().equals(Shared.offerKnow.getOfferID())
@@ -594,7 +598,9 @@ if(Shared.fristTime) {
     }
 
     public void openOfferDetalis(View view) {
-        startActivity(new Intent(this,DetailsChatAct.class));
+        Intent intent=new Intent(this,BuildDetial.class);
+        intent.putExtra("enable","0");
+        startActivity(intent);
     }
 
 }

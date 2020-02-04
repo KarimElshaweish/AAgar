@@ -87,7 +87,7 @@ public class ChatOfferAdapter extends RecyclerView.Adapter<ChatOfferAdapter.View
                         }
                     }
                 }
-                userAdapter=new UserAdapter(_ctx,musers,offerResult.getOfferID());
+                userAdapter=new UserAdapter(_ctx,musers,offerResult);
                 viewHolder.rv.setHasFixedSize(true);
                 viewHolder.rv.setLayoutManager(new LinearLayoutManager(_ctx));
                 viewHolder.rv.setAdapter(userAdapter);
@@ -162,8 +162,5 @@ public class ChatOfferAdapter extends RecyclerView.Adapter<ChatOfferAdapter.View
             rv=itemView.findViewById(R.id.rv);
             pb=itemView.findViewById(R.id.pb);
         }
-
-
-
     }
 }

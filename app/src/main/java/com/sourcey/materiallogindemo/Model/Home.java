@@ -8,7 +8,9 @@ public class Home {
     public Home() {
     }
 
-    public Home(String homeNavigation, String homeReceptionNumber, String homeBathRomsNumber, String homeRoomsNumber, String homeBuildAge, Boolean homeReadySwitch, Boolean homeDriverRoomSwitch, Boolean homeBillGirlRoomSwitch, Boolean homeHairRoomSwitch, Boolean homeHailSwitch, Boolean homeKitchenSwitch) {
+    public Home(String homeNavigation, String homeReceptionNumber, String homeBathRomsNumber, String homeRoomsNumber,
+                String homeBuildAge, Boolean homeReadySwitch, Boolean homeDriverRoomSwitch, Boolean homeBillGirlRoomSwitch,
+                Boolean homeHairRoomSwitch, Boolean homeHailSwitch, Boolean homeKitchenSwitch) {
         this.homeNavigation = homeNavigation;
         this.homeReceptionNumber = homeReceptionNumber;
         this.homeBathRomsNumber = homeBathRomsNumber;

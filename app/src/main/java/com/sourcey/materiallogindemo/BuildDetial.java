@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,7 +40,6 @@ import com.sourcey.materiallogindemo.Edit.LevelEditActivity;
 import com.sourcey.materiallogindemo.Edit.MarketEditActivity;
 import com.sourcey.materiallogindemo.Edit.RessortEditActivity;
 import com.sourcey.materiallogindemo.Edit.VillaEdit;
-import com.sourcey.materiallogindemo.Model.Build;
 import com.sourcey.materiallogindemo.Model.Deals;
 import com.sourcey.materiallogindemo.Model.Farm;
 import com.sourcey.materiallogindemo.Model.Flat;
@@ -57,8 +58,10 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.sourcey.materiallogindemo.Shared.offer;
 
@@ -74,7 +77,7 @@ public class BuildDetial extends AppCompatActivity {
     ImageView favImage;
     View Building,flatView,home,villa,level,farm,market,ressort;
 
-    Map<String,String> build;
+    Map<String,Object> build;
     @Override
     protected void onResume() {
         super.onResume();
@@ -88,14 +91,13 @@ public class BuildDetial extends AppCompatActivity {
         }
     }
 
-    private String checkTrue(Object checking){
-        if(checking=="true")
+    private String checkTrue(boolean checking){
+        if(checking)
             return "نعم";
         else
             return "لا";
     }
     private void __init__(){
-
         ttPrice=findViewById(R.id.ttPrice);
         ttPrice.setText(offerResult.getPrice());
         switch (offerResult.getBuildingType()){
@@ -124,7 +126,7 @@ public class BuildDetial extends AppCompatActivity {
             case "استراحه ":
                 __init__ressort();
                 break;
-            case "أرض":
+            case "ارض":
                 __init__ground();
                 break;
 
@@ -143,17 +145,17 @@ public class BuildDetial extends AppCompatActivity {
         city.setText(offerResult.getCity());
         price=findViewById(R.id.groundPrice);
         price.setText(offerResult.getPrice());
-        build = (Map<String, String>) offerResult.getAspect();
+        build = (Map<String, Object>) offerResult.getAspect();
         buildTypeComm=findViewById(R.id.groundcommtype);
-        buildTypeComm.setText(build.get("groundCommType"));
+        buildTypeComm.setText(build.get("groundCommType").toString());
         groundArea=findViewById(R.id.groundArea);
-        groundArea.setText(build.get("groundArea"));
+        groundArea.setText(build.get("groundArea").toString());
         groundMeterPrice=findViewById(R.id.groundMeterPrice);
-        groundMeterPrice.setText(build.get("groundMeterPrice"));
+        groundMeterPrice.setText(build.get("groundMeterPrice").toString());
         navigation=findViewById(R.id.groundNavigation);
-        navigation.setText(build.get("navigation"));
+        navigation.setText(build.get("navigation").toString());
         streetWidth=findViewById(R.id.groundStreetWidth);
-        streetWidth.setText(build.get("streetWidth"));
+        streetWidth.setText(build.get("streetWidth").toString());
         detials=findViewById(R.id.detialsFull);
         detials.setText(offerResult.getFullDetials());
 
@@ -183,20 +185,20 @@ public class BuildDetial extends AppCompatActivity {
         Btype.setText(offerResult.getType());
         pool=findViewById(R.id.sweetPool);
         hairRoom=findViewById(R.id.sweetHairRoomSwitch);
-        build = (Map<String, String>) offerResult.getAspect();
-        bigBath.setText(checkTrue(build.get("sweetBigBathSwitch")));
-        footballSwitch.setText(checkTrue(build.get("sweetFootballGroundSwitch")));
-        volleyPlaygroundSwitch.setText(checkTrue(build.get("sweetVolleyBallGroundSwitch")));
-        entertanmetPlalce.setText(checkTrue(build.get("sweetEntertanmentPlace")));
-        roomNumbers.setText(build.get("sweetRoomsNumber") == "true" ? "نعم" : "لا");
-        Bathrooms.setText(build.get("sweetBathRomsNumber"));
+        build = (Map<String, Object>) offerResult.getAspect();
+        bigBath.setText(checkTrue((boolean)build.get("sweetBigBathSwitch")));
+        footballSwitch.setText(checkTrue((boolean)build.get("sweetFootballGroundSwitch")));
+        volleyPlaygroundSwitch.setText(checkTrue((boolean)build.get("sweetVolleyBallGroundSwitch")));
+        entertanmetPlalce.setText(checkTrue((boolean)build.get("sweetEntertanmentPlace")));
+        roomNumbers.setText(build.get("sweetRoomsNumber").toString());
+        Bathrooms.setText(build.get("sweetBathRomsNumber").toString());
         detials.setText(offerResult.getFullDetials());
-        navigation.setText(build.get("ressortNavigation"));
-        reception.setText(build.get("sweetReceptionNumber"));
-        buildAge.setText(build.get("sweetBuildAge"));
-        hairRoom.setText(checkTrue(build.get("sweetHairRoomSwitch")));
-        pool.setText(checkTrue(build.get("sweetPoolSwitch")));
-        streetWidth.setText(build.get("sweetStreetWidth"));
+        navigation.setText(build.get("ressortNavigation").toString());
+        reception.setText(build.get("sweetReceptionNumber").toString());
+        buildAge.setText(build.get("sweetBuildAge").toString());
+        hairRoom.setText(checkTrue((boolean)build.get("sweetHairRoomSwitch")));
+        pool.setText(checkTrue((boolean)build.get("sweetPoolSwitch")));
+        streetWidth.setText(build.get("sweetStreetWidth").toString());
     }
     private void __init__market(){
         market=findViewById(R.id.market_view_detials);
@@ -211,13 +213,13 @@ public class BuildDetial extends AppCompatActivity {
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
         buildAge=findViewById(R.id.marketAge);
-        build= (Map<String,String>) offerResult.getAspect();
+        build= (Map<String,Object>) offerResult.getAspect();
         buildready=findViewById(R.id.levelFurnished);
         navigation=findViewById(R.id.marketNavigation);
         streetWidth=findViewById(R.id.marketStreetWidth);
-        streetWidth.setText(build.get("marketStreetWitdth"));
-        navigation.setText(build.get("marketNavigation"));
-        buildAge.setText(build.get("marketBuildAge"));
+        streetWidth.setText(build.get("marketStreetWitdth").toString());
+        navigation.setText(build.get("marketNavigation").toString());
+        buildAge.setText(build.get("marketBuildAge").toString());
         detials.setText(offerResult.getFullDetials());
     }
     private void __init__farm(){
@@ -233,13 +235,13 @@ public class BuildDetial extends AppCompatActivity {
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
-        build= (Map<String,String>) offerResult.getAspect();
+        build= (Map<String,Object>) offerResult.getAspect();
         tree=findViewById(R.id.farmTree);
         buildready=findViewById(R.id.levelFurnished);
         hairRoom=findViewById(R.id.farmHairRoom);
-        tree.setText(build.get("treeNumber"));
-        hairRoom.setText(checkTrue(build.get("farmHomeHairRoomSwitch")));
-        waterFaillNumber.setText(build.get("farmeWaterFailNumber"));
+        tree.setText(build.get("treeNumber").toString());
+        hairRoom.setText(checkTrue((boolean)build.get("farmHomeHairRoomSwitch")));
+        waterFaillNumber.setText(build.get("farmeWaterFailNumber").toString());
         detials.setText(offerResult.getFullDetials());
     }
     private void __init__level(){
@@ -260,21 +262,21 @@ public class BuildDetial extends AppCompatActivity {
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
-        build= (Map<String,String>) offerResult.getAspect();
+        build= (Map<String,Object>) offerResult.getAspect();
         buildready=findViewById(R.id.levelFurnished);
-        carEnternace.setText(checkTrue(build.get("levelcarEnternaceSwitch")));
-        Bathrooms.setText(build.get("levelBathRoomsNumber"));
+        carEnternace.setText(checkTrue((boolean)build.get("levelcarEnternaceSwitch")));
+        Bathrooms.setText(build.get("levelBathRoomsNumber").toString());
         detials.setText(offerResult.getFullDetials());
-        navigation.setText(build.get("levelNavigation"));
-        reception.setText(build.get("levelReceptionNumber"));
-        buildAge.setText(build.get("levelBuildAge"));
-        navigation.setText(build.get("levelNavigation"));
-        buildready.setText(build.get("levelReadySwitch")=="true"?"نعم":"لا");
-        roomNumbers.setText(build.get("levelRoomsNumber"));
+        navigation.setText(build.get("levelNavigation").toString());
+        reception.setText(build.get("levelReceptionNumber").toString());
+        buildAge.setText(build.get("levelBuildAge").toString());
+        navigation.setText(build.get("levelNavigation").toString());
+        buildready.setText((boolean)build.get("levelReadySwitch")?"نعم":"لا");
+        roomNumbers.setText(build.get("levelRoomsNumber").toString());
         AirCondtion=findViewById(R.id.levelAirCondtionSwitch);
-        AirCondtion.setText(checkTrue(build.get("levelAirCondtionSwitch")));
+        AirCondtion.setText(checkTrue((boolean)build.get("levelAirCondtionSwitch")));
         Level=findViewById(R.id.levelLevelNumber);
-        Level.setText(build.get("llevelNumber"));
+        Level.setText(build.get("llevelNumber").toString());
 
     }
     private void __init__villa() {
@@ -308,27 +310,27 @@ public class BuildDetial extends AppCompatActivity {
         Level=findViewById(R.id.villLevelNumber);
         streetWidth=findViewById(R.id.villaStreetWidth);
         valut=findViewById(R.id.villaVaultSwitch);
-        build = (Map<String, String>) offerResult.getAspect();
-        AirCondtion.setText(checkTrue(build.get("villaAirCondtionSwitch")));
-        carEnternace.setText(checkTrue(build.get("villaCarEnternaceSwitch")));
-        extenstion.setText(checkTrue(build.get(("extentionSwitch"))));
-        kitchen.setText(checkTrue(build.get("villaKitchenSwitch")));
+        build = (Map<String, Object>) offerResult.getAspect();
+        AirCondtion.setText(checkTrue((boolean)build.get("villaAirCondtionSwitch")));
+        carEnternace.setText(checkTrue((boolean)build.get("villaCarEnternaceSwitch")));
+        extenstion.setText(checkTrue((boolean)build.get(("extentionSwitch"))));
+        kitchen.setText(checkTrue((boolean)build.get("villaKitchenSwitch")));
         buildready = findViewById(R.id.villaFurnished);
         billRoom.setText(build.get("villaBillGirlRoomSwitch") == "true" ? "نعم" : "لا");
-        hall.setText(checkTrue(checkTrue(build.get("villaHallSwitch"))));
-        Bathrooms.setText(build.get("villaBathRoomsNumber"));
+        hall.setText(checkTrue((boolean)build.get("villaHallSwitch")));
+        Bathrooms.setText(build.get("villaBathRoomsNumber").toString());
         detials.setText(offerResult.getFullDetials());
-        navigation.setText(build.get("villaNavigation"));
-        reception.setText(build.get("villaReceptionNumber"));
-        buildAge.setText(build.get("villaBuildAge"));
-        buildready.setText(build.get("villaReadySwitch") == "true" ? "نعم" : "لا");
-        duplex.setText(checkTrue(build.get("villaDublexSwitch")));
-        Elvator.setText(checkTrue(build.get("villaElvatorSwitch")));
-        hairRoom.setText(checkTrue(build.get("villaHairRoomSwitch")));
-        Level.setText(build.get("villaLevelNumber"));
-        pool.setText(checkTrue(build.get("villaPoolSwitch")));
-        streetWidth.setText(build.get("villaStreetWidth"));
-        valut.setText(checkTrue(build.get("villaVaultSwitch")));
+        navigation.setText(build.get("villaNavigation").toString());
+        reception.setText(build.get("villaReceptionNumber").toString());
+        buildAge.setText(build.get("villaBuildAge").toString());
+        buildready.setText((boolean)build.get("villaReadySwitch")  ? "نعم" : "لا");
+        duplex.setText(checkTrue((boolean)build.get("villaDublexSwitch")));
+        Elvator.setText(checkTrue((boolean)build.get("villaElvatorSwitch")));
+        hairRoom.setText(checkTrue((boolean)build.get("villaHairRoomSwitch")));
+        Level.setText(build.get("villaLevelNumber").toString());
+        pool.setText(checkTrue((boolean)build.get("villaPoolSwitch")));
+        streetWidth.setText(build.get("villaStreetWidth").toString());
+        valut.setText(checkTrue((boolean)build.get("villaVaultSwitch")));
     }
 
     private void __init__home() {
@@ -353,19 +355,19 @@ public class BuildDetial extends AppCompatActivity {
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
-        build= (Map<String,String>) offerResult.getAspect();
-        kitchen.setText(checkTrue(build.get("homeKitchenSwitch")));
+        build= (Map<String,Object>) offerResult.getAspect();
+        kitchen.setText(checkTrue((boolean)build.get("homeKitchenSwitch")));
         buildready=findViewById(R.id.homeFurnished);
-        billRoom.setText(build.get("homeBillGirlRoomSwitch")=="true"?"نعم":"لا");
-        hall.setText(checkTrue(build.get("homeHailSwitch")));
-        Bathrooms.setText(build.get("homeBathRomsNumber"));
+        billRoom.setText((boolean)build.get("homeBillGirlRoomSwitch")?"نعم":"لا");
+        hall.setText(checkTrue((boolean)build.get("homeHailSwitch")));
+        Bathrooms.setText(build.get("homeBathRomsNumber").toString());
         detials.setText(offerResult.getFullDetials());
-        navigation.setText(build.get("homeNavigation"));
-        reception.setText(build.get("homeReceptionNumber"));
-        buildAge.setText(build.get("homeBuildAge"));
-        navigation.setText(build.get("homeNavigation"));
-        buildready.setText(build.get("homeReadySwitch")=="true"?"نعم":"لا");
-        roomNumbers.setText(build.get("homeRoomsNumber"));
+        navigation.setText(build.get("homeNavigation").toString());
+        reception.setText(build.get("homeReceptionNumber").toString());
+        buildAge.setText(build.get("homeBuildAge").toString());
+        navigation.setText(build.get("homeNavigation").toString());
+        buildready.setText((boolean)build.get("homeReadySwitch")?"نعم":"لا");
+        roomNumbers.setText(build.get("homeRoomsNumber").toString());
     }
 
     private void __init__build() {
@@ -387,18 +389,22 @@ public class BuildDetial extends AppCompatActivity {
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
-        build= (Map<String,String>) offerResult.getAspect();
+        build= (Map<String,Object>) offerResult.getAspect();
         detials.setText(offerResult.getFullDetials());
-        buildAge.setText(build.get("bbuildAge"));
-        marketNumber.setText(build.get("buildMarketNumber"));
-        navigation.setText(build.get("buildNavigation"));
-        buildready.setText(build.get("buildReadySwitch")=="true"?"نعم":"لا");
-        roomNumbers.setText(build.get("buildRomsNumber"));
-        streetWidth.setText(build.get("buildRoomsNumber"));
-        buildTypeComm.setText(build.get("durationType"));
+        buildAge.setText(build.get("bbuildAge").toString());
+        marketNumber.setText(build.get("buildMarketNumber").toString());
+        navigation.setText(build.get("buildNavigation").toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+           boolean ready=(boolean)build.get("buildReadySwitch");
+           buildready.setText(ready?"نعم":"لا");
+        }
+        roomNumbers.setText(build.get("buildRomsNumber").toString());
+        streetWidth.setText(build.get("buildRoomsNumber").toString());
+        buildTypeComm.setText(build.get("durationType").toString());
     }
 
     private void __init__flat() {
+        carEnternace=findViewById(R.id.flatCarEnterance);
         flatView =findViewById(R.id.flat_view);
         flatView.setVisibility(View.VISIBLE);
         Furnished=findViewById(R.id.flatFurnished);
@@ -407,7 +413,6 @@ public class BuildDetial extends AppCompatActivity {
         peopleType=findViewById(R.id.people);
         extenstion=findViewById(R.id.flatExstention);
         durationType=findViewById(R.id.flatDurationType);
-        carEnternace=findViewById(R.id.homeCarEnterance);
         AirCondtion=findViewById(R.id.flatAirCondtion);
         Bathrooms=findViewById(R.id.flatBathrooms);
         detials=findViewById(R.id.detialsFull);
@@ -427,30 +432,41 @@ public class BuildDetial extends AppCompatActivity {
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
-        build= (Map<String,String>) offerResult.getAspect();
+        build= (Map<String,Object>) offerResult.getAspect();
         detials.setText(offerResult.getFullDetials());
-        buildAge.setText(build.get("flatAge"));
-        buildready.setText(build.get("furnished")=="true"?"نعم":"لا");
-        roomNumbers.setText(build.get("rooms"));
-        buildTypeComm.setText(build.get("durationType"));
-        reception.setText(build.get("reception"));
-        Level.setText(build.get("flatLevel"));
-        Bathrooms.setText(build.get("bathRoom"));
-        AirCondtion.setText(build.get("airCondition")=="true"?"نعم":"لا");
-        carEnternace.setText(build.get("carEnterance")=="true"?"نعم":"لا");
-        durationType.setText(build.get("durationType"));
-        extenstion.setText(build.get("extension")=="true"?"نعم":"لا");
-        peopleType.setText(build.get("family")=="true"?"عائلى":"عزاب");
-        Furnished.setText(build.get("furnished")=="true"?"نعم":"لا");
-        kitchen.setText(build.get("kitchen")=="true"?"نعم":"لا");
+        buildAge.setText(build.get("flatAge").toString());
+
+        buildready.setText((boolean)build.get("furnished")?"نعم":"لا");
+        roomNumbers.setText(build.get("rooms").toString());
+        buildTypeComm.setText(build.get("durationType").toString());
+        reception.setText(build.get("reception").toString());
+        Level.setText(build.get("flatLevel").toString());
+        Bathrooms.setText(build.get("bathRoom").toString());
+        AirCondtion.setText((boolean)build.get("airCondition")?"نعم":"لا");
+        boolean carEnterance=(boolean)build.get("carEnterance");
+        carEnternace.setText(carEnterance?"نعم":"لا");
+        durationType.setText(build.get("durationType").toString());
+        extenstion.setText((boolean)build.get("extension")?"نعم":"لا");
+        peopleType.setText((boolean)build.get("family")?"عائلى":"عزاب");
+        Furnished.setText((boolean)build.get("furnished")?"نعم":"لا");
+        kitchen.setText((boolean)build.get("kitchen")?"نعم":"لا");
     }
 
     FloatingActionButton editFabButton;
+    Intent intent;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_detial);
+        intent=getIntent();
+        Button btnChat=findViewById(R.id.btnChat);
+        Button btnChooser=findViewById(R.id.btnChooser);
+
+       if(checkEnablesButon()){
+           btnChat.setVisibility(View.VISIBLE);
+           btnChooser.setVisibility(View.VISIBLE);
+       }
         offerResult=Shared.offerKnow;
         editFabButton=findViewById(R.id.fab_edit);
         __init__();
@@ -469,17 +485,19 @@ public class BuildDetial extends AppCompatActivity {
                 Shared.editOffer=new OfferResult();
                 Shared.editOffer=offerResult;
                 startActivity(new Intent(BuildDetial.this, OfferEdit.class));
-//
-//                }
-
             }
         });
         carouselView = findViewById(R.id.carouselView);
         carouselView.setPageCount(offerResult.getImageList().size());
         carouselView.setImageListener(imageListener);
-
     }
-        ImageListener imageListener = new ImageListener() {
+
+    private boolean checkEnablesButon() {
+        return intent.hasExtra("enable")&&
+               getIntent().getStringExtra("enable").equals("0");
+    }
+
+    ImageListener imageListener = new ImageListener() {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
                 Glide.with(BuildDetial.this).load(offerResult.getImageList().get(position)).into(imageView);
@@ -487,7 +505,8 @@ public class BuildDetial extends AppCompatActivity {
         };
 
     public void Finish(View view) {
-        Shared.offerKnow=null;
+//        if(!checkEnablesButon())
+//            Shared.offerKnow=null;
         finish();
     }
 
@@ -507,11 +526,9 @@ public class BuildDetial extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       Shared.offerKnow=null;
+    //   Shared.offerKnow=null;
        finish();
     }
-
-
     public void choseOffer(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("هل انت موافق على السعر ؟");
@@ -658,7 +675,6 @@ public class BuildDetial extends AppCompatActivity {
 // Set up the input
         final EditText input = new EditText(this);
         builder.setView(input);
-
 // Set up the buttons
         builder.setPositiveButton("إرسال", new DialogInterface.OnClickListener() {
             @Override

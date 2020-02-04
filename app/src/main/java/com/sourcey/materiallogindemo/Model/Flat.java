@@ -7,7 +7,9 @@ public class Flat {
     public Flat() {
     }
 
-    public Flat(boolean family, boolean furnished, boolean kitchen, boolean extension, boolean carEnterance, boolean airCondition, String durationType, String reception, String bathRoom, String rooms, String flatLevel, String flatAge) {
+    public Flat(boolean family, boolean furnished, boolean kitchen, boolean extension, boolean carEnterance
+            , boolean airCondition, String durationType, String reception, String bathRoom, String rooms
+            , String flatLevel, String flatAge) {
         this.family = family;
         this.furnished = furnished;
         this.kitchen = kitchen;

@@ -316,6 +316,7 @@
                 android:padding="7dp"
                 android:gravity="center">
                 <Button
+                    android:id="@+id/btnChat"
                     android:layout_marginRight="5dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -331,6 +332,7 @@
                     android:textSize="15dp"
                     />
                 <Button
+                    android:id="@+id/btnChooser"
                     android:padding="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_width="0dp"

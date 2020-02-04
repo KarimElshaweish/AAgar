@@ -309,7 +309,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
         listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
         tabsArray2 =new ArrayList<>();
-        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "أرض","مزرعه "}));
+        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "ارض","مزرعه "}));
         list2.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray2);
         list2.setAdapter(adapter2);
@@ -320,6 +320,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getType=true;
                 type=tabsArray[position];
+                orderType.setText(type);
             }
         });
 
@@ -328,6 +329,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getBuildType=true;
                 buildType=tabsArray2.get(position);
+                orderDescription.setText(buildType);
             }
         });
 
@@ -482,7 +484,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
             @Override
             public void valueChanged(Number value) {
                 if(Integer.parseInt(value.toString())==0){
-                    levelNumber.setText("أرضى");
+                    levelNumber.setText("ارضى");
                 }else{
                     levelNumber.setText(value.toString());
                 }
@@ -1456,7 +1458,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
                         sweetBigBathSwitchBool);
                 offerResult.setAspect(ressort);
                 break;
-            case "أرض":
+            case "ارض":
                 ground=new Ground(groundNavigation,GroundType,groundStreetWidth.getText().toString(),groundArea.getText().toString(),
                         ground_meter_price.getText().toString());
                 offerResult.setAspect(ground);
@@ -1607,7 +1609,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
                 View sweetView=findViewById(R.id.sweet_view);
                 sweetView.setVisibility(View.VISIBLE);
                 __init__ressort();
-            }else if(buildType.equals("أرض")){
+            }else if(buildType.equals("ارض")){
                 View groundView=findViewById(R.id.groundView);
                 groundView.setVisibility(View.VISIBLE);
                 __init__ground();

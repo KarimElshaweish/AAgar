@@ -6,7 +6,8 @@ public class Ground {
     public Ground() {
     }
 
-    public Ground(String navigation, String groundCommType, String streetWidth, String groundArea, String groundMeterPrice) {
+    public Ground(String navigation, String groundCommType, String streetWidth, String groundArea,
+                  String groundMeterPrice) {
         this.navigation = navigation;
         this.groundCommType = groundCommType;
         this.streetWidth = streetWidth;

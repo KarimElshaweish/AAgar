@@ -7,7 +7,9 @@ public class Level {
     public Level() {
     }
 
-    public Level(String levelNavigation, String levelReceptionNumber, String levelBathRoomsNumber, String levelRoomsNumber, String llevelNumber, String levelBuildAge, boolean levelReadySwitch, boolean levelcarEnternaceSwitch, boolean levelAirCondtionSwitch) {
+    public Level(String levelNavigation, String levelReceptionNumber, String levelBathRoomsNumber,
+                 String levelRoomsNumber, String llevelNumber, String levelBuildAge,
+                 boolean levelReadySwitch, boolean levelcarEnternaceSwitch, boolean levelAirCondtionSwitch) {
         this.levelNavigation = levelNavigation;
         this.levelReceptionNumber = levelReceptionNumber;
         this.levelBathRoomsNumber = levelBathRoomsNumber;

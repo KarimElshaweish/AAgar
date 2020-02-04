@@ -40,7 +40,9 @@ public class RecomendFragment extends Fragment {
                         offerResultListReco=new ArrayList<>();
                         for (DataSnapshot dt : dataSnapshot.getChildren()) {
                             com.sourcey.materiallogindemo.Model.OfferResult offer = dt.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class);
-                            if (offer.getType().equals(category)&&offer.getBuildingType().equals(buildType)) {
+                            String type1=offer.getType().trim();
+                            String buildType1=offer.getBuildingType().trim();
+                            if (type1.equals(category.trim()) &&buildType1.equals(buildType.trim())) {
                                 Shared.listReult.add(offer);
                                 LatLng latLng = new LatLng(offer.getLituide(), offer.getLongtuide());
                                 hashMap.put(latLng, offer);

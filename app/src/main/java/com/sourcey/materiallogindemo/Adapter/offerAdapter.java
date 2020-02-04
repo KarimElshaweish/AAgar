@@ -23,6 +23,7 @@ import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
 import java.util.List;
+import java.util.Map;
 
 public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder> {
 
@@ -46,7 +47,12 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.ViewhHolder>
     public void onBindViewHolder(@NonNull ViewhHolder holder, final int position) {
         holder.desc.setText(offerResultList.get(position).getBuildingType());
         holder.cityText.setText(offerResultList.get(position).getCity());
-        holder.priceText.setText(offerResultList.get(position).getPrice()+" "+"ريال");
+        if(offerResultList.get(position).getPrice().isEmpty()) {
+            Map<Object, Object> map = (Map<Object, Object>) offerResultList.get(position).getAspect();
+            holder.priceText.setText(map.get("groundMeterPrice").toString() + " " + "ريال");
+        }else{
+            holder.priceText.setText(offerResultList.get(position).getPrice()+ " " + "ريال");
+        }
         holder.TypeText.setText(offerResultList.get(position).getType());
         holder.streetText.setText(offerResultList.get(position).getStreet());
         holder.vs.setVisibility(View.GONE);

@@ -158,7 +158,7 @@ public class ChatList extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         com.sourcey.materiallogindemo.Model.OfferResult offerResult = dataSnapshot.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class);
-                                        if(!checkOffer(offerResult))
+                                        if(offerResult!=null&&!checkOffer(offerResult))
                                         offerResultList.add(offerResult);
                                         fI++;
                                         if(fI==offerID.size()){

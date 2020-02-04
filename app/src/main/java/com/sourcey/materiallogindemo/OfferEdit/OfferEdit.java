@@ -126,6 +126,7 @@ public class OfferEdit extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getType=true;
                 type=tabsArray[position];
+                orderType.setText(type);
             }
         });
 
@@ -134,6 +135,7 @@ public class OfferEdit extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getBuildType=true;
                 buildType=tabsArray2.get(position);
+                orderDescription.setText(buildType);
             }
         });
 
@@ -145,6 +147,7 @@ public class OfferEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_edit);
         offerResult=Shared.editOffer;
+
         ((EditText)findViewById(R.id.detialsFull2)).setText(offerResult.getFullDetials());
         nrv=findViewById(R.id.nRv);
         nrv.setHasFixedSize(true);
@@ -155,56 +158,141 @@ public class OfferEdit extends AppCompatActivity {
         nrv.setAdapter(nuploadListAdapter);
         navigationAdapter= new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, naviagations);
-                        switch (offerResult.getBuildingType()) {
+        Map<String, Object> fMap= (Map<String,Object>) offerResult.getAspect();
+        switch (offerResult.getBuildingType()) {
                             case "شقة ":
                                 View flatView=findViewById(R.id.flat_view);
                                 flatView.setVisibility(View.VISIBLE);
+                                flat= new Flat((boolean)(fMap.get("family")),
+                                        ((boolean)fMap.get("furnished")),
+                                        (boolean) (fMap.get("kitchen")),
+                                        (boolean)(fMap.get("extension")),
+                                        (boolean)(fMap.get("carEnterance")),
+                                        (boolean)(fMap.get("airCondition")),
+                                        fMap.get("durationType").toString(),
+                                        fMap.get("reception").toString(),
+                                        fMap.get("bathRoom").toString(),
+                                        fMap.get("rooms").toString(),
+                                        fMap.get("flatLevel").toString(),
+                                        fMap.get("flatAge").toString());
                                 __init__flat();
                                 __init__flat__Detials();
                                 break;
                             case "فيلا ":
                                 View villaView=findViewById(R.id.villa_view);
+                                villa=new Villa(fMap.get("navigation").toString(),
+                                        fMap.get("villaReceptionNumber").toString(),
+                                        fMap.get("villaBathRoomsNumber").toString(),
+                                        fMap.get("villaStreetWidth").toString(),
+                                        fMap.get("villaRoomsNumber").toString(),
+                                        fMap.get("villaLevelNumber").toString(),
+                                        fMap.get("villaBuildAge").toString(),
+                                        (boolean)(fMap.get("villaReceptionSwitch")),
+                                        (boolean)(fMap.get("villaDriverSwitch")),
+                                        (boolean)(fMap.get("villaBillGirlRoomSwitch")),
+                                        (boolean)(fMap.get("villaPoolSwitch")),
+                                        (boolean)(fMap.get("villaHairRoomSwitch")),
+                                        (boolean)(fMap.get("villaHallSwitch")),
+                                        (boolean)(fMap.get("villaVaultSwitch")),
+                                        (boolean)(fMap.get("villaReadySwitch")),
+                                        (boolean)(fMap.get("villaKitchenSwitch")),
+                                        (boolean)(fMap.get("extentionSwitch")),
+                                        (boolean)(fMap.get("villaCarEnternaceSwitch")),
+                                        (boolean)(fMap.get("villaElvatorSwitch")),
+                                        (boolean)(fMap.get("villaAirCondtionSwitch")),
+                                        (boolean)(fMap.get("villaDublexSwitch")));
                                 villaView.setVisibility(View.VISIBLE);
                                 __init__villa();
                                 __init__villa__Detials();
                                 break;
                             case "عمارة ":
+                                build=new Build(fMap.get("buildNavigation").toString(),
+                                        fMap.get("durationType").toString(),
+                                        fMap.get("buildStreetWidth").toString(),
+                                        fMap.get("buildRoomsNumber").toString(),
+                                        fMap.get("buildMarketNumber").toString(),
+                                        fMap.get("buildRomsNumber").toString(),
+                                        fMap.get("bbuildAge").toString(),
+                                        (boolean)(fMap.get("buildReadySwitch")));
                                 View build_view=findViewById(R.id.build_view);
                                 build_view.setVisibility(View.VISIBLE);
                                 __init_build();
                                 __init_build__Detials();
                                 break;
                             case "بيت ":
+                                home=new Home(fMap.get("homeNavigation").toString()
+                                        ,fMap.get("homeReceptionNumber").toString(),
+                                        fMap.get("homeBathRomsNumber").toString(),
+                                        fMap.get("homeRoomsNumber").toString(),
+                                        fMap.get("homeBuildAge").toString(),
+                                        (boolean)(fMap.get("homeReadySwitch")),
+                                        (boolean)(fMap.get("homeDriverRoomSwitch")),
+                                        (boolean)(fMap.get("homeBillGirlRoomSwitch")),
+                                        (boolean)(fMap.get("homeHairRoomSwitch")),
+                                        (boolean)(fMap.get("homeHailSwitch")),
+                                        (boolean)(fMap.get("homeKitchenSwitch")));
                                 View homeView=findViewById(R.id.home_view);
                                 homeView.setVisibility(View.VISIBLE);
                                 __init_home();
                                 __init_home__Detials();
                                 break;
                             case "دور ":
+                                level=new Level(fMap.get("levelNavigation").toString(),
+                                        fMap.get("levelReceptionNumber").toString(),
+                                        fMap.get("levelBathRoomsNumber").toString(),
+                                        fMap.get("levelRoomsNumber").toString(),
+                                        fMap.get("llevelNumber").toString(),
+                                        fMap.get("levelBuildAge").toString(),
+                                        (boolean)(fMap.get("levelReadySwitch")),
+                                        (boolean)(fMap.get("levelcarEnternaceSwitch")),
+                                        (boolean)(fMap.get("levelAirCondtionSwitch")));
                                 View levelView=findViewById(R.id.level_view);
                                 levelView.setVisibility(View.VISIBLE);
                                 __init_level();
                                 __init_level_Detials();
                                 break;
                             case "مزرعه ":
+                                farm=new Farm(fMap.get("farmeWaterFailNumber")
+                                        .toString(),fMap.get("treeNumber").toString(),
+                                        (boolean)(fMap.get("farmHomeHairRoomSwitch")));
                                 View farmView=findViewById(R.id.farme_view);
                                 farmView.setVisibility(View.VISIBLE);
                                 __init_farm();
                                 __init_farm__Detials();
                                 break;
                             case "محل ":
+                                market=new Market(fMap.get("marketNavigation").toString(),
+                                        fMap.get("marketStreetWitdth").toString(),
+                                        fMap.get("marketBuildAge").toString());
                                 View marketView=findViewById(R.id.market_view);
                                 marketView.setVisibility(View.VISIBLE);
                                 __init__market();
                                 __init__market__Detials();
                                 break;
                             case "استراحه ":
+                                ressort=new Ressort(fMap.get("ressortNavigation").toString(),
+                                        fMap.get("sweetReceptionNumber").toString(),
+                                        fMap.get("sweetBathRomsNumber").toString(),
+                                        fMap.get("sweetRoomsNumber").toString(),
+                                        fMap.get("sweetStreetWidth").toString(),
+                                        fMap.get("sweetBuildAge").toString(),
+                                        (boolean)(fMap.get("sweetPoolSwitch")),
+                                        (boolean)(fMap.get("sweetFootballGroundSwitch")),
+                                        (boolean)(fMap.get("sweetVolleyBallGroundSwitch")),
+                                        (boolean)(fMap.get("sweetHairRoomSwitch")),
+                                        (boolean)(fMap.get("sweetEntertanmentPlace")),
+                                        (boolean)(fMap.get("sweetBigBathSwitch")));
                                 View sweetView=findViewById(R.id.sweet_view);
                                 sweetView.setVisibility(View.VISIBLE);
                                 __init__ressort();
                                 __init__ressort__Detials();
                                 break;
                             case "أرض":
+                                ground=new Ground(fMap.get("navigation").toString(),
+                                        fMap.get("groundCommType").toString(),
+                                        fMap.get("streetWidth").toString(),
+                                        fMap.get("groundArea").toString(),
+                                        fMap.get("groundMeterPrice").toString());
                                 View groundView=findViewById(R.id.groundView);
                                 groundView.setVisibility(View.VISIBLE);
                                 __init__ground();
@@ -233,6 +321,8 @@ public class OfferEdit extends AppCompatActivity {
         orderPrice = findViewById(R.id.orderPrice);
         orderDescription = findViewById(R.id.orderDescription);
         orderType = findViewById(R.id.orderType);
+        orderType.setText(offerResult.getType());
+        orderDescription.setText(offerResult.getBuildingType());
         orderPicture = findViewById(R.id.orderPicture);
         orderPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -472,6 +562,7 @@ public class OfferEdit extends AppCompatActivity {
     private List<String> fileDoneList;
     private StorageReference mStorage;
     List<Uri> uriList = new ArrayList<>();
+
     @SuppressLint("RestrictedApi")
     private void uploadResult() {
         final KProgressHUD hud = KProgressHUD.create(this)
@@ -494,10 +585,7 @@ public class OfferEdit extends AppCompatActivity {
                 }else{
                     dutration="annual";
                 }
-                flat=new Flat(family,readySwitchbool,kitchenSwitchbool,extentionSwitchbool
-                        ,carEnternaceSwitchbool,airCondtionSwitchbool,dutration,receptionNumber.getText().toString(),
-                        bathRoomsNumber.getText().toString(),roomsNumber.getText().toString(),
-                        levelNumber.getText().toString(),buildAge.getText().toString());
+
 
                 offerResult.setAspect(flat);
                 break;
@@ -628,7 +716,6 @@ public class OfferEdit extends AppCompatActivity {
             ,carEnternaceSwitchbool=false
             ,elvatorSwitchbool=false
             ,airCondtionSwitchbool=false;
-    boolean family=true;
     boolean daily=true,monthly=false,annual=false;
     View flatView;
     private void __init__flat(){
@@ -739,8 +826,8 @@ public class OfferEdit extends AppCompatActivity {
         btnSingle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(family){
-                    family=false;
+                if(flat.isFamily()){
+                    flat.setFamily(false);
                     btnFamily.setBackground(getResources().getDrawable(R.drawable.tab_layout));
                     btnFamily.setTextColor(Color.parseColor("#000000"));
 
@@ -754,8 +841,8 @@ public class OfferEdit extends AppCompatActivity {
         btnFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!family){
-                    family=true;
+                if(!flat.isFamily()){
+                    flat.setFamily(true);
                     btnSingle.setBackground(getResources().getDrawable(R.drawable.tab_layout));
                     btnSingle.setTextColor(Color.parseColor("#000000"));
 
@@ -1681,6 +1768,7 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
         buildReadySwitch=findViewById(R.id.buildReadySwitch);
+        buildReadySwitch.setChecked(build.isBuildReadySwitch());
         buildReadySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1691,7 +1779,6 @@ public class OfferEdit extends AppCompatActivity {
         bbuildAge.setText(build1.get("bbuildAge").toString());
         buildMarketNumber.setText(build1.get("buildMarketNumber").toString());
         buildMarketNumber.setText(build1.get("buildNavigation").toString());
-        buildReadySwitch.setChecked(checkTrue(build1.get("buildReadySwitch")));
         buildRoomsNumber.setText(build1.get("buildRomsNumber").toString());
         buildStreetWidth.setText(build1.get("buildRoomsNumber").toString());
     }
@@ -1707,12 +1794,6 @@ public class OfferEdit extends AppCompatActivity {
 
         commeice.setBackgroundColor(getResources().getColor(R.color.primary));
         commeice.setTextColor(Color.parseColor("#ffffff"));
-    }
-    private Boolean checkTrue(Object checking){
-        if(checking=="true")
-            return true;
-        else
-            return false;
     }
     private void homming() {
         homingBool=true;
@@ -1830,19 +1911,19 @@ public class OfferEdit extends AppCompatActivity {
                 homeKitchenSwitchBool=b;
             }
         });
-       Map<String, String> build1= (Map<String,String>) Shared.editOffer.getAspect();
-        homeKitchenSwitch.setChecked(checkTrue(build1.get("homeKitchenSwitch")));
-        homeReadySwitch.setChecked(checkTrue(build1.get("homeReadySwitch")));
-        homeBillGirlRoomSwitch.setChecked(checkTrue(build1.get("homeBillGirlRoomSwitch")));
-        homeHailSwitch.setChecked(checkTrue(checkTrue(build1.get("homeHailSwitch"))));
-        homeBathRomsNumber.setText(build1.get("homeBathRomsNumber"));
+       Map<String, Object> build1= (Map<String,Object>) Shared.editOffer.getAspect();
+        homeKitchenSwitch.setChecked( (boolean)(build1.get("homeKitchenSwitch")));
+        homeReadySwitch.setChecked( (boolean)(build1.get("homeReadySwitch")));
+        homeBillGirlRoomSwitch.setChecked( (boolean)(build1.get("homeBillGirlRoomSwitch")));
+        homeHailSwitch.setChecked(( (boolean)(build1.get("homeHailSwitch"))));
+        homeBathRomsNumber.setText(build1.get("homeBathRomsNumber").toString());
 
         bathRoomsSeekBar=findViewById(R.id.bathRoomsSeekBar);
 
-        homeReceptionNumber.setText(build1.get("homeReceptionNumber"));
+        homeReceptionNumber.setText(build1.get("homeReceptionNumber").toString());
 
-        homeBuildAge.setText(build1.get("homeBuildAge"));
-        homeRoomsNumber.setText(build1.get("homeRoomsNumber"));
+        homeBuildAge.setText(build1.get("homeBuildAge").toString());
+        homeRoomsNumber.setText(build1.get("homeRoomsNumber").toString());
     }
     private void __init_farm__Detials(){
         farmeWaterFailNumber=findViewById(R.id.farmeWaterFailNumber);
@@ -1868,17 +1949,14 @@ public class OfferEdit extends AppCompatActivity {
                 farmHomeHairRoomSwitchBool=b;
             }
         });
-        Map<String, String>build1= (Map<String,String>) Shared.editOffer.getAspect();
-        treeNumber.setText(build1.get("treeNumber"));
-        farmHomeHairRoomSwitch.setChecked(checkTrue(build1.get("farmHomeHairRoomSwitch")));
-        farmeWaterFailNumber.setText(build1.get("farmeWaterFailNumber"));
+        Map<String, Object>build1= (Map<String,Object>) Shared.editOffer.getAspect();
+        treeNumber.setText(build1.get("treeNumber").toString());
+        farmHomeHairRoomSwitch.setChecked( (boolean)(build1.get("farmHomeHairRoomSwitch")));
+        farmeWaterFailNumber.setText(build1.get("farmeWaterFailNumber").toString());
     }
     private void __init__flat__Detials(){
-       Map<String, String> build1= (Map<String,String>) Shared.editOffer.getAspect();
-
         airCondtionSwitch=findViewById(R.id.airCondtionSwitch);
-
-
+        airCondtionSwitch.setChecked(flat.isAirCondition());
         airCondtionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1886,7 +1964,6 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
         elvatorSwitch=findViewById(R.id.elvatorSwitch);
-
         elvatorSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1894,8 +1971,7 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
         carEnternaceSwitch=findViewById(R.id.carEnternaceSwitch);
-
-
+        carEnternaceSwitch.setChecked(flat.isCarEnterance());
         carEnternaceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1903,8 +1979,7 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
         extentionSwitch=findViewById(R.id.extentionSwitch);
-
-
+        extentionSwitch.setChecked(flat.isExtension());
         extentionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1912,8 +1987,7 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
         kitchenSwitch=findViewById(R.id.kitchenSwitch);
-
-
+        kitchenSwitch.setChecked(flat.isKitchen());
         kitchenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1921,8 +1995,7 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
         readySwitch=findViewById(R.id.readySwitch);
-
-
+        readySwitch.setChecked(flat.isFurnished());
         readySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -1933,25 +2006,17 @@ public class OfferEdit extends AppCompatActivity {
         receptionSeekBar=findViewById(R.id.receptionSeekBar);
         btnSingle=findViewById(R.id.btnSingle);
         btnFamily=findViewById(R.id.btnFamily);
-
         dailyText=findViewById(R.id.dailyText);
         monthlyTxt=findViewById(R.id.monthlyTxt);
         annualText=findViewById(R.id.annualText);
-
         bathRoomsSeekBar=findViewById(R.id.bathRoomsSeekBar);
         bathRoomsNumber=findViewById(R.id.bathRoomsNumber);
-
-
         roomsSeekBar=findViewById(R.id.roomsSeekBar);
         roomsNumber=findViewById(R.id.roomsNumber);
-
         levelSeekBar=findViewById(R.id.levelSeekBar);
         levelNumber=findViewById(R.id.levelNumber);
-
         buildAgeSeekBar=findViewById(R.id.buildAgeSeekBar);
         buildAge=findViewById(R.id.buildAge);
-
-
         buildAgeSeekBar.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
             @Override
             public void valueChanged(Number value) {
@@ -1992,8 +2057,8 @@ public class OfferEdit extends AppCompatActivity {
                 receptionNumber.setText(value.toString());
             }
         });
-        if(build1.get("family")=="true") {
-            family = true;
+        if( flat.isFamily()) {
+            flat.setFamily(true);
             btnSingle.setBackground(getResources().getDrawable(R.drawable.tab_layout));
             btnSingle.setTextColor(Color.parseColor("#000000"));
 
@@ -2001,7 +2066,7 @@ public class OfferEdit extends AppCompatActivity {
             btnFamily.setTextColor(Color.parseColor("#ffffff"));
         }
         else {
-            family = false;
+            flat.setFamily(false);
             btnFamily.setBackground(getResources().getDrawable(R.drawable.tab_layout));
             btnFamily.setTextColor(Color.parseColor("#000000"));
 
@@ -2011,8 +2076,8 @@ public class OfferEdit extends AppCompatActivity {
         btnSingle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(family){
-                    family=false;
+                if(flat.isFamily()){
+                    flat.setFamily(false);
                     btnFamily.setBackground(getResources().getDrawable(R.drawable.tab_layout));
                     btnFamily.setTextColor(Color.parseColor("#000000"));
 
@@ -2021,8 +2086,7 @@ public class OfferEdit extends AppCompatActivity {
                 }
             }
         });
-
-        switch (build1.get("durationType")){
+        switch (flat.getDurationType()){
             case "daily":
                 monthly=false;
                 annual=false;
@@ -2064,12 +2128,11 @@ public class OfferEdit extends AppCompatActivity {
                 monthlyTxt.setBackground(getResources().getDrawable(R.drawable.tab_layout));
                 break;
         }
-
         btnFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!family){
-                    family=true;
+                if(!flat.isFamily()){
+                    flat.setFamily(true);
                     btnSingle.setBackground(getResources().getDrawable(R.drawable.tab_layout));
                     btnSingle.setTextColor(Color.parseColor("#000000"));
 
@@ -2099,7 +2162,6 @@ public class OfferEdit extends AppCompatActivity {
                 }
             }
         });
-
         monthlyTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -2121,7 +2183,6 @@ public class OfferEdit extends AppCompatActivity {
 
             }
         });
-
         annualText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -2143,35 +2204,11 @@ public class OfferEdit extends AppCompatActivity {
 
             }
         });
-        String age=build1.get("flatAge");
-        buildAge.setText(age);
-        String bath=build1.get("bathRoom");
-        bathRoomsNumber.setText(bath);
-        levelNumber.setText(build1.get("flatLevel"));
-        roomsNumber.setText(build1.get("rooms"));
-        receptionNumber.setText(build1.get("reception"));
-        if(build1.get("furnished")=="true"){
-            readySwitch.setChecked(true);
-        }else
-            readySwitch.setChecked(false);
-        if(build1.get("kitchen")=="true"){
-            kitchenSwitch.setChecked(true);
-        }else {
-            kitchenSwitch.setChecked(false);
-        }
-        if(build1.get("extension")=="true"){
-            extentionSwitch.setChecked(true);
-        }else
-            extentionSwitch.setChecked(false);
-        if(build1.get("carEnterance")=="true"){
-            carEnternaceSwitch.setChecked(true);
-        }else{
-            carEnternaceSwitch.setChecked(false);
-        }
-        if(build1.get("airCondition")=="true")
-            airCondtionSwitch.setChecked(true);
-        else
-            airCondtionSwitch.setChecked(false);
+        buildAge.setText(flat.getFlatAge());
+        bathRoomsNumber.setText(flat.getBathRoom());
+        levelNumber.setText(flat.getFlatLevel());
+        roomsNumber.setText(flat.getRooms());
+        receptionNumber.setText(flat.getReception());
     }
     private void __init__ground__Detials(){
         navigationAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,naviagations);
@@ -2260,7 +2297,7 @@ public class OfferEdit extends AppCompatActivity {
         });
         groundArea=findViewById(R.id.ground_meter_ground);
         ground_meter_price=findViewById(R.id.ground_meter_price);
-       Map<String, String> build1 = (Map<String, String>) Shared.editOffer.getAspect();
+       Map<String, Object> build1 = (Map<String, Object>) Shared.editOffer.getAspect();
         if(((build1.get("groundCommType").equals("groundCommerceAndBuilding")))){
             groundCommerceAndBuildingl=true;
             groundBuilding=false;
@@ -2288,9 +2325,9 @@ public class OfferEdit extends AppCompatActivity {
             groundCommeice.setBackgroundColor(getResources().getColor(R.color.primary));
             groundCommeice.setTextColor(Color.parseColor("#ffffff"));
         }
-        groundArea.setText(build1.get("groundArea"));
-        ground_meter_price.setText(build1.get("groundMeterPrice"));
-        groundStreetWidth.setText(build1.get("streetWidth"));
+        groundArea.setText(build1.get("groundArea").toString());
+        ground_meter_price.setText(build1.get("groundMeterPrice").toString());
+        groundStreetWidth.setText(build1.get("streetWidth").toString());
     }
     private void __init__market__Detials(){
         navigationAdapter= new ArrayAdapter<String>(this,
@@ -2325,9 +2362,9 @@ public class OfferEdit extends AppCompatActivity {
                 marketBuildAge.setText(value.toString());
             }
         });
-        Map<String, String>build1= (Map<String,String>) Shared.editOffer.getAspect();
-        marketStreetWitdth.setText(build1.get("marketStreetWitdth"));
-        marketBuildAge.setText(build1.get("marketBuildAge"));
+        Map<String, Object>build1= (Map<String,Object>) Shared.editOffer.getAspect();
+        marketStreetWitdth.setText(build1.get("marketStreetWitdth").toString());
+        marketBuildAge.setText(build1.get("marketBuildAge").toString());
     }
     private void __init__ressort__Detials(){
         navigationAdapter= new ArrayAdapter<String>(this,
@@ -2429,17 +2466,17 @@ public class OfferEdit extends AppCompatActivity {
             }
         });
 
-        Map<String, String>build1 = (Map<String, String>) Shared.editOffer.getAspect();
-        sweetBigBathSwitch.setChecked(checkTrue(build1.get("sweetBigBathSwitch")));
-        sweetFootballGroundSwitch.setChecked(checkTrue(build1.get("sweetFootballGroundSwitch")));
-        sweetVolleyBallGroundSwitch.setChecked(checkTrue(build1.get("sweetVolleyBallGroundSwitch")));
-        sweetEntertanmentPlace.setChecked(checkTrue(build1.get("sweetEntertanmentPlace")));
-        sweetRoomsNumber.setText(build1.get("sweetRoomsNumber") );
-        sweetBathRomsNumber.setText(build1.get("sweetBathRomsNumber"));
-        sweetReceptionNumber.setText(build1.get("sweetReceptionNumber"));
-        sweetBuildAge.setText(build1.get("sweetBuildAge"));
-        sweetHairRoomSwitch.setChecked(checkTrue(build1.get("sweetHairRoomSwitch")));
-        sweetPoolSwitch.setChecked(checkTrue(build1.get("sweetPoolSwitch")));
+        Map<String, Object>build1 = (Map<String, Object>) Shared.editOffer.getAspect();
+        sweetBigBathSwitch.setChecked( (boolean)(build1.get("sweetBigBathSwitch")));
+        sweetFootballGroundSwitch.setChecked( (boolean)(build1.get("sweetFootballGroundSwitch")));
+        sweetVolleyBallGroundSwitch.setChecked( (boolean)(build1.get("sweetVolleyBallGroundSwitch")));
+        sweetEntertanmentPlace.setChecked( (boolean)(build1.get("sweetEntertanmentPlace")));
+        sweetRoomsNumber.setText(build1.get("sweetRoomsNumber").toString() );
+        sweetBathRomsNumber.setText(build1.get("sweetBathRomsNumber").toString());
+        sweetReceptionNumber.setText(build1.get("sweetReceptionNumber").toString());
+        sweetBuildAge.setText(build1.get("sweetBuildAge").toString());
+        sweetHairRoomSwitch.setChecked( (boolean)(build1.get("sweetHairRoomSwitch")));
+        sweetPoolSwitch.setChecked( (boolean)(build1.get("sweetPoolSwitch")));
     }
     private void __init__villa__Detials(){
         Villaspinner=findViewById(R.id.Villaspinner);
@@ -2595,21 +2632,21 @@ public class OfferEdit extends AppCompatActivity {
                 villaDublexSwitchBool=b;
             }
         });
-       Map<String, String> build1 = (Map<String, String>) Shared.editOffer.getAspect();
-        villaAirCondtionSwitch.setChecked(checkTrue(build1.get("villaAirCondtionSwitch")));
-        villaCarEnternaceSwitch.setChecked(checkTrue(build1.get("villaCarEnternaceSwitch")));
-        villaKitchenSwitch.setChecked(checkTrue(build1.get("villaKitchenSwitch")));
-        villaReadySwitch.setChecked(checkTrue(build1.get("villaReadySwitch")));
-        villaBillGirlRoomSwitch.setChecked(checkTrue(build1.get("villaBillGirlRoomSwitch")));
-        villaBathRoomsNumber.setText(build1.get("villaBathRoomsNumber"));
-        villaReceptionNumber.setText(build1.get("villaReceptionNumber"));
-        villaBuildAge.setText(build1.get("villaBuildAge"));
-        villaDublexSwitch.setChecked(checkTrue(build1.get("villaDublexSwitch")));
-        villaElvatorSwitch.setChecked(checkTrue(build1.get("villaElvatorSwitch")));
-        villaHairRoomSwitch.setChecked(checkTrue(build1.get("villaHairRoomSwitch")));
-        villaLevelNumber.setText(build1.get("villaLevelNumber"));
-        villaStreetWidth.setText(build1.get("villaStreetWidth"));
-        villaVaultSwitch.setChecked(checkTrue(build1.get("villaVaultSwitch")));
+       Map<String, Object> build1 = (Map<String, Object>) Shared.editOffer.getAspect();
+        villaAirCondtionSwitch.setChecked( (boolean)(build1.get("villaAirCondtionSwitch")));
+        villaCarEnternaceSwitch.setChecked( (boolean)(build1.get("villaCarEnternaceSwitch")));
+        villaKitchenSwitch.setChecked( (boolean)(build1.get("villaKitchenSwitch")));
+        villaReadySwitch.setChecked( (boolean)(build1.get("villaReadySwitch")));
+        villaBillGirlRoomSwitch.setChecked( (boolean)(build1.get("villaBillGirlRoomSwitch")));
+        villaBathRoomsNumber.setText(build1.get("villaBathRoomsNumber").toString());
+        villaReceptionNumber.setText(build1.get("villaReceptionNumber").toString());
+        villaBuildAge.setText(build1.get("villaBuildAge").toString());
+        villaDublexSwitch.setChecked( (boolean)(build1.get("villaDublexSwitch")));
+        villaElvatorSwitch.setChecked( (boolean)(build1.get("villaElvatorSwitch")));
+        villaHairRoomSwitch.setChecked( (boolean)(build1.get("villaHairRoomSwitch")));
+        villaLevelNumber.setText(build1.get("villaLevelNumber").toString());
+        villaStreetWidth.setText(build1.get("villaStreetWidth").toString());
+        villaVaultSwitch.setChecked( (boolean)(build1.get("villaVaultSwitch")));
     }
     private void  __init_level_Detials(){
         navigationAdapter= new ArrayAdapter<String>(this,
@@ -2689,15 +2726,15 @@ public class OfferEdit extends AppCompatActivity {
                 levelAirCondtionSwitchBool=b;
             }
         });
-        Map<String, String>build1= (Map<String,String>) Shared.editOffer.getAspect();
-        levelcarEnternaceSwitch.setChecked(checkTrue(checkTrue(build1.get("levelcarEnternaceSwitch"))));
-        levelBathRoomsNumber.setText(build1.get("levelBathRoomsNumber"));
-        lrRectiption.setText(build1.get("levelReceptionNumber"));
-        levelBuildAge.setText(build1.get("levelBuildAge"));
-        levelReadySwitch.setChecked(checkTrue(build1.get("levelReadySwitch")));
-        levelRoomsNumber.setText(build1.get("levelRoomsNumber"));
-        levelAirCondtionSwitch.setChecked(checkTrue(build1.get("levelAirCondtionSwitch")));
-        llevelNumber.setText(build1.get("llevelNumber"));
+        Map<String, Object>build1= (Map<String,Object>) Shared.editOffer.getAspect();
+        levelcarEnternaceSwitch.setChecked( (boolean)((build1.get("levelcarEnternaceSwitch"))));
+        levelBathRoomsNumber.setText(build1.get("levelBathRoomsNumber").toString());
+        lrRectiption.setText(build1.get("levelReceptionNumber").toString());
+        levelBuildAge.setText(build1.get("levelBuildAge").toString());
+        levelReadySwitch.setChecked( (boolean)(build1.get("levelReadySwitch")));
+        levelRoomsNumber.setText(build1.get("levelRoomsNumber").toString());
+        levelAirCondtionSwitch.setChecked( (boolean)(build1.get("levelAirCondtionSwitch")));
+        llevelNumber.setText(build1.get("llevelNumber").toString());
     }
 
     public void seeMap(View view) {

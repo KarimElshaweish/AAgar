@@ -46,7 +46,6 @@ public class OwnerOffersFragment extends Fragment {
                         for(DataSnapshot dt1:dt.getChildren()) {
                             list.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
                         }
-
                     }
                 }
                 if(list.size()==0){

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.ChatAct;
 import com.sourcey.materiallogindemo.Model.Chat;
+import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.Model.User;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
@@ -36,7 +37,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
 
     private Context _ctx;
     private List<User>mList;
-    private String offerID;
+    private OfferResult offerID;
     String theLastMessage;
     String user;
 
@@ -45,7 +46,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
         this.mList = mList;
     }
 
-    public UserAdapter(Context _ctx, List<User> mList, String offerID) {
+    public UserAdapter(Context _ctx, List<User> mList, OfferResult offerID) {
         this._ctx = _ctx;
         this.mList = mList;
         this.offerID = offerID;
@@ -64,17 +65,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
         final User user=mList.get(position);
         lastMessage(user.getUserID(),holder.lastMsg,holder.card);
         holder.usernameText.setText(user.getName()+"( "+user.getType()+" )");
-        Glide.with(_ctx).load(user.getProfilePic()).into(holder.profile);
+        Glide.with(_ctx).load(user.getProfilePic()).placeholder(R.drawable.avatar).into(holder.profile);
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Shared.AllMesage=true;
                 Shared.sent_id=user.getUserID();
                 if(offerID!=null){
-                    Shared.chatOfferId=offerID;
+                    Shared.chatOfferId=offerID.getOfferID();
                 }
                 Intent intent=new Intent(_ctx,ChatAct.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Shared.offerKnow=offerID;
                 _ctx.startActivity(intent);
             }
         });
@@ -113,10 +115,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
                                && chat.getSender().equals(userId) ||
                                chat.getReciver().equals(userId) &&
                                        chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                           if(chat.getId().equals(Shared.chatOfferId)
-                                   ||(Shared.offerKnow!=null&&
-                                   chat.getId().equals(Shared.offerKnow.getOfferID())
-                           ))
+                           if(
+                                   chat.getId().equals(offerID.getOfferID())
+                           )
                                     theLastMessage = chat.getMessage();
                                     user=chat.getSender();
 

@@ -11,7 +11,12 @@ public class Villa {
     public Villa() {
     }
 
-    public Villa(String navigation, String villaReceptionNumber, String villaBathRoomsNumber, String villaStreetWidth, String villaRoomsNumber, String villaLevelNumber, String villaBuildAge, boolean villaReceptionSwitch, boolean villaDriverSwitch, boolean villaBillGirlRoomSwitch, boolean villaPoolSwitch, boolean villaHairRoomSwitch, boolean villaHallSwitch, boolean villaVaultSwitch, boolean villaReadySwitch, boolean villaKitchenSwitch, boolean extentionSwitch, boolean villaCarEnternaceSwitch, boolean villaElvatorSwitch, boolean villaAirCondtionSwitch, boolean villaDublexSwitch) {
+    public Villa(String navigation, String villaReceptionNumber, String villaBathRoomsNumber, String villaStreetWidth,
+                 String villaRoomsNumber, String villaLevelNumber, String villaBuildAge, boolean villaReceptionSwitch,
+                 boolean villaDriverSwitch, boolean villaBillGirlRoomSwitch, boolean villaPoolSwitch, boolean villaHairRoomSwitch,
+                 boolean villaHallSwitch, boolean villaVaultSwitch, boolean villaReadySwitch, boolean villaKitchenSwitch,
+                 boolean extentionSwitch, boolean villaCarEnternaceSwitch, boolean villaElvatorSwitch, boolean villaAirCondtionSwitch,
+                 boolean villaDublexSwitch) {
         this.navigation = navigation;
         this.villaReceptionNumber = villaReceptionNumber;
         this.villaBathRoomsNumber = villaBathRoomsNumber;

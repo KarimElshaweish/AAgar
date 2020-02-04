@@ -9,7 +9,10 @@ public class Ressort {
     public Ressort() {
     }
 
-    public Ressort(String ressortNavigation, String sweetReceptionNumber, String sweetBathRomsNumber, String sweetRoomsNumber, String sweetStreetWidth, String sweetBuildAge, boolean sweetPoolSwitch, boolean sweetFootballGroundSwitch, boolean sweetVolleyBallGroundSwitch, boolean sweetHairRoomSwitch, boolean sweetEntertanmentPlace, boolean sweetBigBathSwitch) {
+    public Ressort(String ressortNavigation, String sweetReceptionNumber, String sweetBathRomsNumber,
+                   String sweetRoomsNumber, String sweetStreetWidth, String sweetBuildAge,
+                   boolean sweetPoolSwitch, boolean sweetFootballGroundSwitch, boolean sweetVolleyBallGroundSwitch,
+                   boolean sweetHairRoomSwitch, boolean sweetEntertanmentPlace, boolean sweetBigBathSwitch) {
         this.ressortNavigation = ressortNavigation;
         this.sweetReceptionNumber = sweetReceptionNumber;
         this.sweetBathRomsNumber = sweetBathRomsNumber;
