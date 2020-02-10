@@ -60,6 +60,7 @@ public static boolean fristTime=false;
     public static OfferResult editOffer;
     public static boolean Edit;
     public static TextView city;
+    public static Offer offerNeed;
 
     public static  void reset(){
         customer=false;

@@ -221,9 +221,9 @@ public class ChatAct extends AppCompatActivity {
         getOffer();
         if(Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
         result.setText(Shared.MyOffer.getType()+" "+Shared.MyOffer.getBuildingTyp()+" "+Shared.MyOffer.getPrice()+" "+"ريال");
-        if(Shared.offerKnow!=null&&Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
-        order.setText(Shared.offerKnow.getSpinnerType()+"  "+Shared.offerKnow.getBuildingType()+" "+Shared.offerKnow.getPrice()+" ريال ");
-        if(Shared.offerKnow!=null) {
+        if(Shared.offerNeed!=null) {
+            order.setText(Shared.offerNeed.getType() + "  " + Shared.offerNeed.getBuildingTyp() + " " + Shared.offerNeed.getPrice() + " ريال ");
+        }if(Shared.offerKnow!=null) {
             String id = FirebaseAuth.getInstance().getUid();
             bottom = findViewById(R.id.bottom);
             bottom.setVisibility(View.GONE);
@@ -336,7 +336,7 @@ if(Shared.fristTime) {
         getUserData(Shared.sent_id);
         if(Shared.AllMesage){
          //   blockingTxt.setVisibility(View.GONE);
-            cv1.setVisibility(View.GONE);
+          //  cv1.setVisibility(View.GONE);
        //     cv2.setVisibility(View.GONE);
         }
     }
@@ -366,19 +366,21 @@ if(Shared.fristTime) {
                                             Chat chat=dt.getValue(Chat.class);
                                             if(chat!=null)
                                                 if(chat.getSender().equals(myID)&&chat.getReciver().equals(userID)||
-                                                        chat.getSender().equals(userID)&&chat.getReciver().equals(myID)){
-                                                    if(chat.isIsblock()){
+                                                        chat.getSender().equals(userID)&&chat.getReciver().equals(myID)) {
+                                                    if (chat.isIsblock()) {
                                                         btt.setVisibility(View.GONE);
                                                         blockingTxt.setVisibility(View.GONE);
                                                         //ubblockingTxt.setVisibility(View.VISIBLE);
                                                     }
-                                                    if(chat!=null&& chat.getId()!=null)
-                                                        if(chat.getId().equals(Shared.chatOfferId)
-                                                                ||(Shared.offerKnow!=null&&
+                                                    if (chat != null && chat.getId() != null)
+                                                        if (chat.getId().equals(Shared.chatOfferId)
+                                                                || (Shared.offerKnow != null &&
                                                                 chat.getId().equals(Shared.offerKnow.getOfferID())
-                                                                ))
-                                                    mChat.add(chat);
-
+                                                        )) {
+                                                            mChat.add(chat);
+                                                            Shared.offerNeed = chat.getOfferNeed();
+                                                            order.setText(Shared.offerNeed.getType() + "-" + Shared.offerNeed.getBuildingTyp() + "-" + Shared.offerNeed.getPrice() + " ريال ");
+                                                        }
                                                 }
                                             seenMessage(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                             messageAdapter =new MessageAdapter(ChatAct.this,mChat,imageURL);
@@ -420,6 +422,7 @@ if(Shared.fristTime) {
         hashMap.put("message",message);
         hashMap.put("isseen",false);
         hashMap.put("isblock",true);
+        hashMap.put("offerNeed",Shared.offerNeed);
 
         mReference.child("Chats").push().setValue(hashMap);
 
@@ -452,7 +455,7 @@ if(Shared.fristTime) {
         hashMap.put("message",message);
         hashMap.put("isseen",false);
         hashMap.put("isblock",false);
-
+        hashMap.put("offerNeed",Shared.offerNeed);
         mReference.child("Chats").push().setValue(hashMap);
 
 
@@ -483,6 +486,7 @@ if(Shared.fristTime) {
         hashMap.put("id",Shared.offerKnow!=null?Shared.offerKnow.getOfferID():Shared.chatOfferId);
         hashMap.put("isseen",false);
         hashMap.put("isblock",false);
+        hashMap.put("offerNeed",Shared.offerNeed);
         MediaPlayer mp = MediaPlayer.create(this,R.raw.sent);
         mp.start();
         mReference.child("Chats").push().setValue(hashMap);

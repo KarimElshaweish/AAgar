@@ -3,6 +3,7 @@ package com.sourcey.materiallogindemo.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -80,6 +81,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
                 public void onClick(View view) {
                     if(Shared.keyList!=null)
                     Shared.offerID=Shared.keyList.get(position);
+                    Shared.offerNeed=list.get(position);
                     Intent intent=new Intent(_ctx,OfferResult.class);
                     intent.putExtra("type",list.get(position).getType());
                     intent.putExtra("build_type",list.get(position).getBuildingTyp());
@@ -97,11 +99,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewholder> {
             holder.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Shared.toID=list.get(position).getUID();
-////                    Shared.offer=list.get(position);
-////                    Shared.offerID=Shared.keyList.get(position);
-////                    _ctx.startActivity(new Intent(_ctx,MapsActivity.class));
-////                    Shared.notCurrent=false;
                     Shared.toID=list.get(position).getUID();
                     Shared.offer=list.get(position);
                     Shared.offerID=Shared.keyList.get(position);

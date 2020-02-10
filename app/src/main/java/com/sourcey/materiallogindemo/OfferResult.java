@@ -34,6 +34,7 @@ import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Fragment.RecommendFragments.RecomendFragment;
 import com.sourcey.materiallogindemo.Fragment.RecommendFragments.SentOfferFragment;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
+import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.User;
 
 import java.util.ArrayList;
@@ -53,30 +54,6 @@ public class OfferResult extends AppCompatActivity {
     private DrawerLayout dl;
     private ActionBarDrawerToggle toggle;
     NavigationView navigationView;
-
-
-
-    List<LinkOffer>getMyResult(){
-        final List<LinkOffer>idList=new ArrayList<>();
-        FirebaseDatabase.getInstance().getReference("linkOffer").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot dt:dataSnapshot.getChildren()){
-                    LinkOffer linkOffer=dt.getValue(LinkOffer.class);
-                    if(linkOffer.getUserID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                        idList.add(new LinkOffer(linkOffer.getOfferID(),dt.getKey()));
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return idList;
-    }
     User user;
     CircleImageView navAvatar;
     TextView dlName;

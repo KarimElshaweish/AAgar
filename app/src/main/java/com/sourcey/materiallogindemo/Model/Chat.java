@@ -2,6 +2,16 @@ package com.sourcey.materiallogindemo.Model;
 
 public class Chat {
     private String sender,reciver,message,id;
+    private Offer offerNeed;
+
+    public Offer getOfferNeed() {
+        return offerNeed;
+    }
+
+    public void setOfferNeed(Offer offerNeed) {
+        this.offerNeed = offerNeed;
+    }
+
     private boolean isseen,isblock;
 
     public String getId() {
