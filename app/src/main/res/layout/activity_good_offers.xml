@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/vip"
             android:gravity="center"
-            android:text="الطلبات"
+            android:text="عروضى"
             android:layout_centerHorizontal="true"
             android:textColor="#fff"
             android:textSize="20dp"
@@ -68,121 +68,54 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/primary"
-        app:tabIndicatorHeight="2dp"
-        android:id="@+id/tb"></android.support.design.widget.TabLayout>
-
-    <android.support.v4.view.ViewPager
-        android:layout_below="@id/tb"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/vp"></android.support.v4.view.ViewPager>
+        >
 
-    <LinearLayout
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:padding="10dp">
-        <RelativeLayout
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/linearbk"
-            android:layout_height="match_parent">
-            <EditText
-                android:layout_centerInParent="true"
-                android:padding="5dp"
-                android:hint="السعر"
-                android:gravity="center"
-                android:layout_centerVertical="true"
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/primary"
+            android:src="@drawable/ic_add_white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="15dp"
+            android:id="@+id/addOffer"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ProgressBar
+                android:indeterminateDrawable="@drawable/progress_custome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:id="@+id/pb"
+                android:backgroundTint="@color/primary"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="لاتوجود عروض"
+                android:padding="10dp"
+                android:id="@+id/noOffer"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:textSize="15dp"
+                android:visibility="gone"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/price"
-                android:backgroundTint="#d4d4d4"/>
-        </RelativeLayout>
+                android:id="@+id/rv1"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="17dp"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/vip"
-            android:textColor="#fff"
-            android:background="@color/primary"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="الطلبات الحاليه"/>
-        <TextView
-            android:visibility="gone"
-            android:fontFamily="@font/vip"
-            android:backgroundTint="@color/primary"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="أعلى سعر"
-            android:textColor="#000"
-            android:textSize="17dp"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:background="@drawable/tab_layout"
-            android:textSize="20dp"
-            android:onClick="Share"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:text="عروضى "
-            android:fontFamily="@font/vip"
-            android:gravity="center"
-            android:textColor="@color/primary"
-            />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <Button
-        android:visibility="gone"
-        android:fontFamily="@font/vip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/cornor_button"
-        android:padding="10dp"
-        android:textColor="#fff"
-        android:text="فلتر"
-        android:onClick="Filter"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        />
-    <TextView
-        android:fontFamily="@font/vip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="  لاتوجود طلبات تاكد من  ان GPS يعمل"
-        android:padding="10dp"
-        android:id="@+id/noOrder"
-        android:textColor="#000"
-        android:layout_gravity="center"
-        android:textSize="15dp"
-        android:visibility="visible"
-        />
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="3dp"
-        android:visibility="gone"
-        android:id="@+id/pb"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
 </LinearLayout>
 
 </RelativeLayout><android.support.design.widget.NavigationView

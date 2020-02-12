@@ -80,7 +80,7 @@ public class MyOfferNeeded extends AppCompatActivity {
         }else
         startActivity(new Intent(this,Add_Offers.class));
     }
-    TextView profile_nav,fav,order,chat_nav,notifcationTitle;
+    TextView profile_nav,fav,order,chat_nav,notifcationTitle,activeOrder,soldOrder;
     CardView notifcation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +88,14 @@ public class MyOfferNeeded extends AppCompatActivity {
 
         setContentView(R.layout.activity_my_offer_needed);
         notifcation=findViewById(R.id.notifcation);
+        activeOrder=findViewById(R.id.activeOrder);
+        activeOrder.setVisibility(View.GONE);
+        soldOrder=findViewById(R.id.soldOrder);
+        soldOrder.setVisibility(View.GONE);
         notifcationTitle=findViewById(R.id.notifcationTitle);
         getNotification();
         order=findViewById(R.id.order);
+        order.setText("سجل الطالبات");
         profile_nav=findViewById(R.id.profile_nav);
         fav=findViewById(R.id.fav);
         order.setOnClickListener(new View.OnClickListener() {

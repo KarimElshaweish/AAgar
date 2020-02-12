@@ -218,6 +218,37 @@ public class ChatAct extends AppCompatActivity {
         avatar=findViewById(R.id.avatar);
         order=findViewById(R.id.order);
         result=findViewById(R.id.result);
+        cv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Shared.customer) {
+                    Shared.offerID = Shared.offerNeed.getOfferID();
+                    Intent intent = new Intent(ChatAct.this, com.sourcey.materiallogindemo.OfferResult.class);
+                    intent.putExtra("type", Shared.offerNeed.getType());
+                    intent.putExtra("build_type", Shared.offerNeed.getBuildingTyp());
+                    intent.putExtra("price", Shared.offerNeed.getPrice());
+                    intent.putExtra("city", Shared.offerNeed.getCity());
+                    Shared.putOfferOnMap = Shared.offerNeed;
+                    startActivity(intent);
+                    Shared.MyOffer = Shared.offerNeed;
+
+                } else {
+                    Shared.toID = Shared.offerNeed.getUID();
+                    Shared.offer = Shared.offerNeed;
+                    Shared.offerID =Shared.offerNeed.getOfferID();
+                    Intent intent = new Intent(ChatAct.this, com.sourcey.materiallogindemo.OfferResult.class);
+                    intent.putExtra("type", Shared.offerNeed.getType());
+                    intent.putExtra("build_type", Shared.offerNeed.getBuildingTyp());
+                    intent.putExtra("price",Shared.offerNeed.getPrice());
+                    intent.putExtra("city", Shared.offerNeed.getCity());
+                    intent.putExtra("userID", Shared.offerNeed.getUID());
+                    intent.putExtra("offerID",Shared.offerNeed.getOfferID());
+                    Shared.putOfferOnMap = Shared.offerNeed;
+                    startActivity(intent);
+                    Shared.MyOffer =Shared.offerNeed;
+                }
+            }
+        });
         getOffer();
         if(Shared.MyOffer!=null&&Shared.MyOffer.getType()!=null)
         result.setText(Shared.MyOffer.getType()+" "+Shared.MyOffer.getBuildingTyp()+" "+Shared.MyOffer.getPrice()+" "+"ريال");

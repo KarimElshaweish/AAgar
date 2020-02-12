@@ -23,7 +23,33 @@
     android:textColor="#000"
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_orders_ic"
-    android:text="سجل الطلبات"/>
+    android:text="سجل العروض"/>
+        <TextView
+    android:id="@+id/activeOrder"
+    android:layout_gravity="center"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:textSize="17dp"
+    android:drawablePadding="7dp"
+    android:textColor="#000"
+    android:fontFamily="@font/vip"
+    android:drawableRight="@drawable/ic_search"
+    android:text="الطلبات النشطه"/>
+        <TextView
+    android:id="@+id/soldOrder"
+    android:layout_gravity="center"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:textSize="17dp"
+    android:drawablePadding="7dp"
+    android:textColor="#000"
+    android:fontFamily="@font/vip"
+    android:drawableRight="@drawable/ic_sold"
+    android:text=" عروضى المباع"/>
         <TextView
             android:id="@+id/fav"
             android:gravity="center_vertical"
@@ -100,18 +126,6 @@ android:id="@+id/feedback"
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_feedback"
     android:text="الشكاوى"/>
-        <TextView
-            android:gravity="center_vertical"
-
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textSize="17dp"
-    android:drawablePadding="7dp"
-    android:textColor="#000"
-    android:fontFamily="@font/vip"
-    android:drawableRight="@drawable/ic_about"
-    android:text="نبذا عنا"/>
         <TextView
             android:gravity="center_vertical"
             android:id="@+id/txtLogout"

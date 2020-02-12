@@ -2,9 +2,11 @@ package com.sourcey.materiallogindemo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationListener;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -35,11 +37,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
+import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Fragment.OwnerFragmets.ActiveNeedsFragments;
 import com.sourcey.materiallogindemo.Fragment.OwnerFragmets.MyAllOfferFragment;
 import com.sourcey.materiallogindemo.Fragment.OwnerFragmets.MyOffersFragments.OwnerOffersFragment;
 import com.sourcey.materiallogindemo.Fragment.OwnerFragmets.MyOffersFragments.OwnerSoldFragment;
 import com.sourcey.materiallogindemo.Model.Offer;
+import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.Model.User;
 
 import java.util.ArrayList;
@@ -57,50 +61,6 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
     private DrawerLayout dl;
     private ActionBarDrawerToggle toggle;
     NavigationView navigationView;
-    ViewPager vp;
-    TabLayout tab;
-
-    public class PagerAdapter extends FragmentPagerAdapter {
-
-        public PagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 2:
-                    return new OwnerSoldFragment();
-                case 1:
-                    return new OwnerOffersFragment();
-                case 0:
-                default:
-                return new ActiveNeedsFragments();
-
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    }
-
-    private void __init__() {
-        tab = findViewById(R.id.tb);
-        vp = findViewById(R.id.vp);
-        vp.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-        tab.setupWithViewPager(vp);
-        tab.getTabAt(0).setText("الطلبات النشطه");
-        tab.getTabAt(1).setText("عروضى النشطة");
-        tab.getTabAt(2).setText("عروضى المباعة");
-        for (int i = 0; i < tab.getTabCount(); i++) {
-            //noinspection ConstantConditions
-            TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.custome_tab, null);
-            tab.getTabAt(i).setCustomView(tv);
-        }
-    }
-
     public void logout() {
         Shared.reset();
         FirebaseAuth.getInstance().signOut();
@@ -117,7 +77,62 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
     }
 
     private FusedLocationProviderClient fusedLocationClient;
+    TextView noOffer;
+    List<OfferResult> list;
+    FloatingActionButton addOfferFloationAction;
+    public void openMap() {
+        Shared.AddRandomButton=true;
+        Shared.addOfferNewRandom=true;
+        Shared.random=true;
+        startActivity(new Intent(this, MapsActivity.class));
+    }
+    private void getData(){
+        list=new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference("OfferResult").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list=new ArrayList<>();
+                for(DataSnapshot dt:dataSnapshot.getChildren()){
+                    if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        for(DataSnapshot dt1:dt.getChildren()) {
+                            list.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
+                        }
+                    }
+                }
+                if(list.size()==0){
+                    pb.setVisibility(View.GONE);
+                    noOffer.setVisibility(View.VISIBLE);
+                }
 
+                    offerAdapter Adapter = new offerAdapter(goodOffersAct.this, list);
+                    rv.setAdapter(Adapter);
+                    pb.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void __init__(){
+        addOfferFloationAction=findViewById(R.id.addOffer);
+        addOfferFloationAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMap();
+            }
+        });
+        rv=findViewById(R.id.rv1);
+        pb=findViewById(R.id.pb);
+        pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
+        noOffer=findViewById(R.id.noOffer);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        getData();
+        Shared.owner=true;
+    }
 
     User user;
     CircleImageView navAvatar;
@@ -148,13 +163,12 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
                 });
     }
 
-    TextView profile_nav,feedback_nav, fav, order, chat_nav, txtLogout, myWallet;
+    TextView profile_nav,feedback_nav,active_order,soldOrder, fav, order, chat_nav, txtLogout, myWallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_good_offers);
-        __init__();
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -179,28 +193,14 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
         dl.addDrawerListener(toggle);
         toggle.syncState();
         pb = findViewById(R.id.pb);
-        rv = findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        soldOrder=findViewById(R.id.soldOrder);
+        soldOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(goodOffersAct.this,MySoldOfferActivity.class));
+            }
+        });
         noOrder = findViewById(R.id.noOrder);
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{
-//                            android.Manifest.permission.ACCESS_FINE_LOCATION,
-//                            Manifest.permission.ACCESS_COARSE_LOCATION},
-//                    1);
-//            return;
-//        }
-//        fusedLocationClient.getLastLocation()
-//                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-//                    @Override
-//                    public void onSuccess(Location location) {
-//                        // Got last known location. In some rare situations this can be null.
-//                        if (location != null) {
-//                            // Logic to handle location object
-//                            onLocationChanged(location);
-//                        }
-//                    }
-//                });
         chat_nav = findViewById(R.id.chat_nav);
         chat_nav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +213,13 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(goodOffersAct.this, Profile.class));
+            }
+        });
+        active_order=findViewById(R.id.activeOrder);
+        active_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(goodOffersAct.this,ActiveOrderActivity.class));
             }
         });
         feedback_nav=findViewById(R.id.feedback);
@@ -237,94 +244,12 @@ public class goodOffersAct extends AppCompatActivity implements LocationListener
             }
         });
         getUserData();
+        __init__();
     }
 
-    List<Offer> list;
-//    private void getData(final String city){
-//        list=new ArrayList<>();
-//        Shared.keyList=new ArrayList<>();
-//        final ListAdapter adapter = new ListAdapter(goodOffersAct.this, list);
-//        rv.setAdapter(adapter);
-//        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                pb.setVisibility(View.VISIBLE);
-//                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                        for (DataSnapshot dt2 : dataSnapshot1.getChildren()) {
-//                            pb.setVisibility(View.GONE);
-//                            Offer offer = dt2.getValue(Offer.class);
-//                            if (city.equals(offer.getCity())) {
-//                                list.add(offer);
-//                                Shared.keyList.add(dt2.getKey());
-//                                adapter.notifyDataSetChanged();
-//                                if (list.size() > 0) {
-//                                    pb.setVisibility(View.GONE);
-//                                    noOrder.setVisibility(View.GONE);
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//                pb.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
-//    }
     EditText price;
-    public void Filter(View view){
-        price=findViewById(R.id.price);
-        if(!price.getText().equals("")){
-            List<Offer>listFilter=new ArrayList<>();
-            for (Offer offer:
-                    list) {
-                if(Double.parseDouble(offer.getPrice())<=Double.parseDouble(price.getText().toString())){
-                        listFilter.add(offer);
-
-                }
-            }
-            ListAdapter adapter=new ListAdapter(this,listFilter);
-            rv.setAdapter(adapter);
-        }
-    }
-
-    public void openMap(View view) {
-        Shared.AddRandomButton=true;
-        Shared.addOfferNewRandom=true;
-        Shared.random=true;
-        startActivity(new Intent(this,MapsActivity.class));
-    }
-
     @Override
     public void onLocationChanged(Location location) {
-        //You had this as int. It is advised to have Lat/Loing as double.
-//        double lat = location.getLatitude();
-//        double lng = location.getLongitude();
-//        Locale locale=new Locale("ar");
-//        Geocoder geoCoder = new Geocoder(this, locale);
-//        StringBuilder builder = new StringBuilder();
-//        try {
-//            List<Address> address = geoCoder.getFromLocation(lat, lng, 1);
-//            int maxLines = address.get(0).getMaxAddressLineIndex();
-//            for (int i = 0; i < maxLines; i++) {
-//                String addressStr = address.get(0).getAddressLine(i);
-//                builder.append(addressStr);
-//                builder.append(" ");
-//            }
-//
-//            String city = address.get(0).getAdminArea();
-//            if(city!=null)
-//            getData(city);
-//
-//        } catch (IOException e) {
-//            // Handle IOException
-//        } catch (NullPointerException e) {
-//            // Handle NullPointerException
-//        }
     }
 
     @Override
