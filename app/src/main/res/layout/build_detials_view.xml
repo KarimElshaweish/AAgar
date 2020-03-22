@@ -1,287 +1,530 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<RelativeLayout
-    android:paddingRight="7dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="النوع"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="عماره"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buildType"/>
-</RelativeLayout>
-<RelativeLayout
-    android:background="@color/base"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:paddingRight="7dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="المدينه"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="القاهره"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buildCity"/>
-</RelativeLayout>
-    <RelativeLayout
-    android:paddingRight="7dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="السعر"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="18000"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buildPrice"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ريال"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:paddingLeft="10dp"
-        android:layout_alignParentLeft="true"/>
-</RelativeLayout>
-<RelativeLayout
-    android:background="@color/base"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:paddingRight="7dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="المطلوب"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="إيجار"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/commtype"/>
-</RelativeLayout>
-    <RelativeLayout
-    android:paddingRight="7dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="عمر العقار"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="سنه"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:paddingLeft="10dp"
-            android:layout_alignParentLeft="true"/>
-    <TextView
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buildAge"/>
-</RelativeLayout>
-<RelativeLayout
-    android:background="@color/base"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:paddingRight="7dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="عدد المحلات"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/marketNumber"/>
-</RelativeLayout>
-    <RelativeLayout
-    android:paddingRight="7dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="الإتجاه"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="شرق"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/navigation"/>
-</RelativeLayout>
-<RelativeLayout
-    android:background="@color/base"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:paddingRight="7dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="مؤثثة"
-        android:textSize="15sp"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نعم"
-        android:fontFamily="@font/vip_font"
-        android:textColor="#000"
-        android:textSize="15sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/buildready"/>
-</RelativeLayout>
-    <RelativeLayout
-        android:paddingRight="7dp"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="عدد الغرف"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/roomNumbers"/>
-    </RelativeLayout>
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:orientation="horizontal">
+                <TextView
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تفاصيل العرض"
+                    android:fontFamily="@font/vip_font"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/detialsFull"/>
+                <ImageView
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_info"/>
+            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="2">-->
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:padding="3dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ريال"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/vip_font"
+                                android:textColor="#000"
+                                android:paddingLeft="10dp"
+                                android:layout_alignParentLeft="true"/>
+                            <TextView
+                                android:layout_centerVertical="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="18000"
+                                android:textColor="#000"
+                                android:textSize="15sp"
+                                android:layout_centerHorizontal="true"
+                                android:id="@+id/buildPrice"/>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="السعر"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_money_new"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="القاهره"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/buildCity"/>
+                        <TextView
+                            android:paddingRight="7dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="المدينه : "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_pin_gray"/>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="2">-->
+
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:padding="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="سنه"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/vip_font"
+                                android:textColor="#000"
+                                android:paddingLeft="10dp"
+                                android:layout_alignParentLeft="true"/>
+                            <TextView
+                                android:layout_centerVertical="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2"
+                                android:textColor="#000"
+                                android:textSize="15sp"
+                                android:layout_centerHorizontal="true"
+                                android:id="@+id/buildAge"/>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="عمر العقار : "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_money_new"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="إيجار"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/commtype"/>
+                        <TextView
+                            android:paddingRight="7dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="المطلوب : "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_demand"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="2">-->
+
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="شرق"
+                                android:textColor="#000"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/vip_font"
+                                android:layout_centerHorizontal="true"
+                                android:id="@+id/navigation"/>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="الإتجاه : "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/vip_font"
+                            android:textColor="#000"
+                            android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_dircetions"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center|right"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/marketNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:text="3"
+                            android:textColor="#000"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="@font/vip_font"
+                            android:paddingRight="7dp"
+                            android:text="عدد المحلات : "
+                            android:textColor="#000"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_market" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="2">-->
+
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/buildready"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/vip_font"
+                                android:text="نعم"
+                                android:textColor="#000"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="@font/vip_font"
+                            android:text="مؤثثة : "
+                            android:textColor="#000"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_recption_new" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:gravity="center|right"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/roomNumbers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:text="2"
+                            android:textColor="#000"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="@font/vip_font"
+                            android:paddingRight="7dp"
+                            android:text="عدد الغرف : "
+                            android:textColor="#000"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_room" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="2">-->
+
+                <android.support.v7.widget.CardView
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|right"
+                        android:gravity="center|right"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/vip_font"
+                                android:padding="2dp"
+                                android:paddingLeft="10dp"
+                                android:text="متر"
+                                android:textColor="#000"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/streetWidth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:padding="2dp"
+                                android:text="3"
+                                android:textColor="#000"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="@font/vip_font"
+                            android:text="عرض الشارع : "
+                            android:textColor="#000"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_st_width" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|right"
+                    android:gravity="center|right"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/people"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/vip_font"
+                        android:text="تجارى"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/vip_font"
+                        android:paddingRight="7dp"
+                        android:text="نوع العقار : "
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_building_new" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+        </LinearLayout>
+    </ScrollView>
     <RelativeLayout
-        android:background="@color/base"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:paddingRight="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="عرض الشارع"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:layout_alignParentRight="true"/>
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/streetWidth"/>
-        <TextView
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="متر"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:paddingLeft="10dp"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="نوع العقار"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:layout_alignParentRight="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="تجارى"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/buildTypeComm"/>
-    </RelativeLayout>
-    <RelativeLayout
+        android:visibility="gone"
         android:background="@color/base"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -295,6 +538,7 @@
             android:textColor="#000"
             android:layout_alignParentRight="true"/>
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="نعم"
@@ -302,6 +546,6 @@
             android:textColor="#000"
             android:textSize="15sp"
             android:layout_centerHorizontal="true"
-            android:id="@+id/detialsFull"/>
+            android:id="@+id/buildTypeComm"/>
     </RelativeLayout>
 </LinearLayout>

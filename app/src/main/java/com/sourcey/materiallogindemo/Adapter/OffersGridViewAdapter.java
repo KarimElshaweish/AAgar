@@ -22,12 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.ui.IconGenerator;
 import com.sourcey.materiallogindemo.MapsActivity;
+import com.sourcey.materiallogindemo.Model.Notification;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.joinersa.oooalertdialog.Animation;
@@ -58,18 +60,22 @@ public class OffersGridViewAdapter extends BaseAdapter {
     }
 
     private void sentOffer(final OfferResult noffer){
-        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addListenerForSingleValueEvent(new ValueEventListener() {
+       final FirebaseDatabase ref=FirebaseDatabase.getInstance();
+        ref.getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(noffer.getDescription())){
                     Toast.makeText(_ctx, "تم اضافه هذا العرض من قبل ", Toast.LENGTH_SHORT).show();
                 }else{
-                    FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
+                   ref.getReference("linkOffer").child(Shared.toID).child(Shared.offerID).child(noffer.getDescription()).setValue(noffer)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(_ctx, "تمت الاضافه", Toast.LENGTH_SHORT).show();
-
+                                    String time=Calendar.getInstance().getTime().toString();
+                                    Notification notification=new Notification(noffer.getBuildingType(),noffer.getPrice(),Shared.offerID,time);
+                                    ref.getReference("Notification").child(Shared.toID).child(time)
+                                            .setValue(notification);
                                 }
                             });
                 }

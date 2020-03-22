@@ -21,7 +21,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".MySoldOfferActivity"></activity>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".MySoldOfferActivity" />
         <activity android:name=".ActiveOrderActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

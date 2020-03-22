@@ -63,6 +63,7 @@ import com.sourcey.materiallogindemo.Model.Home;
 import com.sourcey.materiallogindemo.Model.Level;
 import com.sourcey.materiallogindemo.Model.LinkOffer;
 import com.sourcey.materiallogindemo.Model.Market;
+import com.sourcey.materiallogindemo.Model.Notification;
 import com.sourcey.materiallogindemo.Model.Offer;
 import com.sourcey.materiallogindemo.Model.OfferResult;
 import com.sourcey.materiallogindemo.Model.Ressort;
@@ -1503,11 +1504,14 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(AddResultOffer.this, "تم الإضافه", Toast.LENGTH_SHORT).show();
-                                            FirebaseDatabase.getInstance().getReference("Notification_MSG")
-                                                    .child(Shared.toID)
-                                                    .setValue(offerResult.getType()+" "+
-                                                            offerResult.getBuildingType()+" "+
-                                                            offerResult.getPrice());
+//                                            FirebaseDatabase.getInstance().getReference("Notification_MSG")
+//                                                    .child(Shared.toID)
+//                                                    .setValue(offerResult.getType()+" "+
+//                                                            offerResult.getBuildingType()+" "+
+//                                                            offerResult.getPrice());
+                                            Notification notification=new Notification(offerResult.getBuildingType(),offerResult.getPrice(),Shared.offerID,offerResult.getId());
+                                            FirebaseDatabase.getInstance().getReference("Notification").child(Shared.toID).child(offerResult.getId())
+                                                    .setValue(notification);
                                             hud.dismiss();
                                             finish();
                                         }

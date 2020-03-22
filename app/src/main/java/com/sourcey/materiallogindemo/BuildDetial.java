@@ -2,6 +2,7 @@ package com.sourcey.materiallogindemo;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.sourcey.materiallogindemo.Adapter.DialogImageAdapter;
 import com.sourcey.materiallogindemo.Edit.BuildEdit;
 import com.sourcey.materiallogindemo.Edit.FarmEditActivity;
 import com.sourcey.materiallogindemo.Edit.FlatEditActivity;
@@ -102,36 +107,42 @@ public class BuildDetial extends AppCompatActivity {
         ttPrice.setText(offerResult.getPrice());
         switch (offerResult.getBuildingType()){
             case "شقة ":
+                title.setText("شقة");
                 __init__flat();
                 break;
             case "فيلا ":
+                title.setText("فيلا");
                 __init__villa();
                 break;
             case "عمارة ":
+                title.setText("عمارة");
                 __init__build();
                 break;
             case "بيت ":
+                title.setText("بيت");
                 __init__home();
                 break;
             case "دور ":
+                title.setText("دور");
                 __init__level();
                 break;
             case "مزرعه ":
+                title.setText("مزرعه");
                 __init__farm();
                 break;
             case "محل ":
+                title.setText("محل");
                 __init__market();
-
                 break;
             case "استراحه ":
+                title.setText("استراحه");
                 __init__ressort();
                 break;
             case "ارض":
+                title.setText("ارض");
                 __init__ground();
                 break;
-
         }
-
         favImage=findViewById(R.id.faviamge);
         fb=findViewById(R.id.bottomlin);
     }
@@ -385,7 +396,7 @@ public class BuildDetial extends AppCompatActivity {
         roomNumbers=findViewById(R.id.roomNumbers);
         streetWidth=findViewById(R.id.streetWidth);
         buildTypeComm=findViewById(R.id.buildTypeComm);
-        type.setText(offerResult.getBuildingType());
+//        type.setText(offerResult.getBuildingType());
         price.setText(offerResult.getPrice());
         city.setText(offerResult.getCity());
         Btype.setText(offerResult.getType());
@@ -452,14 +463,16 @@ public class BuildDetial extends AppCompatActivity {
         kitchen.setText((boolean)build.get("kitchen")?"نعم":"لا");
     }
 
-    FloatingActionButton editFabButton;
+    ImageView editFabButton;
     Intent intent;
+    TextView title;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_detial);
         intent=getIntent();
+        title=findViewById(R.id.title);
         Button btnChat=findViewById(R.id.btnChat);
         Button btnChooser=findViewById(R.id.btnChooser);
 
@@ -487,9 +500,19 @@ public class BuildDetial extends AppCompatActivity {
                 startActivity(new Intent(BuildDetial.this, OfferEdit.class));
             }
         });
+        TextView countButton=findViewById(R.id.count_utton);
+        String size= String.valueOf(offerResult.getImageList().size());
+        countButton.setText(size);
         carouselView = findViewById(R.id.carouselView);
         carouselView.setPageCount(offerResult.getImageList().size());
         carouselView.setImageListener(imageListener);
+
+        carouselView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private boolean checkEnablesButon() {
@@ -701,5 +724,18 @@ public class BuildDetial extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    public void openImages(View view) {
+        final Dialog dialog = new Dialog(BuildDetial.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_list_img);
+
+        RecyclerView rv=dialog.findViewById(R.id.rv);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(BuildDetial.this));
+        DialogImageAdapter adapterimg=new DialogImageAdapter(offerResult.getImageList(),BuildDetial.this,dialog);
+        rv.setAdapter(adapterimg);
+        dialog.show();
     }
 }

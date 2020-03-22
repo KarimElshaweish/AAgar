@@ -4,204 +4,258 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:padding="4dp"
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="النوع"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:layout_alignParentRight="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="عماره"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmType"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:padding="4dp"
 
-        android:background="@color/base"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
         <TextView
+            android:id="@+id/farmdetialsFull"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/vip_font"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_info"
+            android:fontFamily="@font/vip_font"
             android:paddingRight="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="المدينه"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
+            android:text="التفاصيل : "
             android:textColor="#000"
-            android:layout_alignParentRight="true"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="القاهره"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmCity"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:paddingRight="7dp"
-        android:padding="4dp"
+            android:textSize="15sp" />
 
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:paddingRight="7dp"
+        android:visibility="gone">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="السعر"
-            android:textSize="15sp"
+            android:layout_alignParentRight="true"
             android:fontFamily="@font/vip_font"
+            android:text="النوع"
             android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:textSize="15sp" />
+
         <TextView
-            android:layout_centerVertical="true"
+            android:id="@+id/farmType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/vip_font"
+            android:text="عماره"
+            android:textColor="#000"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/white"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/farmCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/vip_font"
+            android:text="القاهره"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_pin_gray"
+            android:fontFamily="@font/vip_font"
+            android:paddingRight="7dp"
+            android:text="المدينه  : "
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:paddingRight="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="@font/vip_font"
+            android:paddingLeft="10dp"
+            android:text="ريال"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/farmPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:text="18000"
             android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmPrice"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ريال"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:paddingLeft="10dp"
-            android:layout_alignParentLeft="true"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:background="@color/base"
-        android:padding="4dp"
+            android:textSize="15sp" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
-            android:paddingRight="7dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="المطلوب"
-            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_money_new"
             android:fontFamily="@font/vip_font"
+            android:text="السعر : "
             android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/white"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
         <TextView
+            android:id="@+id/farmcommtype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/vip_font"
             android:text="إيجار"
-            android:fontFamily="@font/vip_font"
             android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmcommtype"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:padding="4dp"
+            android:textSize="15sp" />
 
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="عدد الأبار"
-            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_demand"
             android:fontFamily="@font/vip_font"
+            android:paddingRight="7dp"
+            android:text="المطلوب : "
             android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:paddingRight="7dp">
+
         <TextView
+            android:id="@+id/farmWaterllFailNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="20"
             android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmWaterllFailNumber"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:padding="4dp"
-        android:background="@color/base"
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:textSize="15sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="غرفة شعر"
-            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_pool"
             android:fontFamily="@font/vip_font"
+            android:text="عدد الأبار"
             android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:paddingRight="7dp">
+
         <TextView
+            android:id="@+id/farmHairRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/vip_font"
             android:text="نعم"
             android:textColor="#000"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmHairRoom"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:padding="4dp"
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:textSize="15sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="عدد الأشجار"
-            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_tent"
             android:fontFamily="@font/vip_font"
+            android:text="غرفة شعر : "
             android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:paddingRight="7dp">
+
         <TextView
+            android:id="@+id/farmTree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/vip_font"
             android:text="نعم"
             android:textColor="#000"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmTree"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:padding="4dp"
-        android:background="@color/base"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:paddingRight="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="التفاصيل"
-            android:textSize="15sp"
-            android:fontFamily="@font/vip_font"
-            android:textColor="#000"
-            android:layout_alignParentRight="true"/>
+            android:textSize="15sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="نعم"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_tree"
             android:fontFamily="@font/vip_font"
+            android:text="عدد الأشجار : "
             android:textColor="#000"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/farmdetialsFull"/>
-    </RelativeLayout>
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
 </LinearLayout>

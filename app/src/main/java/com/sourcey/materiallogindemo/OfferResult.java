@@ -97,9 +97,9 @@ public class OfferResult extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 1:
-                    return new SentOfferFragment();
                 case 0:
+                    return new SentOfferFragment();
+                case 1:
                 default:
                     return new RecomendFragment();
             }
@@ -116,8 +116,8 @@ public class OfferResult extends AppCompatActivity {
         vp = findViewById(R.id.vp);
         vp.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         tab.setupWithViewPager(vp);
-        tab.getTabAt(0).setText("العروض المتاحة المشابه");
-        tab.getTabAt(1).setText("العروض المرسله");
+        tab.getTabAt(1).setText("عروضى المتاحة");
+        tab.getTabAt(0).setText("عروضى المرسله");
         for (int i = 0; i < tab.getTabCount(); i++) {
             //noinspection ConstantConditions
             TextView tv = (TextView) LayoutInflater.from(this).inflate(R.layout.custome_tab, null);
@@ -160,7 +160,6 @@ public class OfferResult extends AppCompatActivity {
             recommencLayout.setVisibility(View.VISIBLE);
             CustomerLayout.setVisibility(View.GONE);
             __init__();
-
         }
         offerType=findViewById(R.id.offerType);
 
@@ -266,6 +265,12 @@ public class OfferResult extends AppCompatActivity {
 
     public void finish(View view) {
         finish();
+        if(customer) {
+            Intent intent = new Intent(this,MyOfferNeeded.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
     }
 
     public void showOnMap(View view) {

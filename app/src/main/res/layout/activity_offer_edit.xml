@@ -171,21 +171,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <android.support.design.widget.FloatingActionButton
+                <Button
                     android:onClick="AddPicture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_upload_image"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
                     android:id="@+id/imgViewUpload"
-                    app:elevation="7dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    app:backgroundTint="#fff"/>
+                    android:text="إضافة جديده"
+                    android:textColor="@color/primary"
+                    android:background="@drawable/button"
+                   />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
+                    android:layout_below="@+id/imgViewUpload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
           <android.support.v7.widget.RecyclerView

@@ -5,14 +5,28 @@
     android:layout_height="match_parent"
     android:layout_gravity="center">
     <LinearLayout
+        android:id="@+id/lin"
         android:layout_marginRight="10dp"
         android:weightSum="10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+            <TextView
+                android:id="@+id/order"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="17dp"
+                android:drawablePadding="7dp"
+                android:textColor="#000"
+                android:fontFamily="@font/vip"
+                android:drawableRight="@drawable/ic_search"
+                android:text="الطلبات النشطه"/>
 
 <TextView
-    android:id="@+id/order"
+    android:id="@+id/activeOrder"
     android:layout_gravity="center"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
@@ -24,19 +38,7 @@
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_orders_ic"
     android:text="سجل العروض"/>
-        <TextView
-    android:id="@+id/activeOrder"
-    android:layout_gravity="center"
-    android:gravity="center_vertical"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:textSize="17dp"
-    android:drawablePadding="7dp"
-    android:textColor="#000"
-    android:fontFamily="@font/vip"
-    android:drawableRight="@drawable/ic_search"
-    android:text="الطلبات النشطه"/>
+
         <TextView
     android:id="@+id/soldOrder"
     android:layout_gravity="center"
@@ -53,7 +55,7 @@
         <TextView
             android:id="@+id/fav"
             android:gravity="center_vertical"
-
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -63,6 +65,19 @@
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_orders_fav"
     android:text="المفضله"/>
+            <TextView
+            android:id="@+id/notifcation_nav"
+            android:gravity="center_vertical"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="17dp"
+    android:drawablePadding="7dp"
+    android:textColor="#000"
+    android:fontFamily="@font/vip"
+    android:drawableRight="@drawable/ic_noti1"
+    android:text="الإشعارات"/>
         <TextView
             android:id="@+id/profile_nav"
             android:gravity="center_vertical"
@@ -138,6 +153,13 @@ android:id="@+id/feedback"
     android:fontFamily="@font/vip"
     android:drawableRight="@drawable/ic_logout_c"
     android:text="تسجيل الخروج"/>
-
     </LinearLayout>
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:src="@drawable/ic_logo_black"/>
 </RelativeLayout>

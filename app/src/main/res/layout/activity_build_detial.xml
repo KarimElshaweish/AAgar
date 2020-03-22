@@ -1,279 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sourcey.materiallogindemo.BuildDetial">
     <RelativeLayout
+        android:onClick="openImages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:id="@+id/titleBar"
-        android:background="@color/primary">
-        <ImageView
-            android:onClick="Finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"/>
-        <TextView
-            android:fontFamily="@font/vip"
-            android:layout_centerHorizontal="true"
-            android:textColor="#fff"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/phoneumber"
-            android:text="تفاصيل العرض"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-    </RelativeLayout>
-    <ScrollView
-        android:layout_below="@id/titleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-<LinearLayout
-    android:id="@+id/lin"
-    android:padding="10dp"
-    android:layout_below="@id/titleBar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="7dp"
-        android:elevation="7dp"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
-            <com.synnapps.carouselview.CarouselView
-                android:id="@+id/carouselView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:fillColor="#FFFFFFFF"
-                app:pageColor="#00000000"
-                app:radius="6dp"
-                app:slideInterval="3000"
-                app:strokeColor="#FF777777"
-                app:strokeWidth="1dp"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:background="#a0000000">
-
-                <LinearLayout
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/vip_font"
-                        android:text="ريال"
-                        android:textSize="20sp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignLeft="@id/ttPrice"
-                        android:padding="7dp"
-                        android:textColor="#fff"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ttPrice"
-                        android:fontFamily="@font/vip_font"
-                        android:text="1800"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:padding="7dp"
-                        android:textSize="20sp"
-                        android:textColor="#fff"/>
-
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/faviamge"
-                    android:onClick="AddToFavoutit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_fav_white"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="10dp"/>
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-
-    <android.support.v7.widget.CardView
-        android:visibility="gone"
-        android:id="@+id/cv"
-        app:cardCornerRadius="7dp"
-        android:elevation="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <LinearLayout
+        android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="15dp">
-            <LinearLayout
+            >
+            <RelativeLayout
+                android:onClick="openImages"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="right"
-                android:gravity="right">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="منشأة للايجار"
-                    android:textColor="#000"
-                    android:id="@+id/type"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/vip"/>
+                android:layout_height="match_parent">
+                <com.synnapps.carouselview.CarouselView
+                    android:id="@+id/carouselView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:fillColor="#FFFFFFFF"
+                    app:autoPlay="false"
+                    app:pageColor="#00000000"
+                    app:radius="6dp"
+                    app:slideInterval="3000"
+                    app:strokeColor="#FF777777"
+                    app:strokeWidth="1dp"/>
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#a0000000">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_street" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="right"
-                android:gravity="right"
-                android:padding="5dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ريال"
-                    android:layout_marginRight="5dp"
-                    android:gravity="right"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/vip"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50"
-                    android:gravity="right"
-                    android:id="@+id/price"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/vip"/>
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_money" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="right"
-                android:gravity="right">
-                <TextView
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="الوصف : ؟؟"
-                    android:id="@+id/city"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/vip"/>
-                <ImageView
-                    android:layout_marginLeft="3dp"
-                    android:layout_gravity="center"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_pin"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/vip_font"
+                            android:text="ريال"
+                            android:textSize="20sp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignLeft="@id/ttPrice"
+                            android:padding="7dp"
+                            android:textColor="#fff"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ttPrice"
+                            android:fontFamily="@font/vip_font"
+                            android:text="1800"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:padding="7dp"
+                            android:textSize="20sp"
+                            android:textColor="#fff"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/vip_font"
+                            android:text="بقيمة"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:padding="7dp"
+                            android:textSize="20sp"
+                            android:textColor="#fff"/>
 
-            </LinearLayout>    <LinearLayout
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/faviamge"
+                        android:onClick="AddToFavoutit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_fav_white"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="10dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="openImages"/>
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="right"
-                android:gravity="right">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="شارع  : ؟؟"
-                    android:id="@+id/street"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginRight="5dp"
-                    android:fontFamily="@font/vip"/>
-                <ImageView
-                    android:layout_marginLeft="3dp"
-                    android:layout_gravity="center"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_pin"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="right"
-                android:gravity="right">
-                <TextView
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/toprl"
                     android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/desc"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="monospace"/>
-                <ImageView
-                    android:layout_marginLeft="3dp"
-                    android:layout_gravity="center"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_details"/>
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:onClick="Finish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_back_black"
+                        />
+                    <LinearLayout
+                        android:gravity="center|center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true">
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            app:srcCompat="@drawable/ic_edit"
+                            android:id="@+id/fab_edit"
+                            android:layout_margin="3dp"
+                            app:backgroundTint="@color/primary"/>
+                        <ImageView
+                            android:onClick="openImages"
+                            android:layout_gravity="center"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:padding="2dp"
+                            android:src="@drawable/ic_expand"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="title"
+                        android:textColor="@android:color/black"
+                        android:fontFamily="@font/vip_font"
+                        android:textSize="23dp"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:id="@+id/title"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_margin="3dp"
+                    android:layout_below="@id/toprl"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:background="@drawable/circle"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/count_utton"
+                        android:layout_width="wrap_content"
+                        android:textColor="#fff"
+                        android:text="3"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet"
+        android:background="@drawable/top_border"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="350dp"
+        android:visibility="visible"
+        app:layout_behavior="@string/bottom_sheet_behavior">
         <LinearLayout
+            android:background="@drawable/top_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <include
-            android:visibility="gone"
-            android:id="@+id/Building"
-            layout="@layout/build_detials_view" />
-        <include layout="@layout/flat_detials_view"
-            android:id="@+id/flat_view"
-            android:visibility="gone"/>
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center"
+                android:background="@drawable/top_scroll_design"/>
+            <include
+                android:visibility="gone"
+                android:id="@+id/Building"
+                layout="@layout/build_detials_view" />
+            <include layout="@layout/flat_detials_view"
+                android:id="@+id/flat_view"
+                android:visibility="gone"/>
             <include
                 android:visibility="gone"
                 android:id="@+id/home_view"
@@ -298,96 +209,83 @@
             <include layout="@layout/ground_detials_view"
                 android:id="@+id/groundDetials"
                 android:visibility="gone"/>
-        </LinearLayout>
-
-</LinearLayout>
-        <LinearLayout
-            android:id="@+id/bottomlin"
-            android:layout_below="@id/lin"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:padding="7dp"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/btnChat"
-                    android:layout_marginRight="5dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                android:orientation="vertical"
+                android:id="@+id/bottomlin">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/primary"
-                    android:onClick="Chat"
-                    android:layout_below="@id/lin"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:text="تواصل"
-                    android:textColor="#fff"
-                    android:fontFamily="@font/vip"
-                    android:textSize="15dp"
-                    />
-                <Button
-                    android:id="@+id/btnChooser"
-                    android:padding="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:padding="7dp"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btnChat"
+                        android:layout_marginRight="5dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary"
+                        android:onClick="Chat"
+                        android:layout_below="@id/lin"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="تواصل"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/vip"
+                        android:textSize="15dp"
+                        />
+                    <Button
+                        android:id="@+id/btnChooser"
+                        android:padding="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary"
+                        android:onClick="choseOffer"
+                        android:layout_below="@id/lin"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="اختيار هذا العرض"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/vip"
+                        android:textSize="15dp"
+                        />
+                    <Button
+
+                        android:padding="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary"
+                        android:onClick="Map"
+                        android:layout_below="@id/lin"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="مشاهدة على الخريطه"
+                        android:textColor="#fff"
+                        android:fontFamily="@font/vip"
+                        android:textSize="15dp"
+                        />
+
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/primary"
-                    android:onClick="choseOffer"
-                    android:layout_below="@id/lin"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:text="اختيار هذا العرض"
-                    android:textColor="#fff"
+                    android:text="إبلاغ عن هذا العرض"
                     android:fontFamily="@font/vip"
-                    android:textSize="15dp"
-                    />
-                <Button
-
-                    android:padding="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:background="@color/primary"
-                    android:onClick="Map"
-                    android:layout_below="@id/lin"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:text="مشاهدة على الخريطه"
-                    android:textColor="#fff"
-                    android:fontFamily="@font/vip"
-                    android:textSize="15dp"
-                    />
-
-
+                    android:onClick="offerFeedBack"
+                    android:padding="10dp"
+                    android:textColor="@color/wallet_holo_blue_light"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="إبلاغ عن هذا العرض"
-                android:fontFamily="@font/vip"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:onClick="offerFeedBack"
-                android:padding="10dp"
-                android:textColor="@color/wallet_holo_blue_light"/>
+
         </LinearLayout>
-    </LinearLayout>
-    </ScrollView>
-<android.support.design.widget.FloatingActionButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_edit"
-    android:id="@+id/fab_edit"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:layout_margin="20dp"
-    app:backgroundTint="@color/primary"/>
-</RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_menu_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_local_florist_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -71,11 +71,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="F:\AndroidProjects\AAgar\app\src\main\res\drawable\logo1.png" />
-                                      <entry key="outputName" value="ic_sold" />
+                                      <entry key="imageAsset" value="C:\Users\Karim\Downloads\icons8-volleyball-50.png" />
+                                      <entry key="outputName" value="ic_tree" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="99a2b3" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -144,7 +143,7 @@
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="backgroundColor" value="6785ff" />
                                       <entry key="iconShape" value="CIRCLE" />
-                                      <entry key="imageAsset" value="F:\AndroidProjects\AAgar\app\src\main\res\drawable\logo1.png" />
+                                      <entry key="imageAsset" value="C:\Users\Karim\Desktop\ic_close.png" />
                                       <entry key="outputName" value="ic_launcher4" />
                                     </map>
                                   </option>
@@ -176,7 +175,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
-    android:textSize="15sp"
+    android:textSize="18dp"
     android:textColor="#000"
     android:fontFamily="@font/vip_font"
     android:gravity="center"

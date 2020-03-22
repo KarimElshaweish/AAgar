@@ -8,15 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/vip"
-        android:textSize="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="#000"
-        android:text="المعلومات الشخصية"/>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +29,7 @@
                 android:weightSum="3">
                 <TextView
                     android:id="@+id/name"
-                    android:textColor="#d5d5d5"
+                    android:textColor="@color/primary"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_width="0dp"
@@ -56,7 +47,7 @@
                     android:text="الإسم"
                     android:textColor="#000"
                     android:fontFamily="@font/vip"
-                    android:textSize="17dp"/>
+                    android:textSize="19dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,7 +56,7 @@
                 android:weightSum="3">
                 <TextView
                     android:id="@+id/type"
-                    android:textColor="#d5d5d5"
+                    android:textColor="@color/primary"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_width="0dp"
@@ -83,7 +74,7 @@
                     android:text="نوع الحساب"
                     android:textColor="#000"
                     android:fontFamily="@font/vip"
-                    android:textSize="17dp"/>
+                    android:textSize="19dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,7 +83,7 @@
                 android:weightSum="3">
                 <TextView
                     android:id="@+id/email"
-                    android:textColor="#d5d5d5"
+                    android:textColor="@color/primary"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_width="0dp"
@@ -110,7 +101,7 @@
                     android:text="البريد الإلكترونى"
                     android:textColor="#000"
                     android:fontFamily="@font/vip"
-                    android:textSize="17dp"/>
+                    android:textSize="19dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,7 +118,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:text="Cairo"
-                    android:textColor="#d5d5d5"
+                    android:textColor="@color/primary"
                     android:fontFamily="@font/vip"
                     android:textSize="17dp"/>/>
                 <TextView
@@ -139,7 +130,7 @@
                     android:text="العنوان"
                     android:textColor="#000"
                     android:fontFamily="@font/vip"
-                    android:textSize="17dp"/>
+                    android:textSize="19dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,7 +139,7 @@
                 android:weightSum="3">
                 <EditText
                     android:backgroundTint="#fff"
-                    android:textColor="#d5d5d5"
+                    android:textColor="@color/primary"
                     android:editable="false"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -167,7 +158,7 @@
                     android:text="رقم التليفون"
                     android:textColor="#000"
                     android:fontFamily="@font/vip"
-                    android:textSize="17dp"/>
+                    android:textSize="19dp"/>
             </LinearLayout>
         </LinearLayout>
 

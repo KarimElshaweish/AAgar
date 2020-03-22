@@ -45,6 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyOfferNeeded extends AppCompatActivity {
 
+    boolean opend=false;
     public void Finish(View view){
         finish();
     }
@@ -80,7 +81,7 @@ public class MyOfferNeeded extends AppCompatActivity {
         }else
         startActivity(new Intent(this,Add_Offers.class));
     }
-    TextView profile_nav,fav,order,chat_nav,notifcationTitle,activeOrder,soldOrder;
+    TextView profile_nav,fav,order,chat_nav,notifcationTitle,activeOrder,soldOrder,notifcation_nav;
     CardView notifcation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +93,17 @@ public class MyOfferNeeded extends AppCompatActivity {
         activeOrder.setVisibility(View.GONE);
         soldOrder=findViewById(R.id.soldOrder);
         soldOrder.setVisibility(View.GONE);
+        notifcation_nav=findViewById(R.id.notifcation_nav);
+        notifcation_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MyOfferNeeded.this,NotificationActivity.class));
+            }
+        });
         notifcationTitle=findViewById(R.id.notifcationTitle);
         getNotification();
         order=findViewById(R.id.order);
-        order.setText("سجل الطالبات");
+        order.setText("سجل الطلبات");
         profile_nav=findViewById(R.id.profile_nav);
         fav=findViewById(R.id.fav);
         order.setOnClickListener(new View.OnClickListener() {
@@ -159,16 +167,22 @@ public class MyOfferNeeded extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list=new ArrayList<>();
                 Shared.keyList=new ArrayList<>();
+                boolean find=false;
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     for(DataSnapshot dt1:dt.getChildren()) {
                         Offer offer = dt1.getValue(Offer.class);
                         offer.setOfferID(dt1.getKey());
                         if (offer.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                             list.add(offer);
+                            find=true;
                             Shared.keyList.add(dt1.getKey());
                             noOffer.setVisibility(View.GONE);
                         }
                     }
+                }
+                if(!find&&!opend){
+                        opend=true;
+                        startActivity(new Intent(MyOfferNeeded.this, Add_Offers.class));
                 }
                 ListAdapter adapter = new ListAdapter(MyOfferNeeded.this, list);
                 rv.setAdapter(adapter);
@@ -239,11 +253,9 @@ public class MyOfferNeeded extends AppCompatActivity {
                     }
                 });
     }
-
     public void seedl(View view) {
         dl.openDrawer(Gravity.END);
     }
-
     public void removeNotification(View view) {
         FirebaseDatabase.getInstance().getReference("Notification_MSG").child(FirebaseAuth.getInstance().getCurrentUser()
                 .getUid()).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {

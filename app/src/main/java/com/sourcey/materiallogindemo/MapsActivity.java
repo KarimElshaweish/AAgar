@@ -81,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView cityName;
     FloatingActionButton fabAdd;
     TextView type,name,priceInfo;
-    CardView cvDelet;
+    FloatingActionButton cvDelet;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +97,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             name = findViewById(R.id.userName);
 
             if(!Shared.addOfferNewRandom) {
-                type.setText("النوع :"+Shared.offer.getType() + offer.getBuildingTyp());
-                name.setText("إسم العميل : "+ Shared.offer.getUserName());
-                priceInfo.setText("السعر : "+ offer.getPrice());
+                type.setText(Shared.offer.getType() + offer.getBuildingTyp());
+                name.setText( Shared.offer.getUserName());
+                priceInfo.setText( offer.getPrice() + "ريال ");
             }
             fabAdd = findViewById(R.id.fabAdd);
             fabAdd.setVisibility(View.VISIBLE);
@@ -329,7 +329,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
                                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                                 .target(new LatLng(location.getLatitude(), location.getLongitude()))
-                                                .zoom(17)
+                                                .zoom(16)
                                                 .bearing(90)
                                                 .tilt(40)
                                                 .build();
@@ -351,7 +351,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Shared.offer.getTlit(), Shared.offer.getTlon()), 13));
                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                 .target(new LatLng(Shared.offer.getTlit(), Shared.offer.getTlon()))
-                                .zoom(17)
+                                .zoom(16)
                                 .bearing(90)
                                 .tilt(40)
                                 .build();

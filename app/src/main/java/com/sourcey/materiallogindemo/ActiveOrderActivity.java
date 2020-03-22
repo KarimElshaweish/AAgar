@@ -1,11 +1,14 @@
 package com.sourcey.materiallogindemo;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,13 +21,16 @@ import android.widget.TextView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
+import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.Model.Offer;
+import com.sourcey.materiallogindemo.Model.OfferResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,36 +38,59 @@ import java.util.List;
 import java.util.Locale;
 
 public class ActiveOrderActivity extends AppCompatActivity implements LocationListener {
-    List<Offer> list;
+    @Override
+    public void onLocationChanged(Location location) {
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    FloatingActionButton addOfferFloationAction;
+    TextView noOffer;
+    ProgressBar pb;
+    RecyclerView rv;
+    List<OfferResult> list;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mReference = database.getReference("OfferNeeded");
-
-    private void getData(final String city){
+    public void openMap() {
+        Shared.AddRandomButton=true;
+        Shared.addOfferNewRandom=true;
+        Shared.random=true;
+        startActivity(new Intent(this, MapsActivity.class));
+    }
+    private void getData(){
         list=new ArrayList<>();
-        Shared.keyList=new ArrayList<>();
-        final ListAdapter adapter = new ListAdapter(this, list);
-        rv.setAdapter(adapter);
-        mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("OfferResult").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                pb.setVisibility(View.VISIBLE);
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    for (DataSnapshot dt2 : dataSnapshot1.getChildren()) {
-                        pb.setVisibility(View.GONE);
-                        Offer offer = dt2.getValue(Offer.class);
-                        if (city.equals(offer.getCity())) {
-                            list.add(offer);
-                            Shared.keyList.add(dt2.getKey());
-                            adapter.notifyDataSetChanged();
-                            if (list.size() > 0) {
-                                pb.setVisibility(View.GONE);
-                                noOrder.setVisibility(View.GONE);
-                            }
+                list=new ArrayList<>();
+                for(DataSnapshot dt:dataSnapshot.getChildren()){
+                    if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        for(DataSnapshot dt1:dt.getChildren()) {
+                            list.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
                         }
-
                     }
                 }
+                if(list.size()==0){
+                    pb.setVisibility(View.GONE);
+                    noOffer.setVisibility(View.VISIBLE);
+                }
+
+                offerAdapter Adapter = new offerAdapter(ActiveOrderActivity.this, list);
+                rv.setAdapter(Adapter);
                 pb.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -69,79 +98,24 @@ public class ActiveOrderActivity extends AppCompatActivity implements LocationLi
 
             }
         });
-
     }
-    @Override
-    public void onLocationChanged(Location location) {
-        //You had this as int. It is advised to have Lat/Loing as double.
-        double lat = location.getLatitude();
-        double lng = location.getLongitude();
-        Locale locale=new Locale("ar");
-        Geocoder geoCoder = new Geocoder(this, locale);
-        StringBuilder builder = new StringBuilder();
-        try {
-            List<Address> address = geoCoder.getFromLocation(lat, lng, 1);
-            int maxLines = address.get(0).getMaxAddressLineIndex();
-            for (int i = 0; i < maxLines; i++) {
-                String addressStr = address.get(0).getAddressLine(i);
-                builder.append(addressStr);
-                builder.append(" ");
-            }
-
-            String city = address.get(0).getAdminArea();
-            if(city!=null)
-                getData(city);
-
-        } catch (IOException e) {
-            // Handle IOException
-        } catch (NullPointerException e) {
-            // Handle NullPointerException
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
-    private FusedLocationProviderClient fusedLocationClient;
-    ProgressBar pb;
-    RecyclerView rv;
-    TextView noOrder;
     private void __init__(){
-        pb = findViewById(R.id.pb);
-        rv = findViewById(R.id.rv);
+        addOfferFloationAction=findViewById(R.id.addOffer);
+        addOfferFloationAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMap();
+            }
+        });
+        rv=findViewById(R.id.rv1);
+        pb=findViewById(R.id.pb);
+        pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
+        noOffer=findViewById(R.id.noOffer);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        noOrder = findViewById(R.id.noOrder);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                            android.Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION},
-                    1);
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            onLocationChanged(location);
-                        }
-                    }
-                });
+        getData();
+        Shared.owner=true;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
