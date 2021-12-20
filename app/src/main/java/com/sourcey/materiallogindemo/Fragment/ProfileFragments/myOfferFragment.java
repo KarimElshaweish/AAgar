@@ -1,17 +1,14 @@
 package com.sourcey.materiallogindemo.Fragment.ProfileFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,9 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.MyOfferNeeded;
+import com.sourcey.materiallogindemo.model.Offer;
+import com.sourcey.materiallogindemo.model.OfferResult;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
@@ -56,18 +52,23 @@ public class myOfferFragment extends Fragment {
 
     private void getClientData() {
         Shared.customer=true;
-        FirebaseDatabase.getInstance().getReference("OfferNeeded").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("OfferNeeded").
+                addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list=new ArrayList<>();
                 Shared.keyList=new ArrayList<>();
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
-                    Offer offer=dt.getValue(Offer.class);
-                    offer.setOfferID(dt.getKey());
-                    if(offer!=null&&offer.getUID()!=null&&offer.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                        list.add(offer);
-                        Shared.keyList.add(dt.getKey());
+                    for(DataSnapshot dt1:dt.getChildren()){
+                        Offer offer=dt1.getValue(Offer.class);
+                        offer.setOfferID(dt1.getKey());
+                        if(offer!=null&&offer.getUID()!=null&&
+                                offer.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                            list.add(offer);
+                            Shared.keyList.add(dt1.getKey());
+                        }
                     }
+
                 }
                 if(list.size()==0)
                     noOffer.setVisibility(View.VISIBLE);
@@ -92,7 +93,7 @@ public class myOfferFragment extends Fragment {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         for(DataSnapshot dt1:dt.getChildren()) {
-                            list2.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
+                            list2.add(dt1.getValue(com.sourcey.materiallogindemo.model.OfferResult.class));
                         }
 
                     }

@@ -1,13 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.sourcey.materiallogindemo.Fragment.RecommendFragments.RecomendFragment">
 
-               <GridView
+    <TextView
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="لاتوجد عروض مشابه لهذا الطلب"
+        android:fontFamily="@font/gess_two_medium"
+        android:layout_gravity="center"
+        android:id="@+id/noOffer"
+        android:gravity="center"/>
+               <ListView
                    android:padding="15dp"
+                   android:scrollbars="none"
                    android:id="@+id/gv"
-                   android:layout_width="match_parent"
+                   android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:numColumns="1"/>
-</FrameLayout>
+</LinearLayout>

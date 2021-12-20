@@ -3,9 +3,6 @@ package com.sourcey.materiallogindemo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,6 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,10 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.User;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,28 +56,33 @@ public class SignupActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.bind(this);
-        ArrayAdapter<String> Adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,Array);
-        spinner.setAdapter(Adapter);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,CityArray);
-        auth =FirebaseAuth.getInstance();
-        _signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signup();
-            }
-        });
+        try{
+            ButterKnife.bind(this);
+            ArrayAdapter<String> Adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,Array);
+            spinner.setAdapter(Adapter);
+            ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,CityArray);
+            auth =FirebaseAuth.getInstance();
+            _signupButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signup();
+                }
+            });
 
-        _loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-        });
+            _loginLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Finish the registration screen and return to the Login activity
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
+            });
+        }catch (Exception ex){
+            Toast.makeText(this,"حدث خطأ",Toast.LENGTH_SHORT).show();
+        }
+
     }
     User user;
     public void signup() {
@@ -248,6 +252,8 @@ public class SignupActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(SignupActivity.this, "لا تسطيعى التسجيل بهذا الايميل", Toast.LENGTH_SHORT).show();
                         }
+                        _signupButton.setEnabled(true);
+
                     }
                 });
     }

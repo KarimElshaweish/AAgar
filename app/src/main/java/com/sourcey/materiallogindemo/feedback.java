@@ -1,14 +1,14 @@
 package com.sourcey.materiallogindemo;
 
 import android.media.MediaPlayer;
-import android.support.annotation.RestrictTo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,16 +16,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.sourcey.materiallogindemo.Adapter.MessageAdapter;
-import com.sourcey.materiallogindemo.Model.Chat;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.Chat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.internal.Util;
 
 public class feedback extends AppCompatActivity {
 
@@ -35,13 +31,18 @@ public class feedback extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-        text_sent=findViewById(R.id.text_sent);
-        rv=findViewById(R.id.rv);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-        rv.setLayoutManager(linearLayoutManager);
-        readMessage(FirebaseAuth.getInstance().getUid(),"admin","defualt");
+        try{
+            text_sent=findViewById(R.id.text_sent);
+            rv=findViewById(R.id.rv);
+            rv.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+            linearLayoutManager.setStackFromEnd(true);
+            rv.setLayoutManager(linearLayoutManager);
+            readMessage(FirebaseAuth.getInstance().getCurrentUser().getUid(),"admin","defualt");
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     public void finish(View view) {

@@ -1,14 +1,14 @@
 package com.sourcey.materiallogindemo.Adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,11 +17,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sourcey.materiallogindemo.Model.Chat;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.Chat;
+import com.sourcey.materiallogindemo.model.User;
 import com.sourcey.materiallogindemo.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -54,6 +52,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
     @Override
     public void onBindViewHolder(@NonNull final viewholder holder, int position) {
         Chat chat=mChat.get(position);
+        holder.timeText.setText(chat.getTime());
         holder.showMessage.setText(chat.getMessage());
         FirebaseDatabase.getInstance().getReference("user")
                 .child(chat.getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())?chat.getReciver():
@@ -67,7 +66,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
                             User user = dataSnapshot.getValue(User.class);
                             if (user!=null&&user.getProfilePic() != null)
                                 Glide.with(_ctx).load(user.getProfilePic())
-                                        .placeholder(R.mipmap.ic_launcher)
+                                        .placeholder(R.drawable.avatar_logo)
                                         .into(holder.profileImage);
                             else
                                 holder.profileImage.setImageDrawable(_ctx.getResources().getDrawable(R.mipmap.ic_launcher));
@@ -97,7 +96,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
 
     public class viewholder extends RecyclerView.ViewHolder {
 
-        TextView showMessage,txt_seen;
+        TextView showMessage,txt_seen,timeText;
         ImageView profileImage;
 
         public viewholder(View itemView) {
@@ -105,6 +104,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.viewhold
             profileImage=itemView.findViewById(R.id.profile);
             showMessage=itemView.findViewById(R.id.show_message);
             txt_seen=itemView.findViewById(R.id.txt_seen);
+            timeText=itemView.findViewById(R.id.time);
         }
     }
 

@@ -69,6 +69,15 @@
             android:layout_height="wrap_content"
             android:text="مدينتك"/>
     </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/city_selected"
+        android:text="ssdsds"
+        android:visibility="gone"
+        android:fontFamily="@font/gess_two_medium"/>
+
+
     <LinearLayout
         android:padding="10dp"
         android:id="@+id/lin"
@@ -168,7 +177,7 @@
 
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -186,9 +195,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/list"></ListView>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -200,15 +209,17 @@
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ListView
+            <GridView
+                android:numColumns="2"
                 android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/list2"></ListView>
+                android:id="@+id/list2"/>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
         android:visibility="gone"
+        android:padding="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cv4"
@@ -217,16 +228,42 @@
         app:cardElevation="5dp">
     <LinearLayout
         android:padding="5dp"
+        android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ListView
+        <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list3"></ListView>
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+        android:id="@+id/list3"/>
+        <LinearLayout
+            android:id="@+id/citesLayout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_Countries"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_Cites"/>
+            <Button
+                android:background="@drawable/border_button_new"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/gess_two_medium"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAddSpecial"
+                android:text="إضافة"/>
+        </LinearLayout>
 
-<android.support.v7.widget.CardView
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+<androidx.cardview.widget.CardView
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -432,7 +469,7 @@
         </LinearLayout>
     </ScrollView>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 <LinearLayout
     android:visibility="gone"
     android:layout_margin="10dp"
@@ -456,7 +493,7 @@
                 android:background="#b1abab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <android.support.v7.widget.AppCompatSpinner
+            <Spinner
                 android:layout_width="match_parent"
                 android:id="@+id/spinnerType"
                 android:layout_height="30dp"/>
@@ -501,12 +538,12 @@
                 android:background="#b1abab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <android.support.v7.widget.AppCompatSpinner
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:id="@+id/citySpinner"
                 >
-            </android.support.v7.widget.AppCompatSpinner>
+            </Spinner>
 
 </LinearLayout>
         </LinearLayout>
@@ -562,7 +599,7 @@
             android:fontFamily="@font/vip"
             android:textColor="#000"
             android:text="العنوان "/>
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_margin="15dp"
             app:backgroundTint="@color/primary"
             android:onClick="next"

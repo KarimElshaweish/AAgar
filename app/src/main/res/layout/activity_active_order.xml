@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.sourcey.materiallogindemo.ActiveOrderActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +14,6 @@
         android:padding="10dp"
         android:id="@+id/titleBar"
         android:background="@color/primary">
-
         <TextView
             android:id="@+id/offerText"
             android:layout_width="wrap_content"
@@ -21,12 +21,30 @@
             android:layout_gravity="center"
             android:fontFamily="@font/vip"
             android:gravity="center"
-            android:text="عروضى"
+            android:text="عروضى "
             android:layout_centerHorizontal="true"
-            android:textColor="#fff"
-            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:textSize="22dp"
             />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_left_arrow_white"
+            android:onClick="tabClick"
+            android:id="@+id/back"/>
+        <TextView
+            android:id="@+id/addOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="إضافة عرض"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/gess_two_medium"
+            android:textColor="@color/white"
+            android:drawableRight="@drawable/ic_add_white"
+            android:gravity="center"
+            android:drawablePadding="3dp"/>
         <LinearLayout
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -43,22 +61,54 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <RelativeLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:id="@+id/buttonsLayout"
         android:layout_below="@id/titleBar"
+        android:orientation="horizontal">
+        <TextView
+            android:onClick="openFilter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="تصفية"
+            android:drawableRight="@drawable/ic_filter"
+            android:textColor="#d3d3d3"
+            android:fontFamily="@font/gess_two_medium"
+            android:textSize="18dp"
+            android:drawablePadding="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <Button
+            android:onClick="tabClick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="المباعة"
+            android:layout_weight="1"
+            android:id="@+id/soldOrder"
+            android:background="@android:color/white"
+            android:fontFamily="@font/gess_two_medium"
+            android:textColor="#d3d3d3"/>
+        <Button
+            android:id="@+id/activeOrder"
+            android:onClick="tabClick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="النشطة"
+            android:background="@color/white"
+            android:layout_weight="1"
+            android:fontFamily="@font/gess_two_medium"
+            android:textColor="@color/primary"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_below="@id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/primary"
-            android:src="@drawable/ic_add_white"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="15dp"
-            android:id="@+id/addOffer"
-            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,13 +133,15 @@
                 android:textSize="15dp"
                 android:visibility="gone"
                 />
-            <android.support.v7.widget.RecyclerView
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:labelFor="@id/addOffer"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rv1"></android.support.v7.widget.RecyclerView>
+                android:id="@+id/rv1"/>
         </LinearLayout>
 
     </RelativeLayout>
-
 </RelativeLayout>

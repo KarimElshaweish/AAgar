@@ -1,14 +1,12 @@
 package com.sourcey.materiallogindemo.Fragment.ProfileFragments;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.User;
 import com.sourcey.materiallogindemo.Profile;
 import com.sourcey.materiallogindemo.R;
 

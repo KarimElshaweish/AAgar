@@ -3,12 +3,9 @@ package com.sourcey.materiallogindemo;
 
 import android.app.Application;
 
-public class app extends Application {
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        MultiDex.install(this);
-//    }
+import dagger.hilt.android.HiltAndroidApp;
 
+@HiltAndroidApp
+public class app extends Application {
 
 }

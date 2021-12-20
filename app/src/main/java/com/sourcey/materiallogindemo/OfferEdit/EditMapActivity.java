@@ -8,14 +8,16 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.sourcey.materiallogindemo.MainActivity;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
@@ -35,7 +38,8 @@ public class EditMapActivity extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    boolean editMode=false;
+    boolean editMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +53,16 @@ public class EditMapActivity extends FragmentActivity implements OnMapReadyCallb
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final View view=findViewById(R.id.parent);
-        if(!editMode) {
+        final View view = findViewById(R.id.parent);
+        if (!editMode) {
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
-                    Snackbar.make(view,getString(R.string.please_be_in_edit_mode),Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, getString(R.string.please_be_in_edit_mode), Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
@@ -79,9 +84,20 @@ public class EditMapActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     LatLng fLating;
+
     public void changeLocation(View view) {
-        Button btn=(Button)view;
-        if(btn.getText().toString().equals(getString(R.string.changeText))){
+        Button btn = (Button) view;
+        if (btn.getText().toString().equals(getString(R.string.changeText))) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mMap.setMyLocationEnabled(true);
             Snackbar.make(view, "انت الان فى وضع تغير المكان", Snackbar.LENGTH_SHORT).show();
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {

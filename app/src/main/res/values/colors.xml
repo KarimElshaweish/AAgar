@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="primary">#6475dc</color>
+  <color name="primary">#00AAB2</color>
   <color name="low_opacity_primary">#456475DC</color>
   <color name="primary_dark">#6475dc</color>
   <color name="primary_darker">#ffffff</color>
@@ -15,4 +15,5 @@
   <color name="base">#AAAAAA</color>
   <color name="iron">#CCCCCC</color>
   <color name="white">#FFFFFF</color>
+  <color name="gray">#d3d3d3</color>
 </resources>

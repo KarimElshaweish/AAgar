@@ -4,14 +4,15 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.Offer;
+import com.sourcey.materiallogindemo.model.OfferResult;
+import com.sourcey.materiallogindemo.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Shared {
+    public static boolean allUsersChat=false;
     public static  Offer MyOffer;
     public static double longtuide=-1;public static double lituide=-1;
     public static User user;
@@ -61,6 +62,7 @@ public static boolean fristTime=false;
     public static boolean Edit;
     public static TextView city;
     public static Offer offerNeed;
+    public static List<Offer> ignoredList;
 
     public static  void reset(){
         customer=false;

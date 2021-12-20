@@ -2,32 +2,30 @@ package com.sourcey.materiallogindemo.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.content.IntentCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.ChatAct;
-import com.sourcey.materiallogindemo.Model.Chat;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.Chat;
+import com.sourcey.materiallogindemo.model.OfferResult;
+import com.sourcey.materiallogindemo.model.User;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -63,9 +61,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         final User user=mList.get(position);
-        lastMessage(user.getUserID(),holder.lastMsg,holder.card);
+        lastMessage(user.getUserID(),holder.lastMsg,holder.card,position);
         holder.usernameText.setText(user.getName()+"( "+user.getType()+" )");
-        Glide.with(_ctx).load(user.getProfilePic()).placeholder(R.drawable.avatar).into(holder.profile);
+        Glide.with(_ctx).load(user.getProfilePic()).placeholder(R.drawable.avatar_logo).into(holder.profile);
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +76,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Shared.offerKnow=offerID;
                 _ctx.startActivity(intent);
+                Shared.allUsersChat=true;
             }
         });
     }
@@ -102,7 +101,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
            card=itemView.findViewById(R.id.card);
        }
    }
-   private void lastMessage(final String userId, final TextView last_msg, final CardView cardView){
+   private void lastMessage(final String userId, final TextView last_msg, final CardView cardView, final int position){
         theLastMessage="default";
         user="default";
        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Chats");
@@ -127,9 +126,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {
                String temp = theLastMessage;
                switch (theLastMessage){
                    case "default":
-                       last_msg.setText("No Message");
-                       temp="No Message";
-                       cardView.setVisibility(View.GONE);
+                       if(mList.size()>position)
+                        mList.remove(position);
+                       notifyDataSetChanged();
                        break;
                        default:
                            last_msg.setText(theLastMessage);

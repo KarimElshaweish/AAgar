@@ -2,19 +2,18 @@ package com.sourcey.materiallogindemo;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import android.content.Intent;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,70 +50,73 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        forget_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().sendPasswordResetEmail(_emailText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "قم بمراجعة بريدك الالكترونى", Toast.LENGTH_SHORT).show();
+        try {
+            forget_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(_emailText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "قم بمراجعة بريدك الالكترونى", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-            }
-        });
-        auth=FirebaseAuth.getInstance();
-        _loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
-
-        _signupLink.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-                finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-        });
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("جار التوثيق");
-        progressDialog.show();
-        progressDialog.setCanceledOnTouchOutside(false);
-        firebaseUser=auth.getCurrentUser();
-        if(firebaseUser != null){
-            mReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                            Shared.user=dataSnapshot.getValue(User.class);
-                    if(Shared.user.getType().equals(Array[1])) {
-                        progressDialog.dismiss();
-                        Intent intent = new Intent(LoginActivity.this, MyOfferNeeded.class);
-                        startActivity(intent);
-                    }
-                    else{
-                        startActivity(new Intent(LoginActivity.this,goodOffersAct.class));
-                    }
-                            finish();
+                    });
                 }
+            });
+            auth = FirebaseAuth.getInstance();
+            _loginButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
+                public void onClick(View v) {
+                    login();
                 }
             });
 
-        }else{
-            progressDialog.dismiss();
+            _signupLink.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // Start the Signup activity
+                    Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                    startActivityForResult(intent, REQUEST_SIGNUP);
+                    finish();
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
+            });
+            final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("جار التوثيق");
+            progressDialog.show();
+            progressDialog.setCanceledOnTouchOutside(false);
+            firebaseUser = auth.getCurrentUser();
+            if (firebaseUser != null) {
+                mReference.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Shared.user = dataSnapshot.getValue(User.class);
+                        if (Shared.user.getType().equals(Array[1])) {
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(LoginActivity.this, MyOfferNeeded.class);
+                            startActivity(intent);
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, goodOffersAct.class));
+                        }
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            } else {
+                progressDialog.dismiss();
+            }
+        }catch (Exception ex){
+            Toast.makeText(this,"حدث خطأ",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -160,8 +162,8 @@ public class LoginActivity extends AppCompatActivity {
                             mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())){
-                                        mReference.child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    if(dataSnapshot.hasChild(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                        mReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 Shared.user=dataSnapshot.getValue(User.class);
@@ -229,6 +231,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 

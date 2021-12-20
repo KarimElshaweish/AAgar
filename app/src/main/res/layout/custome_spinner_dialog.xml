@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:padding="10dp"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تصفية حسب "
+            android:fontFamily="@font/gess_two_medium"
+            android:textColor="@color/primary"
+            android:textSize="15dp"
+
+            android:layout_gravity="center"
+            android:gravity="center"/>
+       <ListView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:entries="@array/TypesArray"
+           android:descendantFocusability="blocksDescendants"
+
+           android:id="@+id/typeList"/>
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/button"-->
+<!--        android:text="تصفية"-->
+<!--        android:id="@+id/filter"-->
+<!--        android:fontFamily="@font/gess_two_medium"-->
+<!--        android:textColor="@color/primary"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="5dp"/>-->
+    </LinearLayout>
+

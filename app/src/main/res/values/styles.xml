@@ -10,7 +10,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:textColorSecondary">@color/gray</item>
     </style>
 
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">

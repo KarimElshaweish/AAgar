@@ -1,7 +1,8 @@
 package com.sourcey.materiallogindemo.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,36 +15,51 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.RoundedImageView;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.maps.android.ui.IconGenerator;
-import com.sourcey.materiallogindemo.MapsActivity;
-import com.sourcey.materiallogindemo.Model.Notification;
-import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.google.gson.Gson;
+import com.sourcey.materiallogindemo.BuildDetial;
+import com.sourcey.materiallogindemo.RealTimeServices.IInofrmationNotification;
+import com.sourcey.materiallogindemo.model.Notification;
+import com.sourcey.materiallogindemo.model.OfferResult;
 import com.sourcey.materiallogindemo.R;
+import com.sourcey.materiallogindemo.RealTimeServices.IOfferResult;
 import com.sourcey.materiallogindemo.Shared;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import br.com.joinersa.oooalertdialog.Animation;
-import br.com.joinersa.oooalertdialog.OoOAlertDialog;
 
 public class OffersGridViewAdapter extends BaseAdapter {
     List<OfferResult>offerResultList;
     Context _ctx;
-
-    public OffersGridViewAdapter(List<OfferResult> offerResultList, Context _ctx) {
+    TextView badgeText;
+    View v;
+    IOfferResult iOfferResult;
+    TextView noOffer;
+    String offerID;
+    IInofrmationNotification iInofrmationNotification;
+    List<OfferResult>sentedList;
+    public OffersGridViewAdapter(List<OfferResult> offerResultList, Context _ctx, TextView badgeText, View v, Activity activity,TextView noOffer,String offerID
+    ,IInofrmationNotification iInofrmationNotification,List<OfferResult>sentedList) {
         this.offerResultList = offerResultList;
         this._ctx = _ctx;
+        this.badgeText=badgeText;
+        this.v=v;
+        this.iOfferResult= (IOfferResult) activity;
+        this.noOffer=noOffer;
+        this.offerID=offerID;
+        this.iInofrmationNotification=iInofrmationNotification;
+        this.sentedList=sentedList;
     }
 
+    public void clear(){
+        this.offerResultList.clear();
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return offerResultList.size();
@@ -71,7 +87,8 @@ public class OffersGridViewAdapter extends BaseAdapter {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(_ctx, "تمت الاضافه", Toast.LENGTH_SHORT).show();
+                                  //  Toast.makeText(_ctx, "تمت الاضافه", Toast.LENGTH_SHORT).show();
+                                    iInofrmationNotification.sentNotificationToHome();
                                     String time=Calendar.getInstance().getTime().toString();
                                     Notification notification=new Notification(noffer.getBuildingType(),noffer.getPrice(),Shared.offerID,time);
                                     ref.getReference("Notification").child(Shared.toID).child(time)
@@ -87,32 +104,64 @@ public class OffersGridViewAdapter extends BaseAdapter {
             }
         });
     }
-    private void checkIfSent(final int positon, final RelativeLayout sentRl,final Button btn){
+    private void checkIfSent(final int position, final RelativeLayout sentRl,final Button btn){
    //     finalI=positon;
-        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot dt:dataSnapshot.getChildren()){
-                        OfferResult dataOfferResult = dt.getValue(OfferResult.class);
-                        if (offerResultList.get(positon).getOfferID().equals(dataOfferResult.getOfferID())) {
-                            sentRl.setVisibility(View.VISIBLE);
-                            btn.setVisibility(View.GONE);
-                    }
-                }
+        for(OfferResult offerResult:sentedList){
+            String currentPositionID=offerResultList.get(position).getOfferID();
+            String comingID=offerResult.getOfferID();
+            if(currentPositionID.equals(comingID)){
+                sentRl.setVisibility(View.GONE);
+                notifyDataSetChanged();
+                break;
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        }
+//        FirebaseDatabase.getInstance().getReference("linkOffer").child(Shared.toID).child(Shared.offerID).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot dt:dataSnapshot.getChildren()){
+//                        OfferResult dataOfferResult = dt.getValue(OfferResult.class);
+//                        resultList.add(dataOfferResult);
+//
+//                    boolean flagExit=false;
+//                        if (!visitedList.contains(comingID)&&currentPositionID.equals(comingID)) {
+//                            flagExit=true;
+//                            visitedList.add(comingID);
+//                            sentRl.setVisibility(View.GONE);
+//                         //   offerResultList.remove(i);
+//                            int size=Integer.parseInt(badgeText.getText().toString());
+//                            size -= 1;
+//                            if(size<0)
+//                                size=0;
+//                            badgeText.setText(String.valueOf(size));
+//                            if(size==0) {
+//                                v.setVisibility(View.GONE);
+//                                iOfferResult.onAllRecomendedSent();
+//                                noOffer.setVisibility(View.VISIBLE);
+//                            }else{
+//                                noOffer.setVisibility(View.GONE);
+//                            }
+//                           // notifyDataSetChanged();
+//                          //  btn.setVisibility(View.GONE);
+//                    }else {
+//                            sentRl.setVisibility(View.VISIBLE);
+//                        }
+//                        if(flagExit)
+//                            break;
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+   //     notifyDataSetChanged();
     }
     int i=0;
+    boolean flagCheck=false;
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View root= LayoutInflater.from(_ctx).inflate(R.layout.offer_image_item,viewGroup,false);
         final OfferResult offerResult=offerResultList.get(i);
-        RoundedImageView roundedImageView=root.findViewById(R.id.imageCover);
-        Glide.with(_ctx).load(offerResult.getImageList().get(0)).into(roundedImageView);
         TextView price=root.findViewById(R.id.price);
         TextView type=root.findViewById(R.id.type);
         type.setText(offerResult.getType());
@@ -121,7 +170,30 @@ public class OffersGridViewAdapter extends BaseAdapter {
         price.setText(offerResult.getPrice());
         Button share=root.findViewById(R.id.sent);
         RelativeLayout sentLayout=root.findViewById(R.id.sentLayout);
-            checkIfSent(i, sentLayout,share);
+        RelativeLayout allLayout=root.findViewById(R.id.rl);
+        ImageView infomation = (ImageView) root.findViewById(R.id.information);
+        badgeText.setText(String.valueOf(offerResultList.size()-sentedList.size()));
+
+        infomation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(_ctx,BuildDetial.class);
+                Gson gson=new Gson();
+                intent.putExtra("enable","0");
+                intent.putExtra("offer_result",gson.toJson(offerResult));
+                intent.putExtra("position",String.valueOf(i));
+                _ctx.startActivity(intent);
+            }
+        });
+        checkIfSent(i, allLayout, share);
+        int size=offerResultList.size()-sentedList.size();
+        if(size==0) {
+            v.setVisibility(View.GONE);
+            iOfferResult.onAllRecomendedSent();
+            noOffer.setVisibility(View.VISIBLE);
+        }else{
+            noOffer.setVisibility(View.GONE);
+        }
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,11 +1,13 @@
 package com.sourcey.materiallogindemo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,12 +17,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.ChatOfferAdapter;
-import com.sourcey.materiallogindemo.Model.ChatOfferItem;
+import com.sourcey.materiallogindemo.model.ChatOfferItem;
 import com.sourcey.materiallogindemo.Adapter.UserAdapter;
-import com.sourcey.materiallogindemo.Model.Chat;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.Chat;
+import com.sourcey.materiallogindemo.model.OfferResult;
+import com.sourcey.materiallogindemo.model.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,7 +51,7 @@ public class ChatList extends AppCompatActivity {
                             for (DataSnapshot dt1 : dt.getChildren()) {
                                 if(dt1.getKey().equals(Shared.offerID)){
                                     for(DataSnapshot dt2:dt1.getChildren()) {
-                                        com.sourcey.materiallogindemo.Model.OfferResult offer = dt2.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class);
+                                        com.sourcey.materiallogindemo.model.OfferResult offer = dt2.getValue(com.sourcey.materiallogindemo.model.OfferResult.class);
                                         list.add(offer.getOfferID());
                                     }
                                 }
@@ -73,15 +74,20 @@ public class ChatList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
-        recyclerView=findViewById(R.id.rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            recyclerView=findViewById(R.id.rv);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
 
-        useList=new ArrayList<>();
-        Intent intent=getIntent();
-        String offerId=intent.getStringExtra("id");
-        getUsers();
+            useList=new ArrayList<>();
+            Intent intent=getIntent();
+            String offerId=intent.getStringExtra("id");
+            getUsers();
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
 
     }
 
@@ -90,7 +96,7 @@ public class ChatList extends AppCompatActivity {
         offerID=new ArrayList<>();
       //  final List<String>Formatuser=getUsersFroamted();
         reference=FirebaseDatabase.getInstance().getReference("Chats");
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 useList.clear();
@@ -147,7 +153,7 @@ public class ChatList extends AppCompatActivity {
         i=0;
         fI=0;
             FirebaseDatabase.getInstance().getReference("OfferResult")
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                        .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     while(i<offerID.size()) {
@@ -157,7 +163,7 @@ public class ChatList extends AppCompatActivity {
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        com.sourcey.materiallogindemo.Model.OfferResult offerResult = dataSnapshot.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class);
+                                        com.sourcey.materiallogindemo.model.OfferResult offerResult = dataSnapshot.getValue(com.sourcey.materiallogindemo.model.OfferResult.class);
                                         if(offerResult!=null&&!checkOffer(offerResult))
                                         offerResultList.add(offerResult);
                                         fI++;

@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@android:id/text1"
-    android:layout_width="match_parent"
-    android:textSize="18dp"
-    android:textColor="#000"
-    android:fontFamily="@font/vip_font"
-    android:gravity="center"
-    android:layout_height="match_parent"
-    />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp">
+        <TextView
+            android:text="عروضى المتاحه"
+            android:fontFamily="@font/gess_two_medium"
+            android:textColor="@android:color/black"
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:padding="2dp"
+            android:maxLines="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/badgeCotainer"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:background="@drawable/notifications_background"
+        android:gravity="center"
+        android:minWidth="16dp"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="10sp"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+</LinearLayout>

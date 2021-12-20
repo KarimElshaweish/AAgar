@@ -2,35 +2,37 @@ package com.sourcey.materiallogindemo;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sourcey.materiallogindemo.Adapter.ListAdapter;
-import com.sourcey.materiallogindemo.Adapter.offerAdapter;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.sourcey.materiallogindemo.Adapter.IgnoredListAdapter;
+import com.sourcey.materiallogindemo.model.Offer;
+import com.sourcey.materiallogindemo.RealTimeServices.IIgnoredServices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ArchiveOrder extends AppCompatActivity {
+public class ArchiveOrder extends AppCompatActivity implements IIgnoredServices {
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle toggle;
@@ -58,31 +60,36 @@ public class ArchiveOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive_order);
-        rv=findViewById(R.id.rv1);
-        pb=findViewById(R.id.pb);
-        pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary),PorterDuff.Mode.MULTIPLY);
-        noOffer=findViewById(R.id.noOffer);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        getData();
-        navigationView=findViewById(R.id.navigationView);
-        dl = findViewById(R.id.drawer);
-        toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
-        dl.addDrawerListener(toggle);
-        toggle.syncState();
-        order=findViewById(R.id.order);
-        order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ArchiveOrder.this,MyOfferNeeded.class));
-            }
-        });
-        profile_nav=findViewById(R.id.profile_nav);
-        profile_nav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ArchiveOrder.this,Profile.class));
-            }
-        });
+        try{
+            rv=findViewById(R.id.rv1);
+            pb=findViewById(R.id.pb);
+            pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary),PorterDuff.Mode.MULTIPLY);
+            noOffer=findViewById(R.id.noOffer);
+            rv.setLayoutManager(new LinearLayoutManager(this));
+            getData();
+            navigationView=findViewById(R.id.navigationView);
+            dl = findViewById(R.id.drawer);
+            toggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.close);
+            dl.addDrawerListener(toggle);
+            toggle.syncState();
+            order=findViewById(R.id.order);
+            order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ArchiveOrder.this,MyOfferNeeded.class));
+                }
+            });
+            profile_nav=findViewById(R.id.profile_nav);
+            profile_nav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ArchiveOrder.this,Profile.class));
+                }
+            });
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+
     }
     HashMap<String,Offer>hashMap;
     List<Offer> list;
@@ -92,6 +99,7 @@ public class ArchiveOrder extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 hashMap=new HashMap<>();
+                list=new ArrayList<>();
                 for (DataSnapshot dt : dataSnapshot.getChildren()) {
                         Offer offerResult = dt.getValue(Offer.class);
                         list.add(offerResult);
@@ -104,7 +112,7 @@ public class ArchiveOrder extends AppCompatActivity {
                     pb.setVisibility(View.GONE);
                     noOffer.setVisibility(View.VISIBLE);
                 }
-                ListAdapter Adapter = new ListAdapter(ArchiveOrder.this, list);
+                IgnoredListAdapter Adapter = new IgnoredListAdapter(list,ArchiveOrder.this,true);
                 rv.setAdapter(Adapter);
                 pb.setVisibility(View.GONE);
             }
@@ -118,5 +126,15 @@ public class ArchiveOrder extends AppCompatActivity {
 
     public void finish(View view) {
         finish();
+    }
+
+    @Override
+    public void onListEmpty() {
+
+    }
+
+    @Override
+    public void onListHasData() {
+
     }
 }

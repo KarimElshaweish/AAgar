@@ -7,15 +7,16 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -26,7 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.ListAdapter;
-import com.sourcey.materiallogindemo.Model.Offer;
+import com.sourcey.materiallogindemo.model.Offer;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
@@ -42,12 +43,12 @@ public class ActiveNeedsFragments extends Fragment implements LocationListener {
         DatabaseReference mReference = database.getReference("OfferNeeded");
     private void getData(final String city){
         list=new ArrayList<>();
-        Shared.keyList=new ArrayList<>();
         final ListAdapter adapter = new ListAdapter(getContext(), list);
         rv.setAdapter(adapter);
         mReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Shared.keyList=new ArrayList<>();
                 pb.setVisibility(View.VISIBLE);
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     for (DataSnapshot dt2 : dataSnapshot1.getChildren()) {

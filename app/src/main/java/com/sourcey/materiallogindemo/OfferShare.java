@@ -1,13 +1,15 @@
 package com.sourcey.materiallogindemo;
 
 import android.graphics.PorterDuff;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,15 +31,19 @@ public class OfferShare extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_share);
-        rv=findViewById(R.id.rv1);
-        pb=findViewById(R.id.pb);
-        pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary),PorterDuff.Mode.MULTIPLY);
-        noOffer=findViewById(R.id.noOffer);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        getData();
-        Shared.owner=true;
+        try {
+            rv = findViewById(R.id.rv1);
+            pb = findViewById(R.id.pb);
+            pb.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.primary), PorterDuff.Mode.MULTIPLY);
+            noOffer = findViewById(R.id.noOffer);
+            rv.setLayoutManager(new LinearLayoutManager(this));
+            getData();
+            Shared.owner = true;
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
-    List<com.sourcey.materiallogindemo.Model.OfferResult> list;
+    List<com.sourcey.materiallogindemo.model.OfferResult> list;
     private void getData(){
         list=new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("OfferResult").addValueEventListener(new ValueEventListener() {
@@ -46,7 +52,7 @@ public class OfferShare extends AppCompatActivity {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                         if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                             for(DataSnapshot dt1:dt.getChildren()) {
-                                list.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
+                                list.add(dt1.getValue(com.sourcey.materiallogindemo.model.OfferResult.class));
                             }
 
                     }

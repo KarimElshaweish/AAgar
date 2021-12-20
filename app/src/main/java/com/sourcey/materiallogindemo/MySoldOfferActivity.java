@@ -1,13 +1,14 @@
 package com.sourcey.materiallogindemo;
 
 import android.graphics.PorterDuff;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -15,7 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
-import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.sourcey.materiallogindemo.model.OfferResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class MySoldOfferActivity extends AppCompatActivity {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         for(DataSnapshot dt1:dt.getChildren()) {
-                            list.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
+                            list.add(dt1.getValue(com.sourcey.materiallogindemo.model.OfferResult.class));
                         }
 
                     }
@@ -52,7 +53,7 @@ public class MySoldOfferActivity extends AppCompatActivity {
                     pb.setVisibility(View.GONE);
                     noOffer.setVisibility(View.VISIBLE);
                 }
-                offerAdapter Adapter=new offerAdapter(MySoldOfferActivity.this,list);
+                offerAdapter Adapter=new offerAdapter(MySoldOfferActivity.this,list,1);
                 rv.setAdapter(Adapter);
                 pb.setVisibility(View.GONE);
             }
@@ -67,6 +68,10 @@ public class MySoldOfferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_sold_offer);
-        __init__();
+        try {
+            __init__();
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }

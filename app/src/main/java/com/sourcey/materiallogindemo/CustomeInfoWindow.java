@@ -1,15 +1,13 @@
 package com.sourcey.materiallogindemo;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.sourcey.materiallogindemo.model.OfferResult;
 
 public class CustomeInfoWindow  implements GoogleMap.InfoWindowAdapter {
     private  final  View window;

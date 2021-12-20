@@ -1,25 +1,26 @@
 package com.sourcey.materiallogindemo;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,11 +28,12 @@ import com.google.firebase.storage.UploadTask;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Fragment.ProfileFragments.InformationFragment;
 import com.sourcey.materiallogindemo.Fragment.ProfileFragments.myOfferFragment;
-import com.sourcey.materiallogindemo.Model.User;
+import com.sourcey.materiallogindemo.model.User;
+import com.sourcey.materiallogindemo.RealTimeServices.IMyOfferNeed;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile extends AppCompatActivity {
+public class Profile extends AppCompatActivity implements IMyOfferNeed {
 
     private static final int PICK_VIDEO_REQUEST =777 ;
     AppBarLayout toolbar;
@@ -57,12 +59,12 @@ public class Profile extends AppCompatActivity {
     }
 
     public void setSmallAvatar(String image) {
-        Glide.with(this).load(image).placeholder(R.drawable.avatar).into(this.smallAvatar);
+        Glide.with(this).load(image).placeholder(R.drawable.avatar_logo).into(this.smallAvatar);
     }
 
     public void setProfile_avatar(String image) {
-        Glide.with(this).load(image).placeholder(R.drawable.avatar).into(this.profile_avatar);
-        Glide.with(this).load(image).placeholder(R.drawable.avatar).into(this.navAvatar);
+        Glide.with(this).load(image).placeholder(R.drawable.avatar_logo).into(this.profile_avatar);
+        Glide.with(this).load(image).placeholder(R.drawable.avatar_logo).into(this.navAvatar);
 
     }
     CircleImageView navAvatar;
@@ -169,6 +171,16 @@ public class Profile extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    public void onListEmpty() {
+
+    }
+
+    @Override
+    public void onListHasData() {
+
     }
 
 

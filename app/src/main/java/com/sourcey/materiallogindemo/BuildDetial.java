@@ -6,77 +6,56 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
+
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.DialogImageAdapter;
-import com.sourcey.materiallogindemo.Edit.BuildEdit;
-import com.sourcey.materiallogindemo.Edit.FarmEditActivity;
-import com.sourcey.materiallogindemo.Edit.FlatEditActivity;
-import com.sourcey.materiallogindemo.Edit.HomeEditActivity;
-import com.sourcey.materiallogindemo.Edit.LandEditActivity;
-import com.sourcey.materiallogindemo.Edit.LevelEditActivity;
-import com.sourcey.materiallogindemo.Edit.MarketEditActivity;
-import com.sourcey.materiallogindemo.Edit.RessortEditActivity;
-import com.sourcey.materiallogindemo.Edit.VillaEdit;
-import com.sourcey.materiallogindemo.Model.Deals;
-import com.sourcey.materiallogindemo.Model.Farm;
-import com.sourcey.materiallogindemo.Model.Flat;
-import com.sourcey.materiallogindemo.Model.Home;
-import com.sourcey.materiallogindemo.Model.Level;
-import com.sourcey.materiallogindemo.Model.Market;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.Model.Ressort;
-import com.sourcey.materiallogindemo.Model.Villa;
+import com.sourcey.materiallogindemo.model.Deals;
+import com.sourcey.materiallogindemo.model.OfferResult;
+import com.sourcey.materiallogindemo.model.User;
 import com.sourcey.materiallogindemo.OfferEdit.OfferEdit;
+import com.sourcey.materiallogindemo.databinding.CustomeDailogBinding;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import static com.sourcey.materiallogindemo.Shared.offer;
 
 
 public class BuildDetial extends AppCompatActivity {
 
     OfferResult offerResult=new OfferResult();
     TextView type,price,city,streetWidth,reception,Btype,buildAge,marketNumber,navigation,buildready,roomNumbers,buildTypeComm,detials,
-    Level,Bathrooms,AirCondtion,carEnternace,durationType,extenstion,peopleType,Furnished,kitchen,billRoom,hall,duplex,Elvator,hairRoom,
-    pool,valut,waterFaillNumber,tree,bigBath,entertanmetPlalce,footballSwitch,volleyPlaygroundSwitch,ttPrice,groundArea,groundMeterPrice;
+            Level,Bathrooms,AirCondtion,carEnternace,durationType,extenstion,peopleType,Furnished,kitchen,billRoom,hall,duplex,Elvator,hairRoom,
+            pool,valut,waterFaillNumber,tree,bigBath,entertanmetPlalce,footballSwitch,volleyPlaygroundSwitch,ttPrice,groundArea,groundMeterPrice;
     CarouselView carouselView;
     LinearLayout fb;
     ImageView favImage;
@@ -105,36 +84,36 @@ public class BuildDetial extends AppCompatActivity {
     private void __init__(){
         ttPrice=findViewById(R.id.ttPrice);
         ttPrice.setText(offerResult.getPrice());
-        switch (offerResult.getBuildingType()){
-            case "شقة ":
+        switch (offerResult.getBuildingType().trim()){
+            case "شقة":
                 title.setText("شقة");
                 __init__flat();
                 break;
-            case "فيلا ":
+            case "فيلا":
                 title.setText("فيلا");
                 __init__villa();
                 break;
-            case "عمارة ":
+            case "عمارة":
                 title.setText("عمارة");
                 __init__build();
                 break;
-            case "بيت ":
+            case "بيت":
                 title.setText("بيت");
                 __init__home();
                 break;
-            case "دور ":
+            case "دور":
                 title.setText("دور");
                 __init__level();
                 break;
-            case "مزرعه ":
+            case "مزرعه":
                 title.setText("مزرعه");
                 __init__farm();
                 break;
-            case "محل ":
+            case "محل":
                 title.setText("محل");
                 __init__market();
                 break;
-            case "استراحه ":
+            case "استراحه":
                 title.setText("استراحه");
                 __init__ressort();
                 break;
@@ -157,16 +136,18 @@ public class BuildDetial extends AppCompatActivity {
         price=findViewById(R.id.groundPrice);
         price.setText(offerResult.getPrice());
         build = (Map<String, Object>) offerResult.getAspect();
-        buildTypeComm=findViewById(R.id.groundcommtype);
-        buildTypeComm.setText(build.get("groundCommType").toString());
-        groundArea=findViewById(R.id.groundArea);
-        groundArea.setText(build.get("groundArea").toString());
-        groundMeterPrice=findViewById(R.id.groundMeterPrice);
-        groundMeterPrice.setText(build.get("groundMeterPrice").toString());
-        navigation=findViewById(R.id.groundNavigation);
-        navigation.setText(build.get("navigation").toString());
-        streetWidth=findViewById(R.id.groundStreetWidth);
-        streetWidth.setText(build.get("streetWidth").toString());
+        if(build!=null) {
+            buildTypeComm = findViewById(R.id.groundcommtype);
+            buildTypeComm.setText(build != null ? "" : build.get("groundCommType").toString());
+            groundArea = findViewById(R.id.groundArea);
+            groundArea.setText(build.get("groundArea").toString());
+            groundMeterPrice = findViewById(R.id.groundMeterPrice);
+            groundMeterPrice.setText(build.get("groundMeterPrice").toString());
+            navigation = findViewById(R.id.groundNavigation);
+            navigation.setText(build.get("navigation").toString());
+            streetWidth = findViewById(R.id.groundStreetWidth);
+            streetWidth.setText(build.get("streetWidth").toString());
+        }
         detials=findViewById(R.id.detialsFull);
         detials.setText(offerResult.getFullDetials());
 
@@ -331,7 +312,7 @@ public class BuildDetial extends AppCompatActivity {
         hall.setText(checkTrue((boolean)build.get("villaHallSwitch")));
         Bathrooms.setText(build.get("villaBathRoomsNumber").toString());
         detials.setText(offerResult.getFullDetials());
-        navigation.setText(build.get("villaNavigation").toString());
+        navigation.setText(build.get("navigation").toString());
         reception.setText(build.get("villaReceptionNumber").toString());
         buildAge.setText(build.get("villaBuildAge").toString());
         buildready.setText((boolean)build.get("villaReadySwitch")  ? "نعم" : "لا");
@@ -406,8 +387,8 @@ public class BuildDetial extends AppCompatActivity {
         marketNumber.setText(build.get("buildMarketNumber").toString());
         navigation.setText(build.get("buildNavigation").toString());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-           boolean ready=(boolean)build.get("buildReadySwitch");
-           buildready.setText(ready?"نعم":"لا");
+            boolean ready=(boolean)build.get("buildReadySwitch");
+            buildready.setText(ready?"نعم":"لا");
         }
         roomNumbers.setText(build.get("buildRomsNumber").toString());
         streetWidth.setText(build.get("buildRoomsNumber").toString());
@@ -466,66 +447,127 @@ public class BuildDetial extends AppCompatActivity {
     ImageView editFabButton;
     Intent intent;
     TextView title;
+    LinearLayout userNameLinearLayout;
+    User userDB=new User();
+    TextView userNameText;
+    void getOwnerName(String uid,final TextView userNameTextFunc){
+        FirebaseDatabase.getInstance().getReference().child("user").child(uid)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        userDB=dataSnapshot.getValue(User.class);
+                        userNameTextFunc.setText(userDB.getName());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    boolean sold=false;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_detial);
-        intent=getIntent();
-        title=findViewById(R.id.title);
-        Button btnChat=findViewById(R.id.btnChat);
-        Button btnChooser=findViewById(R.id.btnChooser);
+        try{
+            carouselView = findViewById(R.id.carouselView);
+            intent=getIntent();
+            sold=intent.getBooleanExtra("sold",false);
+            if(sold)
+                (findViewById(R.id.soldImage)).setVisibility(View.VISIBLE);
 
-       if(checkEnablesButon()){
-           btnChat.setVisibility(View.VISIBLE);
-           btnChooser.setVisibility(View.VISIBLE);
-       }
-        offerResult=Shared.offerKnow;
-        editFabButton=findViewById(R.id.fab_edit);
-        __init__();
-        if(offerResult.isFav()){
-            favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_yallewo));
-        }else{
-            favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_white));
+            userNameText=findViewById(R.id.offerOrderUserName);
+            title=findViewById(R.id.title);
+            ImageView btnChat=findViewById(R.id.btnChat);
+            RelativeLayout btnChooser=findViewById(R.id.btnChooser);
+            if(!Shared.customer){
+                String position=getIntent().getStringExtra("position");
+                if(position!=null&& !position.equals(""))
+                    position=String.valueOf(Integer.parseInt(position)+1);
+                else
+                    position="";
+                position=" عرضى "+position;
+                userNameText.setText(position);
+                //   btnChat.setVisibility(View.GONE);
+                CardView chatCardViwLayout=findViewById(R.id.chatCardViwLayout);
+                if(!sold)
+                    chatCardViwLayout.setVisibility(View.GONE);
+                else {
+                    TextView userNameChat=findViewById(R.id.userNameChat);
+                    getOwnerName(Shared.offerKnow.getuID(), userNameChat);
+                }
+
+            }else {
+                TextView userNameChat=findViewById(R.id.userNameChat);
+                getOwnerName(Shared.offerKnow.getuID(),userNameChat);
+                getOwnerName(Shared.offerKnow.getuID(),userNameText);
+            }
+            offerResult=Shared.offerKnow;
+            Gson gson=new Gson();
+            OfferResult offerResultJson=gson.fromJson(getIntent().getStringExtra("offer_result"),OfferResult.class);
+            if(offerResultJson!=null)
+                this.offerResult=offerResultJson;
+            if(checkEnablesButon()){
+                if(Shared.customer) {
+                    btnChat.setVisibility(View.VISIBLE);
+                    //  userNameLinearLayout.setVisibility(View.VISIBLE);
+
+
+                }
+                btnChooser.setVisibility(View.VISIBLE);
+            }
+
+            editFabButton=findViewById(R.id.fab_edit);
+            __init__();
+            if(offerResult.isFav()){
+                favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_yallewo));
+            }else{
+                favImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_white));
+            }
+            if(Shared.user.getType().equals(Shared.Array[0]))
+                fb.setVisibility(View.GONE);
+            else
+                editFabButton.setVisibility(View.GONE);
+            editFabButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Shared.editOffer=new OfferResult();
+                    Shared.editOffer=offerResult;
+                    startActivity(new Intent(BuildDetial.this, OfferEdit.class));
+                }
+            });
+            TextView countButton=findViewById(R.id.count_utton);
+            String size= String.valueOf(offerResult.getImageList().size());
+            countButton.setText(size);
+            carouselView.setPageCount(offerResult.getImageList().size());
+            carouselView.setImageListener(imageListener);
+
+            carouselView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
         }
-        if(Shared.user.getType().equals(Shared.Array[0]))
-            fb.setVisibility(View.GONE);
-        else
-            editFabButton.setVisibility(View.GONE);
-        editFabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Shared.editOffer=new OfferResult();
-                Shared.editOffer=offerResult;
-                startActivity(new Intent(BuildDetial.this, OfferEdit.class));
-            }
-        });
-        TextView countButton=findViewById(R.id.count_utton);
-        String size= String.valueOf(offerResult.getImageList().size());
-        countButton.setText(size);
-        carouselView = findViewById(R.id.carouselView);
-        carouselView.setPageCount(offerResult.getImageList().size());
-        carouselView.setImageListener(imageListener);
 
-        carouselView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     private boolean checkEnablesButon() {
         return intent.hasExtra("enable")&&
-               getIntent().getStringExtra("enable").equals("0");
+                getIntent().getStringExtra("enable").equals("0");
     }
 
     ImageListener imageListener = new ImageListener() {
-            @Override
-            public void setImageForPosition(int position, ImageView imageView) {
-                Glide.with(BuildDetial.this).load(offerResult.getImageList().get(position)).into(imageView);
-            }
-        };
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            Glide.with(BuildDetial.this).load(offerResult.getImageList().get(position)).into(imageView);
+        }
+    };
 
     public void Finish(View view) {
 //        if(!checkEnablesButon())
@@ -542,91 +584,179 @@ public class BuildDetial extends AppCompatActivity {
     }
 
     public void Map(View view) {
-        startActivity(new Intent(this,ShowBuildMap.class));
+        Intent intent=new Intent(this,ShowBuildMap.class);
+        intent.putExtra("type",offerResult.getType());
+        intent.putExtra("build",offerResult.getBuildingType());
+        intent.putExtra("price",offerResult.getPrice());
+        startActivity(intent);
     }
 
     String user=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     public void onBackPressed() {
-    //   Shared.offerKnow=null;
-       finish();
+        //   Shared.offerKnow=null;
+        finish();
     }
     public void choseOffer(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("هل انت موافق على السعر ؟");
-        final TextView input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        input.setRawInputType(Configuration.KEYBOARD_12KEY);
-        input.setText(offerResult.getPrice());
-        alert.setView(input);
-        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String text=input.getText().toString();
-                if(!text.equals("")){
-                    KProgressHUD hud = KProgressHUD.create(BuildDetial.this)
-                            .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                            .setLabel("Please wait")
-                            .setMaxProgress(100)
-                            .show();
-                    FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.MyOffer).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
-                                            FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
-                                                    .child(Shared.MyOffer.getOfferID()).setValue(null);
-                                            Deals deals=new Deals();
-                                            deals.setPrice(Double.parseDouble(Shared.MyOffer.getPrice()));
-                                            deals.setCity(Shared.MyOffer.getCity());
-                                            deals.setAgree(false);
-                                            deals.setOfferName(Shared.MyOffer.getBuildingTyp());
-                                            FirebaseDatabase.getInstance().getReference("Deals")
-                                                    .child(offerResult.getuID())
-                                                    .child(Calendar.getInstance().getTime().toString())
-                                                    .setValue(deals);
-                                            FirebaseDatabase.getInstance().getReference("Sold")
-                                                    .child(offerResult.getuID())
-                                                    .child(offerResult.getDescription())
-                                                    .setValue(offerResult).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    FirebaseDatabase.getInstance().getReference("OfferResult")
-                                                            .child(offerResult.getuID())
-                                                            .child(offerResult.getDescription()).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            startActivity(new Intent(BuildDetial.this,MyOfferNeeded.class));
-                                                            Toast.makeText(BuildDetial.this, "End", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            });
-                                        }
-                                    });
 
 
-                                }
-                            });
+        CustomeDailogBinding customeDailogBinding= DataBindingUtil.inflate(LayoutInflater.from(this),R.layout.custome_dailog,null,false);
+        final Dialog dialog=new Dialog(this);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(customeDailogBinding.getRoot());
+        dialog.show();
 
-                        }
-                    });
-                }else{
-                    Toast.makeText(BuildDetial.this, "من فضلك ادخل السعر", Toast.LENGTH_SHORT).show();
-                }
+
+
+        String str="هل موافق ل";
+        str+=Shared.MyOffer.getType()+" ";
+        str+=Shared.MyOffer.getBuildingTyp()+"";
+        str+=" "+ " مقابل";
+        str+=Shared.MyOffer.getPrice();
+        str+=" ريال سعودى ";
+        customeDailogBinding.topText.setText(str);
+        customeDailogBinding.cansel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
-        alert.setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //Put actions for CANCEL button here, or leave in blank
+
+
+        customeDailogBinding.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KProgressHUD hud = KProgressHUD.create(BuildDetial.this)
+                        .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                        .setLabel("Please wait")
+                        .setMaxProgress(100)
+                        .show();
+                FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.MyOffer).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
+                                        FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
+                                                .child(Shared.MyOffer.getOfferID()).setValue(null);
+                                        Deals deals = new Deals();
+                                        deals.setPrice(Double.parseDouble(Shared.MyOffer.getPrice()));
+                                        deals.setCity(Shared.MyOffer.getCity());
+                                        deals.setAgree(false);
+                                        deals.setOfferName(Shared.MyOffer.getBuildingTyp());
+                                        deals.setOffer(Shared.MyOffer);
+                                        FirebaseDatabase.getInstance().getReference("Deals")
+                                                .child(offerResult.getuID())
+                                                .child(Calendar.getInstance().getTime().toString())
+                                                .setValue(deals);
+                                        FirebaseDatabase.getInstance().getReference("Sold")
+                                                .child(offerResult.getuID())
+                                                .child(offerResult.getDescription())
+                                                .setValue(offerResult).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                FirebaseDatabase.getInstance().getReference("OfferResult")
+                                                        .child(offerResult.getuID())
+                                                        .child(offerResult.getDescription()).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        startActivity(new Intent(BuildDetial.this, MyOfferNeeded.class));
+                                                        Toast.makeText(BuildDetial.this, "End", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+
+                        });
+                    }
+                });
             }
         });
-        alert.show();
+//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+//        alert.setTitle("هل انت موافق على السعر ؟");
+//        final TextView input = new EditText(this);
+//        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+//        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+//        input.setText(offerResult.getPrice());
+//        alert.setView(input);
+//        alert.setPositiveButton("موافق", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//                String text=input.getText().toString();
+//                if(!text.equals("")){
+//                    KProgressHUD hud = KProgressHUD.create(BuildDetial.this)
+//                            .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+//                            .setLabel("Please wait")
+//                            .setMaxProgress(100)
+//                            .show();
+//                    FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            FirebaseDatabase.getInstance().getReference("linkOffer").child(user).child(Shared.offerID).child(offerResult.getDescription()).setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    FirebaseDatabase.getInstance().getReference("ArchiveOrder").child(user).child(Shared.MyOffer.getOfferID()).setValue(Shared.MyOffer).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Toast.makeText(BuildDetial.this, "تم إختيار هذا العرض فقط ", Toast.LENGTH_SHORT).show();
+//                                            FirebaseDatabase.getInstance().getReference("OfferNeeded").child(user)
+//                                                    .child(Shared.MyOffer.getOfferID()).setValue(null);
+//                                            Deals deals=new Deals();
+//                                            deals.setPrice(Double.parseDouble(Shared.MyOffer.getPrice()));
+//                                            deals.setCity(Shared.MyOffer.getCity());
+//                                            deals.setAgree(false);
+//                                            deals.setOfferName(Shared.MyOffer.getBuildingTyp());
+//                                            deals.setOffer(Shared.MyOffer);
+//                                            FirebaseDatabase.getInstance().getReference("Deals")
+//                                                    .child(offerResult.getuID())
+//                                                    .child(Calendar.getInstance().getTime().toString())
+//                                                    .setValue(deals);
+//                                            FirebaseDatabase.getInstance().getReference("Sold")
+//                                                    .child(offerResult.getuID())
+//                                                    .child(offerResult.getDescription())
+//                                                    .setValue(offerResult).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                @Override
+//                                                public void onComplete(@NonNull Task<Void> task) {
+//                                                    FirebaseDatabase.getInstance().getReference("OfferResult")
+//                                                            .child(offerResult.getuID())
+//                                                            .child(offerResult.getDescription()).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                        @Override
+//                                                        public void onComplete(@NonNull Task<Void> task) {
+//                                                            startActivity(new Intent(BuildDetial.this,MyOfferNeeded.class));
+//                                                            Toast.makeText(BuildDetial.this, "End", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    });
+//                                                }
+//                                            });
+//                                        }
+//                                    });
+//
+//
+//                                }
+//                            });
+//
+//                        }
+//                    });
+//                }else{
+//                    Toast.makeText(BuildDetial.this, "من فضلك ادخل السعر", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//        alert.setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//                //Put actions for CANCEL button here, or leave in blank
+//            }
+//        });
+//        alert.show();
 
     }
     ImageView fav;
@@ -644,22 +774,22 @@ public class BuildDetial extends AppCompatActivity {
                     .child(offerResult.getId())
                     .setValue(null)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    FirebaseDatabase.getInstance().getReference("linkOffer")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .child(Shared.offerID)
-                            .child(offerResult.getDescription())
-                            .setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            progressDialog.dismiss();
-                            fav.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_white));
+                            FirebaseDatabase.getInstance().getReference("linkOffer")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(Shared.offerID)
+                                    .child(offerResult.getDescription())
+                                    .setValue(offerResult).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressDialog.dismiss();
+                                    fav.setImageDrawable(getResources().getDrawable(R.drawable.ic_fav_white));
+                                }
+                            });
+
                         }
                     });
-
-                }
-            });
         }else{
             progressDialog.setTitle("اضافة الى المفضله....");
             progressDialog.show();

@@ -7,72 +7,96 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
-
-        <ImageView android:src="@drawable/logo1"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
-
-        <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/login_bk"
+            android:layout_height="300dp">
+            <RelativeLayout
+                android:background="#77000000"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+            <ImageView android:src="@drawable/new_logo_client"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal" />
+        </RelativeLayout>
+        <LinearLayout
+            android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email"
-                android:fontFamily="@font/vip"
+            android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="مرحباَ بعودتك"
+                    android:fontFamily="@font/gess_two_medium"
+                    android:textColor="@color/primary"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textSize="20dp"/>
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:gravity="right"
-                android:hint="البريد الالكترونى" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_email"
+                    android:fontFamily="@font/gess_two_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:gravity="right"
+                    android:hint="البريد الالكترونى" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:fontFamily="@font/gess_two_medium"
+                    android:textColor="#000"
+                    android:id="@+id/input_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:gravity="right"
+                    android:hint="كلمة السر"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_login"
+                android:background="@drawable/border_button_new"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 android:textColor="#fff"
-                android:id="@+id/input_password"
-                android:layout_width="match_parent"
+                android:textSize="15dp"
+                android:fontFamily="@font/gess_two_medium"
+                android:text="تسجيل الدخول"/>
+
+            <TextView android:id="@+id/link_signup"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:gravity="right"
-                android:hint="كلمة السر"/>
-        </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="24dp"
+                android:text="إنشاء حساب"
+                android:gravity="center"
+                android:fontFamily="@font/gess_two_medium"
+                android:textSize="16dip"/>
+            <TextView android:id="@+id/forget_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="هل نسيت كلمة المرور  ؟"
+                android:gravity="center"
+                android:textColor="#F55959"
+                android:fontFamily="@font/gess_two_medium"
+                android:textSize="16dip"/>
+        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:padding="12dp"
-            android:textColor="#000"
-            android:fontFamily="@font/vip"
-            android:text="تسجيل الدخول"/>
-
-        <TextView android:id="@+id/link_signup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="إنشاء حساب"
-            android:gravity="center"
-            android:fontFamily="@font/vip"
-            android:textSize="16dip"/>
-        <TextView android:id="@+id/forget_password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="هل نسيت كلمة المرور  ؟"
-            android:gravity="center"
-            android:fontFamily="@font/vip"
-            android:textSize="16dip"/>
 
     </LinearLayout>
 </ScrollView>

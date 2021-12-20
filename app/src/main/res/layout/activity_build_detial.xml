@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/city"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.sourcey.materiallogindemo.BuildDetial">
     <RelativeLayout
         android:onClick="openImages"
+        android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.CardView
+        android:layout_height="320dp">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             >
             <RelativeLayout
                 android:onClick="openImages"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <com.synnapps.carouselview.CarouselView
                     android:id="@+id/carouselView"
                     android:layout_width="match_parent"
@@ -29,6 +42,13 @@
                     app:slideInterval="3000"
                     app:strokeColor="#FF777777"
                     app:strokeWidth="1dp"/>
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/soldImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:padding="20dp"
+                    android:src="@drawable/sold"/>
                 <RelativeLayout
                     android:visibility="gone"
                     android:layout_width="match_parent"
@@ -87,58 +107,63 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:onClick="openImages"/>
+
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:id="@+id/toprl"
-                    android:padding="5dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:onClick="Finish"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_back_black"
-                        />
-                    <LinearLayout
-                        android:gravity="center|center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true">
+
+                    <RelativeLayout
+                        android:background="@color/primary"
+                        android:id="@+id/toprl"
+                        android:padding="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            app:srcCompat="@drawable/ic_edit"
-                            android:id="@+id/fab_edit"
-                            android:layout_margin="3dp"
-                            app:backgroundTint="@color/primary"/>
-                        <ImageView
-                            android:onClick="openImages"
-                            android:layout_gravity="center"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:padding="2dp"
-                            android:src="@drawable/ic_expand"/>
-                    </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="title"
-                        android:textColor="@android:color/black"
-                        android:fontFamily="@font/vip_font"
-                        android:textSize="23dp"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:id="@+id/title"/>
-                </RelativeLayout>
+                            android:layout_centerVertical="true"
+                            android:onClick="Finish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_left_arrow_white"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/offerOrderUserName"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:textSize="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:textColor="@color/white"/>
+                        <LinearLayout
+                            android:gravity="center|center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true">
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                app:srcCompat="@drawable/ic_edit"
+                                android:id="@+id/fab_edit"
+                                android:layout_margin="3dp"
+                                app:backgroundTint="@color/primary"/>
+                            <ImageView
+                                android:onClick="openImages"
+                                android:layout_gravity="center"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:padding="2dp"
+                                android:src="@drawable/ic_expand"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
                 <LinearLayout
                     android:layout_margin="3dp"
                     android:layout_below="@id/toprl"
@@ -156,28 +181,69 @@
                         />
                 </LinearLayout>
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/chatCardViwLayout"
+            app:cardCornerRadius="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:onClick="Chat"
+            android:elevation="10dp">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_margin="2dp"
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="user name"
+                    android:fontFamily="@font/gess_two_medium"
+                    android:textColor="@color/black"
+                    android:id="@+id/userNameChat"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    />
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/btnChat"
+                    android:src="@drawable/chat_floating"
+                    android:contentDescription="@string/chat" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/bottom_sheet"
-        android:background="@drawable/top_border"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="350dp"
-        android:visibility="visible"
-        app:layout_behavior="@string/bottom_sheet_behavior">
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:padding="10dp"
             android:background="@drawable/top_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="3dp"
-                android:layout_gravity="center"
-                android:background="@drawable/top_scroll_design"/>
+            <TextView
+                android:padding="10dp"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="title"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/gess_two_medium"
+                android:textSize="23dp"
+                android:gravity="center"
+                android:id="@+id/title"/>
             <include
                 android:visibility="gone"
                 android:id="@+id/Building"
@@ -217,62 +283,62 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:padding="7dp"
+                    android:orientation="vertical"
+                    android:padding="10dp"
                     android:gravity="center">
-                    <Button
-                        android:id="@+id/btnChat"
-                        android:layout_marginRight="5dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:background="@color/primary"
-                        android:onClick="Chat"
-                        android:layout_below="@id/lin"
-                        android:gravity="center"
-                        android:layout_centerHorizontal="true"
-                        android:text="تواصل"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/vip"
-                        android:textSize="15dp"
-                        />
-                    <Button
-                        android:id="@+id/btnChooser"
-                        android:padding="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:background="@color/primary"
-                        android:onClick="choseOffer"
-                        android:layout_below="@id/lin"
-                        android:gravity="center"
-                        android:layout_centerHorizontal="true"
-                        android:text="اختيار هذا العرض"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/vip"
-                        android:textSize="15dp"
-                        />
-                    <Button
-
-                        android:padding="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:background="@color/primary"
+                    <RelativeLayout
+                        android:layout_margin="10dp"
                         android:onClick="Map"
-                        android:layout_below="@id/lin"
-                        android:gravity="center"
-                        android:layout_centerHorizontal="true"
-                        android:text="مشاهدة على الخريطه"
-                        android:textColor="#fff"
-                        android:fontFamily="@font/vip"
-                        android:textSize="15dp"
-                        />
-
-
+                        android:padding="10dp"
+                        android:background="@drawable/border_button_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مشاهدة على الخريطه"
+                            android:textColor="#fff"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:textSize="15dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                           />
+                        <ImageView
+                            android:layout_marginRight="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_white_pin"
+                            android:layout_marginEnd="10dp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/btnChooser"
+                        android:onClick="choseOffer"
+                        android:layout_margin="10dp"
+                        android:padding="10dp"
+                        android:background="@drawable/white_new_green_border_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="اختيار هذا العرض"
+                            android:textColor="@color/primary"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:textSize="15dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                           />
+                        <ImageView
+                            android:layout_marginRight="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_white_pin"
+                            android:layout_marginEnd="10dp" />
+                    </RelativeLayout>
                 </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
@@ -287,5 +353,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+    </ScrollView>
+
+</LinearLayout>
+</RelativeLayout>

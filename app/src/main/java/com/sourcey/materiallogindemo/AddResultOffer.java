@@ -2,7 +2,8 @@ package com.sourcey.materiallogindemo;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,15 +12,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import android.util.Pair;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,60 +23,76 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.UploadListAdapter;
-import com.sourcey.materiallogindemo.Model.Build;
-import com.sourcey.materiallogindemo.Model.Farm;
-import com.sourcey.materiallogindemo.Model.Flat;
-import com.sourcey.materiallogindemo.Model.Ground;
-import com.sourcey.materiallogindemo.Model.Home;
-import com.sourcey.materiallogindemo.Model.Level;
-import com.sourcey.materiallogindemo.Model.LinkOffer;
-import com.sourcey.materiallogindemo.Model.Market;
-import com.sourcey.materiallogindemo.Model.Notification;
-import com.sourcey.materiallogindemo.Model.Offer;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.Model.Ressort;
-import com.sourcey.materiallogindemo.Model.Villa;
+import com.sourcey.materiallogindemo.model.Build;
+import com.sourcey.materiallogindemo.model.Farm;
+import com.sourcey.materiallogindemo.model.Flat;
+import com.sourcey.materiallogindemo.model.Ground;
+import com.sourcey.materiallogindemo.model.Home;
+import com.sourcey.materiallogindemo.model.Level;
+import com.sourcey.materiallogindemo.model.LinkOffer;
+import com.sourcey.materiallogindemo.model.Market;
+import com.sourcey.materiallogindemo.model.Notification;
+import com.sourcey.materiallogindemo.model.OfferResult;
+import com.sourcey.materiallogindemo.model.Ressort;
+import com.sourcey.materiallogindemo.model.Villa;
+import com.sourcey.materiallogindemo.Notification.Client;
+import com.sourcey.materiallogindemo.Notification.Data;
+import com.sourcey.materiallogindemo.Notification.MyResponse;
+import com.sourcey.materiallogindemo.Notification.Sender;
+import com.sourcey.materiallogindemo.Notification.Token;
+import com.sourcey.materiallogindemo.Service.APIService;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import static com.sourcey.materiallogindemo.Shared.CityArray;
+import dagger.hilt.EntryPoint;
+import dagger.hilt.android.AndroidEntryPoint;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.sourcey.materiallogindemo.OfferEdit.EditMapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 import static com.sourcey.materiallogindemo.Shared.offer;
-import static com.sourcey.materiallogindemo.Shared.offerID;
 
 public class AddResultOffer extends AppCompatActivity implements LocationListener {
 
@@ -98,6 +110,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
     LinearLayout layoutForm;
     private FusedLocationProviderClient fusedLocationClient;
     ListView listView;
+    Integer []arr=new Integer[100];
     @Override
         public void onLocationChanged(Location location) {
             //You had this as int. It is advised to have Lat/Loing as double.
@@ -149,7 +162,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
     }
 
     CardView cv1,cv2,cv3,cv4;
-    ListView list2;
+    GridView list2;
     TextView titleText,adress;
     private void changeOffline(TextView off){
         off.setBackground(getResources().getDrawable(R.drawable.tab_layout));
@@ -159,140 +172,171 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
         online.setBackgroundColor(getResources().getColor(R.color.primary));
         online.setTextColor(Color.parseColor("#ffffff"));
     }
+    int intentType=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_result_offer);
-        adress=findViewById(R.id.adress);
-        Geocoder geocoder;
-        List<Address> addresses = null;
-        geocoder = new Geocoder(this, Locale.getDefault());
-
-        try {
-            addresses = geocoder.getFromLocation(Shared.lituide, Shared.longtuide, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            String knownName = addresses.get(0).getFeatureName();
-            adress.setText(knownName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        titleText=findViewById(R.id.titleText);
-        navigationAdapter= new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,naviagations);
-
-        list2=findViewById(R.id.list2);
-        cv4=findViewById(R.id.cv4);
-        cv3=findViewById(R.id.cv3);
-        cv1=findViewById(R.id.cv1);
-        cv2=findViewById(R.id.cv2);
-        imgViewUpload=findViewById(R.id.imgViewUpload);
-        listView=findViewById(R.id.list);
-        orderPrice = findViewById(R.id.orderPrice);
-        orderDescription = findViewById(R.id.orderDescription);
-        orderType = findViewById(R.id.orderType);
-        orderPicture = findViewById(R.id.orderPicture);
-
-        orderPicture.setOnClickListener(new View.OnClickListener() {
+        TextView openCondations=findViewById(R.id.condations);
+        openCondations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                titleText.setText(orderPicture.getText().toString());
-                cv1.setVisibility(View.VISIBLE);
-                cv2.setVisibility(View.GONE);
-                cv3.setVisibility(View.GONE);
-                cv4.setVisibility(View.GONE);
-                changeOnline(orderPicture);
-                changeOffline(orderType);
-                changeOffline(orderDescription);
-                changeOffline(orderPrice);
+                Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.google.com/"));
+                startActivity(intent);
             }
         });
-        orderType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                titleText.setText(orderType.getText().toString());
-                cv1.setVisibility(View.GONE);
-                cv2.setVisibility(View.VISIBLE);
-                cv3.setVisibility(View.GONE);
-                cv4.setVisibility(View.GONE);
-                changeOnline(orderType);
-                changeOffline(orderPicture);
-                changeOffline(orderDescription);
-                changeOffline(orderPrice);
+        Intent intent=getIntent();
+        intentType=intent.getIntExtra("type",0);
+        try{
+            adress=findViewById(R.id.adress);
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(Shared.lituide, Shared.longtuide, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                String knownName = addresses.get(0).getLocality();
+                adress.setText(knownName);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-        orderDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                titleText.setText(orderDescription.getText().toString());
-                cv1.setVisibility(View.GONE);
-                cv2.setVisibility(View.GONE);
-                cv3.setVisibility(View.VISIBLE);
-                cv4.setVisibility(View.GONE);
-                changeOnline(orderDescription);
-                changeOffline(orderPicture);
-                changeOffline(orderType);
-                changeOffline(orderPrice);
+
+
+            titleText=findViewById(R.id.titleText);
+            navigationAdapter= new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item,naviagations);
+
+            list2=findViewById(R.id.list2);
+            cv4=findViewById(R.id.cv4);
+            cv3=findViewById(R.id.cv3);
+            cv1=findViewById(R.id.cv1);
+            cv2=findViewById(R.id.cv2);
+            imgViewUpload=findViewById(R.id.imgViewUpload);
+            listView=findViewById(R.id.list);
+            orderPrice = findViewById(R.id.orderPrice);
+            orderDescription = findViewById(R.id.orderDescription);
+            orderType = findViewById(R.id.orderType);
+            orderPicture = findViewById(R.id.orderPicture);
+
+            orderPicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    time=0;
+                    titleText.setText(orderPicture.getText().toString());
+                    cv1.setVisibility(View.VISIBLE);
+                    cv2.setVisibility(View.GONE);
+                    cv3.setVisibility(View.GONE);
+                    cv4.setVisibility(View.GONE);
+                    changeOnline(orderPicture);
+                    changeOffline(orderType);
+                    changeOffline(orderDescription);
+                    changeOffline(orderPrice);
+                }
+            });
+            orderType.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    time=1;
+                    titleText.setText(orderType.getText().toString());
+                    cv1.setVisibility(View.GONE);
+                    cv2.setVisibility(View.VISIBLE);
+                    cv3.setVisibility(View.GONE);
+                    cv4.setVisibility(View.GONE);
+                    changeOnline(orderType);
+                    changeOffline(orderPicture);
+                    changeOffline(orderDescription);
+                    changeOffline(orderPrice);
+                }
+            });
+            orderDescription.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    time=2;
+                    titleText.setText(orderDescription.getText().toString());
+                    cv1.setVisibility(View.GONE);
+                    cv2.setVisibility(View.GONE);
+                    cv3.setVisibility(View.VISIBLE);
+                    cv4.setVisibility(View.GONE);
+                    changeOnline(orderDescription);
+                    changeOffline(orderPicture);
+                    changeOffline(orderType);
+                    changeOffline(orderPrice);
+                }
+            });
+            orderPrice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    time=3;
+                    ini_all();
+                    titleText.setText(orderPrice.getText().toString());
+                    cv1.setVisibility(View.GONE);
+                    cv2.setVisibility(View.GONE);
+                    cv3.setVisibility(View.GONE);
+                    cv4.setVisibility(View.VISIBLE);
+                    changeOnline(orderPrice);
+                    changeOffline(orderPicture);
+                    changeOffline(orderType);
+                    changeOffline(orderDescription);
+                }
+            });
+            mStorage = FirebaseStorage.getInstance().getReference();
+            layoutForm = findViewById(R.id.layoutForm);
+            fileNameList = new ArrayList<>();
+            fileDoneList = new ArrayList<>();
+            rv = findViewById(R.id.rv);
+            rv.setLayoutManager(new LinearLayoutManager(this));
+            rv.setHasFixedSize(true);
+            uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList, uriList);
+            rv.setAdapter(uploadListAdapter);
+
+
+            spinnerCity = findViewById(R.id.citySpinner);
+            spinnerType = findViewById(R.id.spinnerType);
+            priceText = findViewById(R.id.total_price_edit);
+            detials=findViewById(R.id.detials);
+            descText = findViewById(R.id.descText);
+            streetText = findViewById(R.id.StreetText);
+            setTypeSpinner();
+
+
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_location_permission)
+                        .setMessage(R.string.text_location_permission)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(AddResultOffer.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+                return;
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
             }
-        });
-        orderPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                titleText.setText(orderPrice.getText().toString());
-                cv1.setVisibility(View.GONE);
-                cv2.setVisibility(View.GONE);
-                cv3.setVisibility(View.GONE);
-                cv4.setVisibility(View.VISIBLE);
-                changeOnline(orderPrice);
-                changeOffline(orderPicture);
-                changeOffline(orderType);
-                changeOffline(orderDescription);
-            }
-        });
-        mStorage = FirebaseStorage.getInstance().getReference();
-        layoutForm = findViewById(R.id.layoutForm);
-        fileNameList = new ArrayList<>();
-        fileDoneList = new ArrayList<>();
-        rv = findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setHasFixedSize(true);
-        uploadListAdapter = new UploadListAdapter(fileNameList, fileDoneList, uriList);
-        rv.setAdapter(uploadListAdapter);
-
-
-        spinnerCity = findViewById(R.id.citySpinner);
-        spinnerType = findViewById(R.id.spinnerType);
-        priceText = findViewById(R.id.total_price_edit);
-        detials=findViewById(R.id.detials);
-        descText = findViewById(R.id.descText);
-        streetText = findViewById(R.id.StreetText);
-        setTypeSpinner();
-
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            onLocationChanged(location);
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                onLocationChanged(location);
+                            }
                         }
-                    }
-                });
+                    });
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
     }
     ArrayList<String>tabsArray2;
 
@@ -306,22 +350,39 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
             tabsArray =new String[]{"إيجار","شراء"};
         }
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray);
+
         spinnerType.setAdapter(adapter);
+        if(tabsArray.length==2){
+            if(intentType==0)
+                spinnerType.setSelection(0);
+            else
+                spinnerType.setSelection(1);
+        }
         listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
         tabsArray2 =new ArrayList<>();
-        tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "ارض","مزرعه "}));
+        String[]allBuildsTypes=new String[]{"فيلا ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "ارض","مزرعه "};
+        Intent intent=getIntent();
+        String buildTypeFromIntent=intent.getStringExtra("build_type");
+
+        if(buildTypeFromIntent==null||buildTypeFromIntent.equals(""))
+            tabsArray2.addAll(Arrays.asList(allBuildsTypes));
+        else
+            tabsArray2.addAll(Collections.singletonList(buildTypeFromIntent));
         list2.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray2);
         list2.setAdapter(adapter2);
 
 
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getType=true;
-                type=tabsArray[position];
-                orderType.setText(type);
+                    getType = true;
+                    type = tabsArray[position];
+                    orderType.setText(type);
+
             }
         });
 
@@ -340,6 +401,8 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
         getMedia();
     }
     private void getMedia() {
+        if(rv==null)
+            rv = findViewById(R.id.rv);
         rv.setVisibility(View.VISIBLE);
         choseImage = true;
         Intent intent = new Intent();
@@ -1379,6 +1442,47 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
     Market market;
     Ressort ressort;
     Ground ground;
+    APIService apiService;
+
+    private  void sendNotificaion(String reciver, final String name, final String msg){
+        apiService= Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        DatabaseReference tokens=FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query=tokens.orderByKey().equalTo(reciver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dt : dataSnapshot.getChildren()) {
+                    Token token = dt.getValue(Token.class);
+                    Data data = new Data(FirebaseAuth.getInstance().getCurrentUser().getUid()
+                            , R.mipmap.ic_launcher
+                            , name + " : " + "", "عرض جديد", Shared.sent_id);
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotificaiton(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200) {
+                                        if (response.body().success != 1) {
+                                            //   Toast.makeText(ChatAct.this, "failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+                                    System.out.println(t.getMessage());
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     @SuppressLint("RestrictedApi")
     private void uploadResult() {
         final KProgressHUD hud = KProgressHUD.create(this)
@@ -1513,6 +1617,10 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
                                             FirebaseDatabase.getInstance().getReference("Notification").child(Shared.toID).child(offerResult.getId())
                                                     .setValue(notification);
                                             hud.dismiss();
+
+                                            sendNotificaion(Shared
+                                                    .toID,"Notification","New Offer");
+
                                             finish();
                                         }
                                     });
@@ -1580,52 +1688,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
             }
 
         } else if (time == 2) {
-            titleText.setText("استلام العرض");
-            if(buildType.equals("شقة ")) {
-                View flatView=findViewById(R.id.flat_view);
-                flatView.setVisibility(View.VISIBLE);
-                __init__flat();
-            }else if(buildType.equals("فيلا ")){
-                View villaView=findViewById(R.id.villa_view);
-                villaView.setVisibility(View.VISIBLE);
-                __init__villa();
-            }else if(buildType.equals("عمارة ")){
-                View build_view=findViewById(R.id.build_view);
-                build_view.setVisibility(View.VISIBLE);
-                __init_build();
-            }else if(buildType.equals("بيت ")){
-                View homeView=findViewById(R.id.home_view);
-                homeView.setVisibility(View.VISIBLE);
-                __init_home();
-            }else if(buildType.equals("دور ")){
-                View levelView=findViewById(R.id.level_view);
-                levelView.setVisibility(View.VISIBLE);
-                __init_level();
-            }else if(buildType.equals("مزرعه ")){
-                View farmView=findViewById(R.id.farme_view);
-                farmView.setVisibility(View.VISIBLE);
-                __init_farm();
-            }else if(buildType.equals("محل ")){
-                View marketView=findViewById(R.id.market_view);
-                marketView.setVisibility(View.VISIBLE);
-                __init__market();
-            }else if(buildType.equals("استراحه ")){
-                View sweetView=findViewById(R.id.sweet_view);
-                sweetView.setVisibility(View.VISIBLE);
-                __init__ressort();
-            }else if(buildType.equals("ارض")){
-                View groundView=findViewById(R.id.groundView);
-                groundView.setVisibility(View.VISIBLE);
-                __init__ground();
-            }
-            if (!getBuildType) {
-                Toast.makeText(this, "من فضلك ادخل وصف المنشاءه", Toast.LENGTH_SHORT).show();
-                priceText.setError("من فضلك ادخل سعر المنشاءه");
-            } else {
-                time++;
-                hideView(cv3, cv4);
-                changeColor(orderDescription, orderPrice);
-            }
+            ini_all();
         } else if (time == 3) {
 //            String price = priceText.getText().toString();
 //            if (price.equals("")) {
@@ -1641,6 +1704,75 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
 
 
     }
+
+    private void ini_all() {
+        titleText.setText("استلام العرض");
+        View flatView=findViewById(R.id.flat_view);
+        flatView.setVisibility(View.GONE);
+        View villaView=findViewById(R.id.villa_view);
+        villaView.setVisibility(View.GONE);
+        View build_view=findViewById(R.id.build_view);
+        build_view.setVisibility(View.GONE);
+        View homeView=findViewById(R.id.home_view);
+        homeView.setVisibility(View.GONE);
+        View levelView=findViewById(R.id.level_view);
+        levelView.setVisibility(View.GONE);
+        View farmView=findViewById(R.id.farme_view);
+        farmView.setVisibility(View.GONE);
+        View marketView=findViewById(R.id.market_view);
+        marketView.setVisibility(View.GONE);
+        View sweetView=findViewById(R.id.sweet_view);
+        sweetView.setVisibility(View.GONE);
+        View groundView=findViewById(R.id.groundView);
+        groundView.setVisibility(View.GONE);
+        switch (buildType.trim()) {
+            case "شقة":
+                flatView.setVisibility(View.VISIBLE);
+                __init__flat();
+                break;
+            case "فيلا":
+                villaView.setVisibility(View.VISIBLE);
+                __init__villa();
+                break;
+            case "عمارة":
+                build_view.setVisibility(View.VISIBLE);
+                __init_build();
+                break;
+            case "بيت":
+                homeView.setVisibility(View.VISIBLE);
+                __init_home();
+                break;
+            case "دور":
+                levelView.setVisibility(View.VISIBLE);
+                __init_level();
+                break;
+            case "مزرعه":
+                farmView.setVisibility(View.VISIBLE);
+                __init_farm();
+                break;
+            case "محل":
+                marketView.setVisibility(View.VISIBLE);
+                __init__market();
+                break;
+            case "استراحه":
+                sweetView.setVisibility(View.VISIBLE);
+                __init__ressort();
+                break;
+            case "ارض":
+                groundView.setVisibility(View.VISIBLE);
+                __init__ground();
+                break;
+        }
+        if (!getBuildType) {
+            Toast.makeText(this, "من فضلك ادخل وصف المنشاءه", Toast.LENGTH_SHORT).show();
+            priceText.setError("من فضلك ادخل سعر المنشاءه");
+        } else {
+            time++;
+            hideView(cv3, cv4);
+            changeColor(orderDescription, orderPrice);
+        }
+    }
+
     private void hideView(final View view, final View appear){
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         //use this to make it longer:  animation.setDuration(1000);
@@ -1664,4 +1796,7 @@ public class AddResultOffer extends AppCompatActivity implements LocationListene
     public void finish(View view) {
         finish();
     }
+
+
+
 }

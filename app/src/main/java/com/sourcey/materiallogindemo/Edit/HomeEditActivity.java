@@ -1,7 +1,5 @@
 package com.sourcey.materiallogindemo.Edit;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +10,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.sourcey.materiallogindemo.Model.Home;
+import com.sourcey.materiallogindemo.model.Home;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
@@ -52,7 +53,7 @@ public class HomeEditActivity extends AppCompatActivity {
                         homeRoomsNumber.getText().toString(),homeBuildAge.getText().toString(),homeReadySwitchBool,
                         homeDriverRoomSwitchBool,homeBillGirlRoomSwitchBool,homeHairRoomSwitchBool,homeHailSwitchBool,homeKitchenSwitchBool);
                 Shared.editOffer.setAspect(home);
-                mReference.child(FirebaseAuth.getInstance().getUid()).child(Shared.editOffer.getDescription()).setValue(Shared.editOffer).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Shared.editOffer.getDescription()).setValue(Shared.editOffer).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         hud.dismiss();

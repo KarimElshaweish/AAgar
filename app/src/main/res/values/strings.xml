@@ -27,4 +27,163 @@
     <string name="ok">موافقه</string>
     <string name="changeText">تعديل الموقع</string>
     <string name="please_be_in_edit_mode">من فضلك اضغط على تعديل الموقع</string>
+    <string name="paymentMethod">وسائل الدفع</string>
+    <string name="chat">chat</string>
+    <string-array name="TypesArray">
+        <item>الكل</item>
+        <item>فيلا</item>
+        <item>ارض</item>
+        <item>دور</item>
+        <item>شقة</item>
+        <item>عمارة</item>
+        <item>بيت</item>
+        <item>استراحه</item>
+        <item>محل</item>
+        <item>مزرعه</item>
+    </string-array>
+
+
+    <string-array name="Egypt_Cites">
+       <item>القاهرة</item>
+       <item>العريش</item>
+       <item>ملوى</item>
+       <item>عشرة رمضان</item>
+       <item>بلبيس</item>
+       <item>مرسى مطروح</item>
+       <item>إدفو</item>
+       <item>بنها</item>
+       <item>شبين الكوم</item>
+       <item>مدينة السادس من أكتوبر</item>
+       <item>الغردقة</item>
+       <item>سوهاج</item>
+       <item>قنا</item>
+       <item>بنى سويف</item>
+       <item>المنيا</item>
+       <item>دمنهور</item>
+       <item>دمياط</item>
+       <item>أسوان</item>
+       <item>القاهرة</item>
+       <item>الزقازيق</item>
+       <item>الفيوم</item>
+       <item>الإسماعيلية</item>
+       <item>أسيوط</item>
+       <item>طنطا</item>
+       <item>المحلة الكبرى</item>
+       <item>الأقصر</item>
+       <item>السويس</item>
+       <item>بور سعيد</item>
+       <item>شبرا الخيمة</item>
+       <item>الجيزة</item>
+       <item>الإسكندرية</item>
+       <item>الحوامدية</item>
+       <item>ميت غمر</item>
+       <item>كفر الشيخ</item>
+       <item>دسوق</item>
+       <item>قليوب</item>
+       <item>المطرية</item>
+    </string-array>
+    <string-array name="Sudia_Cites">
+        <item>أبو عريش</item>
+        <item>بيشة</item>
+        <item>الدوادمي</item>
+        <item>صبيا</item>
+        <item>ينبع</item>
+        <item>نجران</item>
+        <item>حائل</item>
+        <item>أبها</item>
+        <item>الخرج</item>
+        <item>الجبيل</item>
+        <item>حفر الباطن</item>
+        <item>الخبر</item>
+        <item>خميس مشيط</item>
+        <item>القطيف</item>
+        <item>تبوك</item>
+        <item>بريدة</item>
+        <item>الطائف</item>
+        <item>الدمام</item>
+        <item>الاحساء</item>
+        <item>المدينة المنورة</item>
+        <item>مكة المكرمة</item>
+        <item>جدة</item>
+        <item>الرياض</item>
+        <item>الباحة</item>
+        <item>الجموم</item>
+        <item>رابغ</item>
+        <item>أحد رفيدة</item>
+        <item>شرورة</item>
+        <item>الليث</item>
+        <item>رفحاء</item>
+        <item>عفيف</item>
+        <item>العرضيات</item>
+        <item>العارضة</item>
+        <item>الخفجي</item>
+        <item>الرس</item>
+        <item>احد المسارحه</item>
+        <item>القويعية</item>
+        <item>المجمعة</item>
+        <item>جازان</item>
+        <item>صامطة</item>
+        <item>القريات</item>
+        <item>عنيزة</item>
+        <item>عرعر</item>
+        <item>سكاكا</item>
+        <item>محايل</item>
+        <item>القنفذة</item>
+        <item>بالقرن</item>
+        <item>الدرعية</item>
+        <item>ضمد</item>
+        <item>طبرجل</item>
+        <item>بيش</item>
+        <item>الزلفي</item>
+        <item>الدرب</item>
+        <item>الافلاج</item>
+        <item>سراة عبيدة</item>
+        <item>رجال المع</item>
+        <item>بلجرشي</item>
+        <item>الحائط</item>
+        <item>ميسان</item>
+        <item>بدر</item>
+        <item>املج</item>
+        <item>رأس تنوره</item>
+        <item>المهد</item>
+        <item>الدائر</item>
+        <item>البكيريه</item>
+        <item>البدائع</item>
+        <item>خليص</item>
+        <item>الحناكية</item>
+        <item>العلا</item>
+        <item>النماص</item>
+        <item>الطوال</item>
+        <item>المجاردة</item>
+        <item>بقيق</item>
+        <item>تثليث</item>
+        <item>المخواة</item>
+        <item>النعيرية</item>
+        <item>الوجه</item>
+        <item>ضباء</item>
+        <item>بارق</item>
+        <item>طريف</item>
+        <item>خيبر</item>
+        <item>أضم</item>
+        <item>النبهانية</item>
+        <item>رنيه</item>
+        <item>دومة الجندل</item>
+        <item>المذنب</item>
+        <item>تربه</item>
+        <item>ظهران الجنوب</item>
+        <item>حوطة بني تميم</item>
+        <item>الخرمة</item>
+        <item>قلوه</item>
+        <item>شقراء</item>
+        <item>المويه</item>
+        <item>المزاحمية</item>
+        <item>الأسياح</item>
+        <item>بقعاء</item>
+        <item>السليل</item>
+        <item>تيماء</item>
+    </string-array>
+    <string-array name="Countries_Array">
+        <item>مصر</item>
+        <item>السعودية</item>
+    </string-array>
 </resources>

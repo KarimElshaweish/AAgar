@@ -13,25 +13,30 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/logo1"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="يسعدنا انضمامك"
+            android:fontFamily="@font/gess_two_medium"
+            android:textColor="@color/primary"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="3dp"
+            android:textSize="20dp"/>
 
         <!-- Name Label -->
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText android:id="@+id/input_name"
-                android:fontFamily="@font/vip"
+                android:fontFamily="@font/gess_two_medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="الإسم" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Address Label -->
         <LinearLayout
@@ -41,14 +46,15 @@
             android:layout_marginTop="8dp"
             android:weightSum="3"
             android:layout_marginBottom="8dp">
-            <android.support.v7.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:layout_width="0dp"
                 android:layout_weight="2"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:id="@+id/spinnerAccount">
-            </android.support.v7.widget.AppCompatSpinner>
+            </androidx.appcompat.widget.AppCompatSpinner>
             <TextView
-                android:fontFamily="@font/vip"
+                android:layout_gravity="center"
+                android:fontFamily="@font/gess_two_medium"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -56,41 +62,42 @@
                 android:text="نوع الحساب"/>
 
         </LinearLayout>
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText android:id="@+id/input_email"
-                android:fontFamily="@font/vip"
+                android:fontFamily="@font/gess_two_medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="البريد الإلكترونى" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!-- mobile number -->
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText android:id="@+id/input_mobile"
-                android:fontFamily="@font/vip"
+                android:fontFamily="@font/gess_two_medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:hint="رقم الموبايل" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Label -->
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText
+                android:fontFamily="@font/gess_two_medium"
                 android:id="@+id/input_password"
                 android:layout_gravity="center"
                 android:gravity="right"
@@ -98,10 +105,10 @@
                 android:layout_height="wrap_content"
              android:inputType="textPassword"
                 android:hint="كلمة السر"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Re-enter Label -->
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -109,30 +116,50 @@
             <EditText android:id="@+id/input_reEnterPassword"
                 android:layout_width="match_parent"
                 android:gravity="right"
-
+                android:fontFamily="@font/gess_two_medium"
                 android:layout_height="wrap_content"
                 android:hint="تأكيد كلمة السر"
                 android:inputType="textPassword"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Signup Button -->
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:fontFamily="@font/vip"
+            android:textColor="@android:color/white"
+            android:background="@drawable/border_button_new"
+            android:fontFamily="@font/gess_two_medium"
             android:text="إنشاء حساب"/>
-
-        <TextView android:id="@+id/link_login"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="تملك حساب ؟"
-            android:gravity="center"
-            android:textSize="16dip"/>
+            android:orientation="horizontal">
+            <TextView android:id="@+id/link_login"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text=" تسجيل الدخول "
+                android:gravity="center"
+                android:textColor="#1F996B"
+                android:fontFamily="@font/gess_two_medium"
+                />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="تملك حساب ؟"
+                android:gravity="center"
+                android:fontFamily="@font/gess_two_medium"
+               />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>

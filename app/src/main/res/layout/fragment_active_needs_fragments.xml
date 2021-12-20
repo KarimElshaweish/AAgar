@@ -29,11 +29,11 @@
             android:visibility="gone"
             android:id="@+id/pb"
             />
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rv"></android.support.v7.widget.RecyclerView>
+            android:id="@+id/rv"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
 </RelativeLayout>

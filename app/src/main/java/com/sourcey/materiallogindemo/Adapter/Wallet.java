@@ -1,8 +1,7 @@
 package com.sourcey.materiallogindemo.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sourcey.materiallogindemo.Model.Deals;
+import com.sourcey.materiallogindemo.model.Deals;
+import com.sourcey.materiallogindemo.model.Offer;
+import com.sourcey.materiallogindemo.OfferResult;
 import com.sourcey.materiallogindemo.R;
+import com.sourcey.materiallogindemo.Shared;
 
 import java.util.List;
 
@@ -37,9 +43,30 @@ public class Wallet extends RecyclerView.Adapter<Wallet.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         if(list.get(i).isAgree())
             viewHolder.buttons.setVisibility(View.GONE);
+        viewHolder.appPrice.setText(String.valueOf(list.get(i).getPrice()*.05));
         viewHolder.city.setText(list.get(i).getCity());
         viewHolder.price.setText(String.valueOf(list.get(i).getPrice()));
         viewHolder.type.setText(list.get(i).getOfferName());
+        viewHolder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Offer offer=list.get(i).getOffer();
+                Shared.offerID=offer.getOfferID();
+                Shared.offerNeed=offer;
+                Intent intent=new Intent(_ctx, OfferResult.class);
+                intent.putExtra("type",offer.getType());
+                intent.putExtra("build_type",offer.getBuildingTyp());
+                intent.putExtra("price",offer.getPrice());
+                intent.putExtra("city",offer.getCity());
+                intent.putExtra("userName",offer.getUserName());
+                intent.putExtra("uid",offer.getUID());
+                intent.putExtra("wallet",true);
+                intent.putExtra("offer_id",offer.getOfferID());
+                Shared.putOfferOnMap=offer;
+                _ctx.startActivity(intent);
+                Shared.MyOffer=offer;
+            }
+        });
         viewHolder.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,9 +87,11 @@ public class Wallet extends RecyclerView.Adapter<Wallet.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView city,type,price;
+        TextView city,type,price,appPrice;
         Button confirm;
         LinearLayout buttons;
+        CardView cv;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             type=itemView.findViewById(R.id.type);
@@ -70,6 +99,8 @@ public class Wallet extends RecyclerView.Adapter<Wallet.ViewHolder> {
             price=itemView.findViewById(R.id.price);
             confirm=itemView.findViewById(R.id.confirm);
             buttons=itemView.findViewById(R.id.buttons);
+            cv=itemView.findViewById(R.id.cv);
+            appPrice=itemView.findViewById(R.id.app_price);
         }
     }
 }

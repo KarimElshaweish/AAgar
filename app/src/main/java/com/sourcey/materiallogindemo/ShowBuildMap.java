@@ -1,7 +1,9 @@
 package com.sourcey.materiallogindemo;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +25,25 @@ public class ShowBuildMap extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        String type=getIntent().getStringExtra("type");
+        String build=getIntent().getStringExtra("build");
+
+        String price=getIntent().getStringExtra("price");
+        price=price+" ريال ";
+
+        TextView priceTextView=findViewById(R.id.price);
+        priceTextView.setText(price);
+
+        TextView txt1=findViewById(R.id.build);
+        txt1.setText(build);
+
+
+        TextView txt2=findViewById(R.id.type);
+        txt2.setText(type);
+
+
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {

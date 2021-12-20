@@ -7,11 +7,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +23,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,18 +40,16 @@ import com.google.firebase.storage.UploadTask;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sourcey.materiallogindemo.Adapter.UploadListAdapter;
 import com.sourcey.materiallogindemo.Adapter.UploadListEdit;
-import com.sourcey.materiallogindemo.AddResultOffer;
-import com.sourcey.materiallogindemo.Model.Build;
-import com.sourcey.materiallogindemo.Model.Farm;
-import com.sourcey.materiallogindemo.Model.Flat;
-import com.sourcey.materiallogindemo.Model.Ground;
-import com.sourcey.materiallogindemo.Model.Home;
-import com.sourcey.materiallogindemo.Model.Level;
-import com.sourcey.materiallogindemo.Model.LinkOffer;
-import com.sourcey.materiallogindemo.Model.Market;
-import com.sourcey.materiallogindemo.Model.OfferResult;
-import com.sourcey.materiallogindemo.Model.Ressort;
-import com.sourcey.materiallogindemo.Model.Villa;
+import com.sourcey.materiallogindemo.model.Build;
+import com.sourcey.materiallogindemo.model.Farm;
+import com.sourcey.materiallogindemo.model.Flat;
+import com.sourcey.materiallogindemo.model.Ground;
+import com.sourcey.materiallogindemo.model.Home;
+import com.sourcey.materiallogindemo.model.Level;
+import com.sourcey.materiallogindemo.model.Market;
+import com.sourcey.materiallogindemo.model.OfferResult;
+import com.sourcey.materiallogindemo.model.Ressort;
+import com.sourcey.materiallogindemo.model.Villa;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
@@ -57,12 +57,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import static com.sourcey.materiallogindemo.Shared.offer;
 
 public class OfferEdit extends AppCompatActivity {
 

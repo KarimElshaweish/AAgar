@@ -2,7 +2,8 @@ package com.sourcey.materiallogindemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,7 +31,7 @@ public class OfferShowOnMapAct extends FragmentActivity implements OnMapReadyCal
         mMap = googleMap;
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(Shared.putOfferOnMap.getFlit(), Shared.putOfferOnMap.getFlon()))
-                .zoom(17)
+                .zoom(16)
                 .bearing(90)
                 .tilt(40)
                 .build();

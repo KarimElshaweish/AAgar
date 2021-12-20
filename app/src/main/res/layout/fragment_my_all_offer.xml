@@ -7,18 +7,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.sourcey.materiallogindemo.Fragment.OwnerFragmets.MyAllOfferFragment">
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/primary"
         app:tabIndicatorHeight="2dp"
-        android:id="@+id/tb1"></android.support.design.widget.TabLayout>
+        android:id="@+id/tb1"></com.google.android.material.tabs.TabLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:layout_below="@id/tb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/vp1"></android.support.v4.view.ViewPager>
+        android:id="@+id/vp1"></androidx.viewpager.widget.ViewPager>
 
 
 </LinearLayout>

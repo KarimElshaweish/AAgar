@@ -4,52 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:gravity="right"
-                android:orientation="horizontal">
-                <TextView
-                    android:padding="2dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="تفاصيل العرض"
-                    android:fontFamily="@font/vip_font"
-                    android:textColor="#000"
-                    android:textSize="15sp"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/detialsFull"/>
-                <ImageView
-                    android:padding="2dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
-
+                android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
                         android:gravity="center|right"
@@ -67,12 +34,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:fontFamily="@font/vip_font"
+                                android:fontFamily="@font/gess_two_medium"
                                 android:padding="3dp"
                                 android:paddingLeft="10dp"
                                 android:text="ريال"
-                                android:textColor="#000"
-                                android:textSize="15sp" />
+                                android:textColor="#7d7d7d"
+                                android:textSize="20sp" />
 
                             <TextView
                                 android:id="@+id/flatPrice"
@@ -82,73 +49,47 @@
                                 android:layout_centerVertical="true"
                                 android:padding="3dp"
                                 android:text="18000"
-                                android:textColor="#000"
+                                android:fontFamily="@font/gess_two_medium"
+                                android:textColor="#7d7d7d"
                                 android:textSize="15sp" />
 
                         </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="السعر :"
-                            android:textColor="#000"
-                            android:textSize="15sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_money_new" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center|right"
+                    android:gravity="center|right"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+                    <TextView
+                        android:id="@+id/flatCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/gess_two_medium"
+                        android:text="القاهره"
+                        android:textColor="#7D7D7D"
+                        android:textSize="15sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_gravity="center|right"
-                        android:gravity="center|right"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_pin_gray" />
 
-                        <TextView
-                            android:id="@+id/flatCity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="القاهره"
-                            android:textColor="#000"
-                            android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:paddingRight="7dp"
-                            android:text="المدينه :"
-                            android:textColor="#000"
-                            android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_pin_gray" />
 
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="140dp"
+                android:layout_marginRight="30dp"
+                android:background="#DEDEDE"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -156,15 +97,9 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -173,21 +108,22 @@
                         android:padding="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="center"
+                            android:gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:fontFamily="@font/vip_font"
-                                android:padding="2dp"
+                                android:fontFamily="@font/gess_two_medium"
+                                android:padding="10dp"
                                 android:paddingLeft="10dp"
                                 android:text="سنه"
-                                android:textColor="#000"
+                                android:textColor="#7D7D7D"
                                 android:textSize="15sp" />
 
                             <TextView
@@ -198,71 +134,66 @@
                                 android:layout_centerVertical="true"
                                 android:padding="2dp"
                                 android:text="2"
-                                android:textColor="#000"
+                                android:fontFamily="@font/gess_two_medium"
+                                android:paddingBottom="10dp"
+                                android:textColor="#7D7D7D"
                                 android:textSize="15sp" />
 
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="عمر العقار :"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:text="عمر العقار "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_money_new" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
-                        android:gravity="center|right"
+                        android:gravity="right"
                         android:orientation="horizontal"
                         android:padding="10dp">
 
                         <TextView
+                            android:padding="10dp"
+                            android:layout_weight="1"
                             android:id="@+id/flatcommtype"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:text="إيجار"
-                            android:textColor="#000"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:padding="10dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="المطلوب : "
+                            android:text="المطلوب  "
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_demand" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
@@ -271,15 +202,10 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -288,50 +214,46 @@
                         android:padding="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_gravity="right"
                             android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/flatLevel"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/vip_font"
+                                android:fontFamily="@font/gess_two_medium"
                                 android:text="أرضى"
-                                android:textColor="#000"
+                                android:textColor="#7D7D7D"
+                                android:padding="10dp"
+                                android:layout_gravity="right"
+                                android:gravity="right"
                                 android:textSize="15sp" />
 
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="الدور :"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:text="الدور "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_level" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -341,31 +263,33 @@
 
                         <TextView
                             android:id="@+id/flatReceptionNumber"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:text="3"
-                            android:textColor="#000"
+                            android:padding="10dp"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="عدد الصالات : "
+                            android:padding="10dp"
+                            android:text="عدد الصالات  "
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_recption_new" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
@@ -374,15 +298,9 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
 
                     <LinearLayout
+                        android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -391,10 +309,11 @@
                         android:padding="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="center"
+                            android:gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
@@ -404,36 +323,30 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
                                 android:text="2"
-                                android:textColor="#000"
+                                android:padding="10dp"
+                                android:fontFamily="@font/gess_two_medium"
+                                android:textColor="#7D7D7D"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="عدد الغرف : "
+                            android:fontFamily="@font/gess_two_medium"
+                            android:text="عدد الغرف  "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_room" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -443,31 +356,32 @@
 
                         <TextView
                             android:id="@+id/flatBathrooms"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:text="3"
-                            android:textColor="#000"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:fontFamily="@font/gess_two_medium"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="عدد الحمامات : "
+                            android:text="عدد الحمامات  "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_bath" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
@@ -476,15 +390,10 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -493,49 +402,41 @@
                         android:padding="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
+                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
+
                                 android:id="@+id/flatCarEnterance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/vip_font"
+                                android:fontFamily="@font/gess_two_medium"
                                 android:text="نعم"
-                                android:textColor="#000"
+                                android:textColor="#7D7D7D"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="مدخل السياره : "
+                            android:fontFamily="@font/gess_two_medium"
+                            android:text="مدخل السياره"
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_car" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
 
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -545,32 +446,32 @@
 
                         <TextView
                             android:id="@+id/flatAirCondtion"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:text="نعم"
-                            android:textColor="#000"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="مكيف : "
+                            android:text="مكيف "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_condation" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
@@ -579,15 +480,8 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
-
                     <LinearLayout
+                        android:weightSum="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -596,10 +490,11 @@
                         android:padding="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center|right"
-                            android:gravity="center|right"
+                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
@@ -607,38 +502,30 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/vip_font"
+                                android:fontFamily="@font/gess_two_medium"
                                 android:text="نعم"
-                                android:textColor="#000"
+                                android:padding="10dp"
+                                android:textColor="#7D7D7D"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="ملحق : "
+                            android:fontFamily="@font/gess_two_medium"
+                            android:text="ملحق "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_enlarg" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
 
                     <LinearLayout
+                        android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -648,32 +535,33 @@
 
                         <TextView
                             android:id="@+id/flatDurationType"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:text="يومي"
-                            android:textColor="#000"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="المدة : "
+                            android:text="المدة "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_duration" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
@@ -682,15 +570,9 @@
                 android:orientation="vertical"
                 android:weightSum="2">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
 
                     <LinearLayout
+                        android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -699,10 +581,11 @@
                         android:padding="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center|right"
+                            android:gravity="right|center"
                             android:orientation="horizontal">
 
                             <TextView
@@ -710,38 +593,28 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/vip_font"
+                                android:fontFamily="@font/gess_two_medium"
                                 android:text="نعم"
-                                android:textColor="#000"
+                                android:textColor="#7D7D7D"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
-                            android:text="مؤثثة : "
+                            android:fontFamily="@font/gess_two_medium"
+                            android:text="مؤثثة"
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_recption_new" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+
 
                     <LinearLayout
+                        android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -751,32 +624,32 @@
 
                         <TextView
                             android:id="@+id/people"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:text="عائلى"
-                            android:textColor="#000"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="السكن : "
+                            android:text="السكن"
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_building_new" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -784,7 +657,7 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-<!--                <android.support.v7.widget.CardView-->
+<!--                <androidx.cardview.widget.CardView-->
 <!--                    android:layout_margin="3dp"-->
 <!--                    app:cardCornerRadius="10dp"-->
 <!--                    app:cardElevation="5dp"-->
@@ -826,16 +699,9 @@
 <!--                                android:layout_centerHorizontal="true"-->
 <!--                                android:id="@+id/flatFurnished"/>                        </LinearLayout>-->
 <!--                    </LinearLayout>-->
-<!--                </android.support.v7.widget.CardView>-->
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
-
+<!--                </androidx.cardview.widget.CardView>-->
                     <LinearLayout
+                        android:layout_weight="2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|right"
@@ -845,35 +711,64 @@
 
                         <TextView
                             android:id="@+id/flatKitchen"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:text="نعم"
-                            android:textColor="#000"
+                            android:padding="10dp"
+                            android:textColor="#7D7D7D"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:fontFamily="@font/vip_font"
+                            android:fontFamily="@font/gess_two_medium"
                             android:paddingRight="7dp"
-                            android:text="مطبخ : "
+                            android:text="مطبخ "
+                            android:padding="10dp"
                             android:textColor="#000"
                             android:textSize="15sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_kitchen" />
-
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="140dp"
+                android:layout_marginRight="30dp"
+                android:background="#DEDEDE"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تفاصيل العرض"
+                    android:fontFamily="@font/vip_font"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/detialsFull"/>
+                <ImageView
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_info"/>
+            </LinearLayout>
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 

@@ -9,9 +9,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/profile"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/avatar_logo"/>
     <TextView
-
         android:layout_margin="7dp"
         android:id="@+id/show_message"
         android:layout_width="wrap_content"
@@ -31,4 +30,12 @@
         android:id="@+id/txt_seen"
         android:layout_below="@+id/show_message"
         android:layout_alignParentRight="true"/>
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time"
+        android:layout_below="@+id/show_message"
+        android:layout_alignParentLeft="true"/>
 </RelativeLayout>

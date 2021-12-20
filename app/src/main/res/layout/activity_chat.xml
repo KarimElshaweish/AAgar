@@ -1,220 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f4f4f4"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.sourcey.materiallogindemo.ChatAct">
-
-    <android.support.v7.widget.CardView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:id="@+id/titleBar">
+        android:layout_height="50dp"
+        android:background="@color/primary">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:background="@color/primary"
             >
             <ImageView
                 android:onClick="Finish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_back_black"
-                android:layout_alignParentLeft="true"/>
-            <TextView
-                android:drawableLeft="@drawable/ic_call"
-                android:layout_centerHorizontal="true"
-                android:textColor="#000"
-                android:textSize="15dp"
+                android:src="@drawable/ic_left_arrow_white"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"/>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/phoneumber"
-                android:text="0101010"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+                <TextView
+                    android:fontFamily="@font/vip_font"
+                    android:textColor="@android:color/white"
+                    android:textSize="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/phoneumber"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="3dp"
+                    android:src="@drawable/avatar_logo"
+                    />
+            </LinearLayout>
+            <TextView
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="حذر "
                 android:gravity="center"
-                android:layout_gravity="center"/>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avatar"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/avatar"
-                android:layout_alignParentRight="true"/>
+                android:fontFamily="@font/gess_two_medium"
+                android:textColor="@android:color/white"
+                android:id="@+id/blocking"
+                android:padding="5dp"
+                />
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
-    <LinearLayout
+    </androidx.appcompat.widget.Toolbar>
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleBar"
-        android:id="@+id/blockingBar"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="حذر هذا الشخص"
-            android:gravity="center"
-            android:textColor="#3498db"
-            android:id="@+id/blocking"
-            android:padding="5dp"
-            />
-<!--        <TextView-->
-<!--            android:visibility="gone"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="فك حذر هذا الشخص"-->
-<!--            android:gravity="center"-->
-<!--            android:textColor="#3498db"-->
-<!--            android:layout_below="@id/titleBar"-->
-<!--            android:id="@+id/ubblocking"-->
-<!--            android:padding="5dp"-->
-<!--            />-->
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:id="@+id/form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/blockingBar"
-        >
-        <include layout="@layout/list_item"
-            android:visibility="gone"
-            android:id="@+id/view"
-            android:layout_below="@+id/titleBar"
-            android:layout_above="@+id/rv"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
-    <LinearLayout
-        android:id="@+id/liTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv1"
-            android:onClick="openDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-            <LinearLayout
-                android:padding="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="الطلب"
-                    android:textSize="12dp"
-                    android:layout_gravity="left"
-                    android:layout_margin="7dp"
-                    android:fontFamily="@font/vip"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="الطلب"
-                    android:id="@+id/order"
-                    android:textSize="15dp"
-                    android:layout_gravity="left"
-                    android:textColor="#000"
-                    android:layout_margin="7dp"
-                    android:fontFamily="@font/vip"
-                    />
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-                android:id="@+id/cv2"
-            android:onClick="openOfferDetalis"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:padding="2dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="العرض"
-                    android:textSize="12dp"
-                    android:layout_margin="7dp"
-                    android:fontFamily="@font/vip"
-                    />  <TextView
-                android:layout_gravity="right"
-                        android:id="@+id/result"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="العرض"
-                    android:textSize="15dp"
-                    android:textColor="#000"
-                    android:layout_margin="7dp"
-                    android:fontFamily="@font/vip"
-                    />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
-    </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/form"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv"
-        android:layout_above="@id/btt"
-        tools:ignore="NotSibling"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/chat_navigation" />
 
 
-    <RelativeLayout
-        android:layout_marginBottom="5dp"
-        android:id="@+id/btt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="15dp"
-        >
-      <android.support.v7.widget.CardView
-          android:layout_alignParentLeft="true"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/sentImage"
-          android:layout_margin="4dp"
-          app:cardCornerRadius="20dp">
-          <ImageView
-              android:padding="10dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@drawable/ic_out_text"
-              android:layout_centerVertical="true"
-              android:onClick="Tost"
-              />
-      </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_margin="4dp"
-            android:id="@+id/write"
-            android:layout_alignParentRight="true"
-            app:cardCornerRadius="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="match_parent"
-            android:layout_toRightOf="@id/sentImage"
-            android:layout_height="wrap_content">
-            <EditText
-                android:padding="10dp"
-                android:background="@color/space_transparent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_sent"
-                android:hint="كتابة الرساله .... "/>
-        </android.support.v7.widget.CardView>
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

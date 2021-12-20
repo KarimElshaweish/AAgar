@@ -33,14 +33,14 @@
             android:onClick="finish"/>
 
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/titleBar"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rv"
         android:layout_above="@id/btt"
-        tools:ignore="NotSibling"></android.support.v7.widget.RecyclerView>
+        tools:ignore="NotSibling"></androidx.recyclerview.widget.RecyclerView>
     <RelativeLayout
         android:layout_marginBottom="5dp"
         android:id="@+id/btt"
@@ -49,7 +49,7 @@
         android:layout_alignParentBottom="true"
         android:padding="15dp"
         >
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,9 +64,9 @@
                 android:layout_centerVertical="true"
                 android:onClick="sendMessage"
                 />
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_margin="4dp"
             android:id="@+id/write"
             android:layout_alignParentRight="true"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/text_sent"
                 android:hint="كتابة الرساله .... "/>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
 </RelativeLayout>

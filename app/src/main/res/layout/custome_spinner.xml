@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:padding="3dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@android:id/text1"
+    android:fontFamily="@font/gess_two_medium"
+    android:textSize="15sp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:textColor="@color/black"
+    android:layout_height="30dp">
+
+</TextView>

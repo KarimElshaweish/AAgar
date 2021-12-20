@@ -1,6 +1,8 @@
 package com.sourcey.materiallogindemo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,41 +11,54 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.sourcey.materiallogindemo.Model.Flat;
-import com.sourcey.materiallogindemo.Model.Offer;
+import com.sourcey.materiallogindemo.model.Flat;
+import com.sourcey.materiallogindemo.model.Offer;
+import com.sourcey.materiallogindemo.model.Regions.Countries.Countries;
+import com.sourcey.materiallogindemo.viewmodel.CountriesViewModel;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class Add_Offers extends AppCompatActivity implements LocationListener {
 
     boolean addLocation = false, fillData = false;
@@ -54,11 +69,15 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     Offer offer;
     ListView listView;
 
+
+
     public void Finish(View view) {
         finish();
     }
 
     public void AddLocation(View view) {
+        String time=Calendar.getInstance().getTime().toString();
+        offer.setTime(time);
         offer = new Offer();
         offer.setUserName(Shared.user.getName());
         offer.setCity(spinnerCity.getSelectedItem().toString());
@@ -81,6 +100,7 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
         Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         offer.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         Shared.upload = offer;
         addLocation = true;
         Shared.addLocation = true;
@@ -142,80 +162,87 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
     Flat flat;
     KProgressHUD hud;
     TextView titleText;
+
+    int intentType=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__offers);
-        __init__();
-         hud = KProgressHUD.create(Add_Offers.this)
-                .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
-                .setLabel("جارى رفع العرض")
-                .setMaxProgress(100);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION},
-                    1);
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            hud.show();
-                            // Logic to handle location object
-                            onLocationChanged(location);
-                        }
-                    }
-                });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getTyp=true;
-                type= tabsArray.get(position);
-                if(getTyp){
-                    time++;
-                    buildType.setVisibility(View.VISIBLE);
-                    changeColor(orderTypeNext,buildType);
-                    hideView(cv1,cv2);
-                    titleText.setText("نوع العقار");
-                    //  listView.setVisibility(View.GONE);
-                }
-                else{
-                    Toast.makeText(getBaseContext(), "من فضلك اختار نوع العقار", Toast.LENGTH_SHORT).show();
-                }
-
+        Intent intent=getIntent();
+        intentType=intent.getIntExtra("type", -1);
+        try{
+            __init__();
+            hud = KProgressHUD.create(Add_Offers.this)
+                    .setStyle(KProgressHUD.Style.ANNULAR_DETERMINATE)
+                    .setLabel("جارى رفع العرض")
+                    .setMaxProgress(100);
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION},
+                        1);
+                return;
             }
-        });
-        list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getBuildType=true;
-                build=tabsArray2.get(position);
-                if(!getBuildType)
-                    Toast.makeText(getBaseContext(), "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
-                else {
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                hud.show();
+                                // Logic to handle location object
+                                onLocationChanged(location);
+                            }
+                        }
+                    });
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    getTyp=true;
+                    type= tabsArray.get(position);
+                    orderTypeNext.setText(type);
+                    if(getTyp){
+                        time++;
+                        buildType.setVisibility(View.VISIBLE);
+                        changeColor(orderTypeNext,buildType);
+                        hideView(cv1,cv2);
+                        titleText.setText("نوع العقار");
+                        //  listView.setVisibility(View.GONE);
+                    }
+                    else{
+                        Toast.makeText(getBaseContext(), "من فضلك اختار نوع العقار", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+            list2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    getBuildType=true;
+                    build=tabsArray2.get(position);
+                    buildType.setText(build);
+                    if(!getBuildType)
+                        Toast.makeText(getBaseContext(), "من فضلك اختار العقار", Toast.LENGTH_SHORT).show();
+                    else {
                         time++;
                         priceNext1.setVisibility(View.VISIBLE);
                         btnNtextStep.setVisibility(View.VISIBLE);
                         changeColor(buildType, priceNext1);
                         hideView(cv2, cv3);
-                    titleText.setText("تفاصيل الطلب");
+                        titleText.setText("تفاصيل الطلب");
 
-                    if (!build.equals(tabsArray2.get(3))) {
+                        if (!build.equals(tabsArray2.get(3))) {
                             roomlin.setVisibility(View.GONE);
 
                         }
 
-                    //  linPrice.setVisibility(View.VISIBLE);
-                    // list2.setVisibility(View.GONE);
+                        //  linPrice.setVisibility(View.VISIBLE);
+                        // list2.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
 //        btnContinue.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -237,18 +264,11 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
 //               // changeColor(priceNext1,notificationTyp);
 //            }
 //        });
-        notifcationTypListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                notificaionLocatian = tabsArray3.get(position);
-                getNotification = true;
-
-
-                if (!getNotification) {
-                    piceTextNew.setError("من فضلك اختار نوع الاشعارات");
-                } else {
+            LinearLayout citesLayout=findViewById(R.id.citesLayout);
+            notifcationTypListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     offer = new Offer();
-
                     offer.setUserName(Shared.user.getName());
                     offer.setCity(fnialAddress);
                     offer.setPrice(piceTextNew.getText().toString());
@@ -268,7 +288,10 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                     Shared.AddToMap.setUserName(Shared.user.getName());
                     Shared.AddToMap.setBuildingTyp(build);
                     Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    if(build.equals("شقة ")){
+                    String time = Calendar.getInstance().getTime().toString();
+                    offer.setTime(time);
+                    Shared.AddToMap.setTime(time);
+                    if (build.equals("شقة ")) {
                         Shared.AddToMap.setAspect(flat);
                         offer.setAspect(flat);
                     }
@@ -276,21 +299,103 @@ public class Add_Offers extends AppCompatActivity implements LocationListener {
                     Shared.upload = offer;
                     addLocation = true;
                     Shared.addLocation = true;
-                    startActivity(new Intent(Add_Offers.this, MapsActivity.class));
-                    finish();
+                    if (position == 1) {
+                       // getlistofCitest(offer);
+                        citesLayout.setVisibility(View.VISIBLE);
+                        Button btnAdd=findViewById(R.id.btnAddSpecial);
+                        btnAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                             //   getcurrentLocationCity=false;
+                             //   Toast.makeText(getBaseContext(),fnialAddress,Toast.LENGTH_SHORT).show();
+//                                citySelectedTextView=findViewById(R.id.city_selected);
+//                                citySelectedTextView.setVisibility(View.VISIBLE);
+//                                citySelectedTextView.setText(fnialAddress);
+
+                                Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                Locale locale=new Locale("ar");
+                                Shared.AddToMap.setOfferID(Calendar.getInstance(locale).getTime().toString());
+                                FirebaseDatabase.getInstance().getReference("OfferNeeded").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .child(Calendar.getInstance().getTime().toString())
+                                        .setValue(Shared.AddToMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Add_Offers.this, "تم إضافة الطلب", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        startActivity(new Intent(Add_Offers.this, MyOfferNeeded.class));
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        citesLayout.setVisibility(View.GONE);
+                        notificaionLocatian = tabsArray3.get(position);
+                        getNotification = true;
+
+
+                        if (!getNotification) {
+                            piceTextNew.setError("من فضلك اختار نوع الاشعارات");
+                        } else {
+
+                            startActivity(new Intent(Add_Offers.this, MapsActivity.class));
+                            finish();
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
 
     }
-ListView notifcationTypListView;
+    List<String>citesList;
+    ListView notifcationTypListView;
     LinearLayout roomlin;
     FloatingActionButton btnNtextStep;
+    String currentCity;
     private void __init__() {
         titleText=findViewById(R.id.titleText);
         Shared.addoffMethod=true;
         btnNtextStep=findViewById(R.id.btnNtextStep);
         roomlin=findViewById(R.id.roomlin);
+        Spinner countriesSpinner=findViewById(R.id.spinner_Countries);
+        List<String>countries = Arrays.asList(getResources().getStringArray(R.array.Countries_Array));
+        Collections.sort(countries);
+        ArrayAdapter spinnerCountreisAdapter=new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,countries);
+        countriesSpinner.setAdapter(spinnerCountreisAdapter);
+        Spinner citesSpinner=findViewById(R.id.spinner_Cites);
+        countriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ArrayAdapter citesAdatper;
+                if(i==1){
+                    citesList= Arrays.asList(getResources().getStringArray(R.array.Egypt_Cites));
+                }else{
+                    citesList= Arrays.asList(getResources().getStringArray(R.array.Sudia_Cites));
+                }
+                Collections.sort(citesList);
+                citesAdatper=new ArrayAdapter<>(Add_Offers.this, R.layout.support_simple_spinner_dropdown_item, citesList);
+                citesSpinner.setAdapter(citesAdatper);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        citesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Shared.AddToMap.setCity(citesList.get(i));
+                currentCity=citesList.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         cv4=findViewById(R.id.cv4);
         cv3=findViewById(R.id.cv3);
         cv2=findViewById(R.id.cv2);
@@ -377,6 +482,18 @@ ListView notifcationTypListView;
         streetText = findViewById(R.id.StreetText);
         setTypeSpinner();
         Shared.addOffer = true;
+
+
+        titleText.setText(buildType.getText().toString());
+        cv1.setVisibility(View.GONE);
+        cv2.setVisibility(View.VISIBLE);
+        cv3.setVisibility(View.GONE);
+        cv4.setVisibility(View.GONE);
+        buildType.setTextColor(Color.parseColor("#ffffff"));
+        buildType.setBackgroundColor(getResources().getColor(R.color.primary));
+        changeOffline(orderTypeNext);
+        changeOffline(priceNext1);
+        changeOffline(notificationTyp);
     }
 
     ArrayList<String>tabsArray2,tabsArray,tabsArray3;
@@ -386,18 +503,103 @@ ListView notifcationTypListView;
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray3);
         notifcationTypListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         notifcationTypListView.setAdapter(adapter3);
+
+
+
         tabsArray2 =new ArrayList<>();
         tabsArray2.addAll(Arrays.asList(new String[]{"فيلا ", "ارض ", "دور ", "شقة ", "عمارة ", "بيت ", "استراحه ", "محل ", "مزرعه "}));
         tabsArray=new ArrayList<>();
         tabsArray.addAll(Arrays.asList(new String[]{"شراء", "إيجار"}));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, tabsArray);
         spinnerType.setAdapter(adapter);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                spinnerType.setSelection(1);
+
+            }
+        });
+
+
         listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
         ArrayAdapter<String>adapter2=new ArrayAdapter<>(this,android.R.layout.simple_list_item_single_choice,tabsArray2);
         list2.setChoiceMode(listView.CHOICE_MODE_SINGLE);
         list2.setAdapter(adapter2);
+        if(intentType==0){
+            spinnerType.setSelection(1);
+            listView.setItemChecked(1,true);
+            orderTypeNext.setText(tabsArray.get(1));
+            type="إيجار";
+
+        }else if(intentType==1){
+            spinnerType.setSelection(0);
+            listView.setItemChecked(0,true);
+            orderTypeNext.setText(tabsArray.get(0));
+            type="شراء";
+        }
     }
+
+    Offer localOffer;
+    private void getlistofCitest(Offer offer) {
+        this.localOffer=offer;
+        getcurrentLocationCity=true;
+        hud.show();
+         FusedLocationProviderClient fusedLocationClient;
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    1);
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            onLocationChanged(location);
+                        }
+                        else{
+                            ActivityCompat.requestPermissions(Add_Offers.this, new String[]{
+                                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    1);
+
+                        }
+                    }
+                });
+
+//        ArrayList<String> list=new ArrayList<String>();
+//
+//        String[] locales = Locale.getISOCountries();
+//
+//        for (String countryCode : locales) {
+//
+//            Locale obj = new Locale("", countryCode);
+//
+//            System.out.println("Country Name = " + obj.getDisplayCountry());
+//            list.add(obj.getDisplayCountry());
+//
+//        }
+//
+//        CountriesViewModel countriesViewModel= new ViewModelProvider(this).get(CountriesViewModel.class);
+//        countriesViewModel.getCountries();
+//        countriesViewModel.getCountriesList().observe(this, new Observer<Countries>() {
+//            @Override
+//            public void onChanged(Countries countries) {
+//                if(countries!=null)
+//                    System.out.println(countries.getData());
+//            }
+//        });
+
+
+    }
+
     public void Add(View view) {
         fillData = true;
         if(notifcationTypListView.getSelectedItemPosition()==0)
@@ -436,6 +638,8 @@ ListView notifcationTypListView;
 
     }
     String fnialAddress;
+    Boolean getcurrentLocationCity=false;
+    TextView citySelectedTextView;
     @Override
     public void onLocationChanged(Location location) {
 
@@ -455,6 +659,7 @@ ListView notifcationTypListView;
             }
 
             fnialAddress = address.get(0).getAdminArea();
+            System.out.println(fnialAddress);
             String[] tabsArray =
                     new String[]{fnialAddress};
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tabsArray);
@@ -463,6 +668,42 @@ ListView notifcationTypListView;
             streetText.setEnabled(false);
             addressTxt.setText(streetText.getText());
             hud.dismiss();
+
+            if(getcurrentLocationCity){
+                getcurrentLocationCity=false;
+                Toast.makeText(getBaseContext(),fnialAddress,Toast.LENGTH_SHORT).show();
+                citySelectedTextView=findViewById(R.id.city_selected);
+                citySelectedTextView.setVisibility(View.VISIBLE);
+                citySelectedTextView.setText(fnialAddress);
+                offer.setCity(fnialAddress);
+
+                offer.setFlit(lat);
+                offer.setFlon(lng);
+
+                offer.setSlit(lat);
+                offer.setSlon(lng);
+
+                offer.setFtlit(lat);
+                offer.setFtlon(lng);
+
+                offer.setTlit(lat);
+                offer.setTlon(lng);
+
+                offer.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                offer.setOfferID(Calendar.getInstance(locale).getTime().toString());
+                FirebaseDatabase.getInstance().getReference("OfferNeeded").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(Calendar.getInstance().getTime().toString())
+                        .setValue(offer).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Add_Offers.this, "تم إضافة الطلب", Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(new Intent(Add_Offers.this, MyOfferNeeded.class));
+                    }
+                });
+
+
+            }
 
         } catch (IOException e) {
             // Handle IOException
@@ -485,7 +726,7 @@ ListView notifcationTypListView;
     public void onProviderDisabled(String s) {
 
     }
-    ListView list2;
+    GridView list2;
     CardView cv1,cv2,cv3,cv4;
     int time =0;
     TextView priceNext1,notificationTyp,descrtiptionNext,orderTypeNext,addressTxt,buildType;
@@ -524,6 +765,7 @@ ListView notifcationTypListView;
         off.setBackground(getResources().getDrawable(R.drawable.tab_layout));
 
     }
+    @SuppressLint("RestrictedApi")
     public void next(View view) {
      //   Button btn=(Button)view;
         if(time==0){
@@ -585,6 +827,8 @@ ListView notifcationTypListView;
                 offer.setStreet(streetText.getText().toString());
                 offer.setUserName(Shared.user.getName());
                 offer.setBuildingTyp(build);
+                String time=Calendar.getInstance().getTime().toString();
+                offer.setTime(time);
                 Shared.AddToMap = new Offer();
                 Shared.AddToMap.setCity(fnialAddress);
                 Shared.AddToMap.setPrice(piceTextNew.getText().toString());
@@ -595,7 +839,7 @@ ListView notifcationTypListView;
                 Shared.AddToMap.setUserName(Shared.user.getName());
                 Shared.AddToMap.setBuildingTyp(build);
                 Shared.AddToMap.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+                Shared.AddToMap.setTime(time);
                 offer.setUID(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 Shared.upload = offer;
                 addLocation = true;

@@ -3,16 +3,17 @@ package com.sourcey.materiallogindemo.Fragment.OwnerFragmets.MyOffersFragments;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sourcey.materiallogindemo.Adapter.offerAdapter;
 import com.sourcey.materiallogindemo.MapsActivity;
-import com.sourcey.materiallogindemo.Model.OfferResult;
+import com.sourcey.materiallogindemo.model.OfferResult;
 import com.sourcey.materiallogindemo.R;
 import com.sourcey.materiallogindemo.Shared;
 
@@ -44,7 +45,7 @@ public class OwnerOffersFragment extends Fragment {
                 for(DataSnapshot dt:dataSnapshot.getChildren()){
                     if (dt.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         for(DataSnapshot dt1:dt.getChildren()) {
-                            list.add(dt1.getValue(com.sourcey.materiallogindemo.Model.OfferResult.class));
+                            list.add(dt1.getValue(com.sourcey.materiallogindemo.model.OfferResult.class));
                         }
                     }
                 }

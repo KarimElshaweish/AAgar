@@ -16,12 +16,15 @@
     <application
         android:name=".app"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher4"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".ChosingOrderTypeActivity"></activity>
+        <activity android:name=".IgnoredOrderActivity" />
+        <activity android:name=".Payment.PaymentMethod" />
+        <activity android:name=".NotificationActivity" />
         <activity android:name=".MySoldOfferActivity" />
         <activity android:name=".ActiveOrderActivity" />
         <!--
@@ -40,7 +43,7 @@
             android:name=".OfferEdit.EditMapActivity"
             android:label="@string/title_activity_edit_map" />
         <activity android:name=".OfferEdit.OfferEdit" />
-        <activity android:name=".OfferEdit.EditOfffer" />
+<!--        <activity android:name=".OfferEdit.EditOfffer" />-->
         <activity android:name=".feedback" />
         <activity android:name=".Edit.LandEditActivity" />
         <activity android:name=".Edit.RessortEditActivity" />
@@ -63,12 +66,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Dark" />
-        <activity
-            android:name=".SignupActivity"
-            android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignupActivity" />
 
         <service
             android:name=".Notification.MyFirebaseService"
@@ -104,7 +103,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".OfferResult" />
-        <activity android:name=".ChatAct" />
+        <activity
+            android:name=".ChatAct"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ChatList" />
         <activity android:name=".MyOfferNeeded" />
         <activity android:name=".OfferShare" />
